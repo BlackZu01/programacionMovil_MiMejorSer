@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/main.dart';
 
 class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -51,7 +53,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     FadeInUp(
-                      duration: Duration(milliseconds: 1200),
+                      duration: const Duration(milliseconds: 1200),
                       child: Text(
                         "Crea una cuenta nueva",
                         style: TextStyle(fontSize: 15, color: Colors.grey[700]),
@@ -62,7 +64,7 @@ class _SignupPageState extends State<SignupPage> {
                 Column(
                   children: <Widget>[
                     FadeInUp(
-                      duration: Duration(milliseconds: 1200),
+                      duration: const Duration(milliseconds: 1200),
                       child: makeInput(
                         label: "Correo electronico",
                         controller: emailController,

@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'login.dart';
 import 'signup.dart';
 
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
   final String username;
   final String password;
 
-  const HomePage({required this.username, required this.password, super.key});  
+  const HomePage({required this.username, required this.password, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +52,9 @@ class HomePage extends StatelessWidget {
               ),
               FadeInUp(
                   duration: const Duration(milliseconds: 1400),
-                  child: Container(
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height / 3,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('../assets/images/flower.png'))),
+                    child: Lottie.asset('assets/sunflower.json'),
                   )),
               Column(
                 children: <Widget>[
@@ -104,7 +103,7 @@ class HomePage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignupPage()));
+                                    builder: (context) => const SignupPage()));
                           },
                           color: Colors.yellow,
                           elevation: 0,

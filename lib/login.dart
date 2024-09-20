@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:my_app/welcome.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -159,17 +162,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             FadeInUp(
-              duration: const Duration(milliseconds: 1200),
-              child: Container(
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('../assets/images/login.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
+                duration: const Duration(milliseconds: 1400),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: Lottie.asset('assets/wave.json',
+                      fit: BoxFit.cover, width: screenWidth),
+                )),
           ],
         ),
       ),

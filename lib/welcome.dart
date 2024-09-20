@@ -8,6 +8,11 @@ class QuestionPage extends StatefulWidget {
 }
 
 class _QuestionPageState extends State<QuestionPage> {
+  List<String> tasks = ["Tarea 1", "Tarea 2", "Tarea 3"];
+
+  // Estado para controlar la visibilidad de la lista
+  bool showTasks = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +50,34 @@ class _QuestionPageState extends State<QuestionPage> {
               size: 20,
               color: Colors.black,
             )),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    showTasks = !showTasks;
+                  });
+                },
+                child: const Text('Mostrar lista de tareas')),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: showTasks
+                  ? Column(
+                      children: tasks
+                          .map((task) => ListTile(title: Text(task)))
+                          .toList(),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(onPressed: () {}, child: const Text('Otro boton')),
+          ],
+        ),
       ),
     );
   }
