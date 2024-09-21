@@ -114,7 +114,9 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             // Verificar si los datos coinciden
                             if (emailController.text == widget.username &&
-                                passwordController.text == widget.password) {
+                                passwordController.text == widget.password &&
+                                emailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -1,4 +1,6 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/initial.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({super.key});
@@ -9,19 +11,19 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
   List<String> tasks = ["Tarea 1", "Tarea 2", "Tarea 3"];
+  TextEditingController nameController = TextEditingController();
 
-  // Estado para controlar la visibilidad de la lista
+  // Estado para controlar la visibilidad de la lista de tareas
   bool showTasks = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-            child: Text(
+        title: const Text(
           'Mi Mejor Ser',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        )),
+        ),
         centerTitle: true,
         toolbarHeight: 110,
         backgroundColor: Colors.lightGreenAccent,
@@ -29,18 +31,6 @@ class _QuestionPageState extends State<QuestionPage> {
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50))),
-        actions: [
-          PopupMenuButton(
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                child: Text('Editar'),
-              ),
-              const PopupMenuItem(
-                child: Text('Eliminar'),
-              )
-            ],
-          )
-        ],
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -56,29 +46,82 @@ class _QuestionPageState extends State<QuestionPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    showTasks = !showTasks;
-                  });
-                },
-                child: const Text('Mostrar lista de tareas')),
-            AnimatedSize(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              child: showTasks
-                  ? Column(
-                      children: tasks
-                          .map((task) => ListTile(title: Text(task)))
-                          .toList(),
-                    )
-                  : const SizedBox.shrink(),
+            FadeInUp(
+              duration: const Duration(milliseconds: 1000),
+              child: const Text('Seleccione su plan de actividad diario.'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: () {}, child: const Text('Otro boton')),
+            FadeInUp(
+                duration: Duration(milliseconds: 1000),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    MaterialButton(
+                        minWidth: double.infinity,
+                        height: 40,
+                        color: Colors.lightGreenAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            showTasks = !showTasks;
+                          });
+                        },
+                        child: const Text('Lista de tareas predeterminada')),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: showTasks
+                          ? Column(
+                              children: tasks
+                                  .map((task) => ListTile(title: Text(task)))
+                                  .toList(),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                    const SizedBox(height: 20),
+                    MaterialButton(
+                        minWidth: double.infinity,
+                        height: 40,
+                        color: Colors.lightGreenAccent,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        onPressed: () {
+                          openDialog(nameController);
+                        },
+                        child: const Text('Crear nueva lista')),
+                  ],
+                )),
           ],
         ),
       ),
     );
+  }
+
+  Future openDialog(TextEditingController controlador) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text('¿Cómo prefiere que lo llamemos?'),
+            content: TextField(
+              controller: controlador,
+              decoration: const InputDecoration(hintText: 'Ingrese un nombre'),
+            ),
+            actions: [
+              TextButton(
+                onPressed: submit,
+                child: const Text('Enviar'),
+              )
+            ],
+          ));
+
+  void submit() {
+    Navigator.of(context).pop();
+    goToInit(context, nameController.text);
+  }
+
+  void goToInit(BuildContext context, String text) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => InitialPage(name: text)));
   }
 }

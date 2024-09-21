@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                   FadeInUp(
                       duration: const Duration(milliseconds: 1200),
                       child: Text(
-                        "Ingresa tus credenciales para entrar a la aplicación",
+                        "Ingresa tus credenciales para utilizar la aplicación",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey[700], fontSize: 15),
                       )),
