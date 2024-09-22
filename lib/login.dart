@@ -6,8 +6,13 @@ import 'package:my_app/welcome.dart';
 class LoginPage extends StatefulWidget {
   final String username;
   final String password;
+  final String name;
 
-  const LoginPage({required this.username, required this.password, Key? key})
+  const LoginPage(
+      {required this.username,
+      required this.password,
+      required this.name,
+      Key? key})
       : super(key: key);
 
   @override
@@ -120,7 +125,8 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const QuestionPage(),
+                                  builder: (context) =>
+                                      QuestionPage(name: widget.name),
                                 ),
                               );
                             } else {

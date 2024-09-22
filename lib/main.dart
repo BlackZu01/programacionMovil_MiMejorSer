@@ -7,15 +7,20 @@ import 'signup.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: HomePage(username: '', password: ''),
+    home: HomePage(name: '', username: '', password: ''),
   ));
 }
 
 class HomePage extends StatelessWidget {
   final String username;
   final String password;
+  final String name;
 
-  const HomePage({required this.username, required this.password, super.key});
+  const HomePage(
+      {required this.username,
+      required this.password,
+      required this.name,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +75,7 @@ class HomePage extends StatelessWidget {
                                   builder: (context) => LoginPage(
                                         username: username,
                                         password: password,
+                                        name: name,
                                       )));
                         },
                         shape: RoundedRectangleBorder(

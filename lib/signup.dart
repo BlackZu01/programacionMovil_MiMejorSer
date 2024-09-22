@@ -15,6 +15,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +64,19 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 Column(
                   children: <Widget>[
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1200),
+                      child: makeInput(
+                        label: "Nombre",
+                        controller: nameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Ingrese un nombre';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                     FadeInUp(
                       duration: const Duration(milliseconds: 1200),
                       child: makeInput(
@@ -141,6 +155,7 @@ class _SignupPageState extends State<SignupPage> {
                               builder: (context) => HomePage(
                                 username: emailController.text,
                                 password: passwordController.text,
+                                name: nameController.text,
                               ),
                             ),
                           );

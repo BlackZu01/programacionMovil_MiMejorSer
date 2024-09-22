@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/initial.dart';
 
 class QuestionPage extends StatefulWidget {
-  const QuestionPage({super.key});
+  final String name;
+  const QuestionPage({required this.name, super.key});
 
   @override
   State<QuestionPage> createState() => _QuestionPageState();
@@ -11,7 +12,6 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
   List<String> tasks = ["Tarea 1", "Tarea 2", "Tarea 3"];
-  TextEditingController nameController = TextEditingController();
 
   // Estado para controlar la visibilidad de la lista de tareas
   bool showTasks = false;
@@ -88,7 +88,7 @@ class _QuestionPageState extends State<QuestionPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         onPressed: () {
-                          openDialog(nameController);
+                          goToInit(context, widget.name);
                         },
                         child: const Text('Crear nueva lista')),
                   ],
@@ -97,27 +97,6 @@ class _QuestionPageState extends State<QuestionPage> {
         ),
       ),
     );
-  }
-
-  Future openDialog(TextEditingController controlador) => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: const Text('¿Cómo prefiere que lo llamemos?'),
-            content: TextField(
-              controller: controlador,
-              decoration: const InputDecoration(hintText: 'Ingrese un nombre'),
-            ),
-            actions: [
-              TextButton(
-                onPressed: submit,
-                child: const Text('Enviar'),
-              )
-            ],
-          ));
-
-  void submit() {
-    Navigator.of(context).pop();
-    goToInit(context, nameController.text);
   }
 
   void goToInit(BuildContext context, String text) {
