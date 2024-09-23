@@ -6,6 +6,8 @@ import 'package:my_app/Controller/accountController.dart';
 import 'package:my_app/pages/main.dart';
 
 class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -14,6 +16,7 @@ class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>(); // Llave para manejar el Form
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final Accountcontroller controller = Get.find();
@@ -54,7 +57,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     FadeInUp(
-                      duration: Duration(milliseconds: 1200),
+                      duration: const Duration(milliseconds: 1200),
                       child: Text(
                         "Crea una cuenta nueva",
                         style: TextStyle(fontSize: 15, color: Colors.grey[700]),
@@ -65,7 +68,20 @@ class _SignupPageState extends State<SignupPage> {
                 Column(
                   children: <Widget>[
                     FadeInUp(
-                      duration: Duration(milliseconds: 1200),
+                      duration: const Duration(milliseconds: 1200),
+                      child: makeInput(
+                        label: "Nombre",
+                        controller: nameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Ingrese un nombre';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1200),
                       child: makeInput(
                         label: "Correo electronico",
                         controller: emailController,
@@ -138,8 +154,9 @@ class _SignupPageState extends State<SignupPage> {
                           // Si es válido, navega a la página de inicio con los datos
                           controller.addEmailList(emailController.text);
                           controller.addPasswordList(passwordController.text);
+                          controller.addnameList(nameController.text);
                           debugPrint('${controller.emailGetList.contains('$emailController')}');
-                           Get.off(()=>HomePage());
+                           Get.off(()=>const HomePage());
                          
                         }
                       },

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
 import 'package:my_app/pages/practices.dart';
 import 'package:my_app/pages/welcome.dart';
+import 'package:lottie/lottie.dart';
 import 'login.dart';
 import 'signup.dart';
 
@@ -33,7 +34,7 @@ darkTheme: FlexThemeData.dark(
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,,
-    initialRoute: '/Practices',
+    initialRoute: '/Home',
     getPages: [
       GetPage(name:'/Home',page:() =>  HomePage()),
       GetPage(name:'/Login',page: () => LoginPage()),
@@ -45,8 +46,10 @@ darkTheme: FlexThemeData.dark(
 }
 
 class HomePage extends StatelessWidget {
-  final String username="";
-  final String password="";
+  const HomePage({super.key});
+
+
+
 
   
 
@@ -77,7 +80,7 @@ class HomePage extends StatelessWidget {
                   FadeInUp(
                       duration: const Duration(milliseconds: 1200),
                       child: Text(
-                        "Ingresa tus credenciales para entrar a la aplicación",
+                        "Ingresa tus credenciales para utilizar la aplicación",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey[700], fontSize: 15),
                       )),
@@ -85,11 +88,9 @@ class HomePage extends StatelessWidget {
               ),
               FadeInUp(
                   duration: const Duration(milliseconds: 1400),
-                  child: Container(
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height / 3,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('../assets/images/flower.png'))),
+                    child: Lottie.asset('assets/sunflower.json'),
                   )),
               Column(
                 children: <Widget>[
@@ -129,7 +130,7 @@ class HomePage extends StatelessWidget {
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
-                            Get.to(()=>SignupPage());            
+                            Get.to(()=>const SignupPage());            
                           },
                           color: Colors.yellow,
                           elevation: 0,
