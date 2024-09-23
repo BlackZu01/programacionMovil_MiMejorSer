@@ -1,20 +1,54 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/pages/practices.dart';
+import 'package:my_app/pages/welcome.dart';
 import 'login.dart';
 import 'signup.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  Get.put(Accountcontroller(),permanent: true);
+  runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    home: HomePage(username: '', password: ''),
+    theme: FlexThemeData.light(
+  scheme: FlexScheme.greenM3,
+  surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+  blendLevel: 7,
+  visualDensity: FlexColorScheme.comfortablePlatformDensity,
+  useMaterial3: true,
+  swapLegacyOnMaterial3: true,
+),
+darkTheme: FlexThemeData.dark(
+  scheme: FlexScheme.greenM3,
+  surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+  blendLevel: 13,
+  visualDensity: FlexColorScheme.comfortablePlatformDensity,
+  useMaterial3: true,
+  swapLegacyOnMaterial3: true,
+  // To use the Playground font, add GoogleFonts package and uncomment
+  // fontFamily: GoogleFonts.notoSans().fontFamily,
+),
+// If you do not have a themeMode switch, uncomment this line
+// to let the device system mode control the theme mode:
+// themeMode: ThemeMode.system,,
+    initialRoute: '/Practices',
+    getPages: [
+      GetPage(name:'/Home',page:() =>  HomePage()),
+      GetPage(name:'/Login',page: () => LoginPage()),
+      GetPage(name:'/SignUp',page: () => SignupPage()),
+      GetPage(name: '/Welcome', page: () => const QuestionPage()),
+      GetPage(name: '/Practices', page: () => Practices())
+    ],
   ));
 }
 
 class HomePage extends StatelessWidget {
-  final String username;
-  final String password;
+  final String username="";
+  final String password="";
 
-  const HomePage({required this.username, required this.password, super.key});  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -65,13 +99,7 @@ class HomePage extends StatelessWidget {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage(
-                                        username: username,
-                                        password: password,
-                                      )));
+                          Get.off(()=>LoginPage());
                         },
                         shape: RoundedRectangleBorder(
                             side: const BorderSide(color: Colors.black),
@@ -101,10 +129,7 @@ class HomePage extends StatelessWidget {
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignupPage()));
+                            Get.to(()=>SignupPage());            
                           },
                           color: Colors.yellow,
                           elevation: 0,

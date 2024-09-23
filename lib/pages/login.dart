@@ -1,13 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/welcome.dart';
+import 'package:get/get.dart';
+import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/pages/main.dart';
+import 'package:my_app/pages/welcome.dart';
+
 
 class LoginPage extends StatefulWidget {
-  final String username;
-  final String password;
 
-  const LoginPage({required this.username, required this.password, Key? key})
-      : super(key: key);
+
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+ final Accountcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+           Get.off(()=>HomePage());
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -105,19 +107,20 @@ class _LoginPageState extends State<LoginPage> {
                             right: BorderSide(color: Colors.black),
                           ),
                         ),
-                        child: MaterialButton(
+                        child:MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
                             // Verificar si los datos coinciden
-                            if (emailController.text == widget.username &&
-                                passwordController.text == widget.password) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const QuestionPage(),
-                                ),
-                              );
+                            
+                            if (controller.emailGetList.contains(emailController.text) &&
+                               controller.confirmPassword(controller.emailGetList.indexOf(emailController.text))==
+                               passwordController.text
+                               ) {
+                                
+                                controller.emailpassword('$emailController', '$passwordController');
+                              Get.off(()=>const QuestionPage());
+                              
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
