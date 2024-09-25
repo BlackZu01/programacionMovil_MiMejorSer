@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/pages/practices.dart';
 
 class InitialPage extends StatefulWidget {
-
-  const InitialPage({ Key? key}) : super(key: key);
+  const InitialPage({Key? key}) : super(key: key);
 
   @override
   _InitialPage createState() => _InitialPage();
@@ -29,14 +29,14 @@ class _InitialPage extends State<InitialPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Obx(()=>Text(
-          'Saludos, ${controller.nameValue} 👋',
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        )),
+        title: Obx(() => Text(
+              'Saludos, ${controller.nameValue} 👋',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
         centerTitle: false,
         actions: const [
           Icon(Icons.notifications_none, color: Colors.black),
@@ -116,6 +116,25 @@ class _InitialPage extends State<InitialPage> {
                 },
               ),
             ),
+            Center(child:ElevatedButton(
+              onPressed: () {
+                Get.off(()=>Practices());
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    Theme.of(context).colorScheme.inversePrimary, // Color de fondo
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(30.0), // Bordes redondeados
+                ),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 30, vertical: 15), // Espaciado
+              ),
+              child: const Text(
+                'Añadir Practicas',
+                style: TextStyle(fontSize: 18), // Estilo del texto
+              ),
+            ))
           ],
         ),
       ),
