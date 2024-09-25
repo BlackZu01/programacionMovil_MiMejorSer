@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_app/Controller/accountController.dart';
 
 class InitialPage extends StatefulWidget {
-  final String name;
 
-  const InitialPage({required this.name, Key? key}) : super(key: key);
+  const InitialPage({ Key? key}) : super(key: key);
 
   @override
   _InitialPage createState() => _InitialPage();
@@ -19,6 +20,7 @@ class _InitialPage extends State<InitialPage> {
     Task(name: 'ESTUDIAR', duration: '30 minutes', status: 'TO DO'),
     Task(name: 'TOMAR AGUA', duration: '2 minutes', status: 'TO DO')
   ];
+  final Accountcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +29,14 @@ class _InitialPage extends State<InitialPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          'Saludos, ${widget.name} 👋',
+        title: Obx(()=>Text(
+          'Saludos, ${controller.nameValue} 👋',
           style: const TextStyle(
             color: Colors.black,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
-        ),
+        )),
         centerTitle: false,
         actions: const [
           Icon(Icons.notifications_none, color: Colors.black),

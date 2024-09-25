@@ -1,6 +1,9 @@
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/main.dart';
+import 'package:get/get.dart';
+import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/pages/main.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -13,10 +16,10 @@ class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>(); // Llave para manejar el Form
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-
+  final Accountcontroller controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +30,7 @@ class _SignupPageState extends State<SignupPage> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+           Get.off(()=>HomePage());
           },
           icon: const Icon(Icons.arrow_back_ios, size: 20, color: Colors.black),
         ),
@@ -149,16 +152,12 @@ class _SignupPageState extends State<SignupPage> {
                         // Verificar si el formulario es válido
                         if (_formKey.currentState!.validate()) {
                           // Si es válido, navega a la página de inicio con los datos
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(
-                                username: emailController.text,
-                                password: passwordController.text,
-                                name: nameController.text,
-                              ),
-                            ),
-                          );
+                          controller.addEmailList(emailController.text);
+                          controller.addPasswordList(passwordController.text);
+                          controller.addnameList(nameController.text);
+                          debugPrint('${controller.emailGetList.contains('$emailController')}');
+                           Get.off(()=>const HomePage());
+                         
                         }
                       },
                       color: Colors.greenAccent,

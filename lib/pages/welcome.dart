@@ -1,10 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/initial.dart';
+import 'package:get/get.dart';
+import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/pages/initial.dart';
 
 class QuestionPage extends StatefulWidget {
-  final String name;
-  const QuestionPage({required this.name, super.key});
+  const QuestionPage({super.key});
 
   @override
   State<QuestionPage> createState() => _QuestionPageState();
@@ -15,6 +16,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
   // Estado para controlar la visibilidad de la lista de tareas
   bool showTasks = false;
+  final Accountcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,8 @@ class _QuestionPageState extends State<QuestionPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         onPressed: () {
-                          goToInit(context, widget.name);
+                          controller.changename(controller.obtainName(controller.emailGetList.indexOf(controller.emailValue)));
+                          goToInit(context, controller.nameValue);
                         },
                         child: const Text('Crear nueva lista')),
                   ],
@@ -100,7 +103,6 @@ class _QuestionPageState extends State<QuestionPage> {
   }
 
   void goToInit(BuildContext context, String text) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => InitialPage(name: text)));
+      Get.off(()=>const InitialPage());
   }
 }
