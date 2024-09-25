@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_app/PracticesWidgets/W1.dart';
+import 'package:my_app/PracticesWidgets/W2.dart';
+import 'package:my_app/PracticesWidgets/W3.dart';
+import 'package:my_app/PracticesWidgets/W4.dart';
+import 'package:my_app/PracticesWidgets/W5.dart';
+import 'package:my_app/PracticesWidgets/W6.dart';
+import 'package:my_app/PracticesWidgets/W8.dart';
 
 
 // ignore: use_key_in_widget_constructors
 class Practices extends StatelessWidget {
-  // Lista de íconos y textos
+
   final List<Map<String, dynamic>> items = [
     {"icon": Icons.water_drop, "text": "Tomar agua"},
     {"icon": Icons.restaurant, "text": "Alimentación sana"},
-    {"icon": Icons.directions_run, "text": "Trotar"},
+    {"icon": Icons.directions_run, "text": "Caminar/Trotar"},
     {"icon": Icons.fitness_center, "text": "Gimnasio"},
     {"icon": Icons.library_books, "text": "Estudiar"},
     {"icon": Icons.auto_stories, "text": "Leer"},
@@ -51,7 +59,22 @@ class Practices extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return ElevatedButton(
                     onPressed: () {
-                      print('${items[index]["text"]} button pressed');
+                      switch(index){
+                        case 0:Get.off(()=>const Practice1());
+                        break;
+                        case 1:Get.off(()=>const Practice2());
+                        break;
+                         case 2:Get.off(()=>const Practice3());
+                        break;
+                        case 3:Get.off(()=>const Practice4());
+                        break;
+                         case 4:Get.off(()=>const Practice5());
+                        break;
+                        case 5:Get.off(()=>const Practice6());
+                        break;
+                        case 7: Get.off(()=>const Practice8());
+                        break;
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.secondary, 

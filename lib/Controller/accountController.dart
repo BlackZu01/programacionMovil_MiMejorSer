@@ -1,5 +1,5 @@
 
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 class Accountcontroller extends GetxController{
@@ -34,17 +34,14 @@ class Accountcontroller extends GetxController{
   }
   
   void addEmailList(String value){
-    debugPrint(value);
      emailList.add(value);
   }
 
    void addnameList(String value){
-    debugPrint(value);
      nameList.add(value);
   }
 
   void addPasswordList(String value){
-     debugPrint(value);
      passwordList.add(value);
   }
 
