@@ -3,26 +3,29 @@ import 'package:get/get.dart';
 import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
 
-class Practice3 extends StatefulWidget {
-  const Practice3({super.key});
+import '../../Controller/PracticeClass.dart';
+
+class Practice7 extends StatefulWidget {
+  const Practice7({super.key});
 
   @override
-  _Practice3State createState() => _Practice3State();
+  _Practice7State createState() => _Practice7State();
 }
 
-class _Practice3State extends State<Practice3> {
+class _Practice7State extends State<Practice7> {
   Practicecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    Task task;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Caminar o Trote'),
+        title: const Text('Seguimiento de Pausas Saludables'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
+            controller.reset(7);
             Get.off(() => Practices());
-            controller.reset(3);
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -37,7 +40,7 @@ class _Practice3State extends State<Practice3> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Tiempo de Caminar o Trote',
+              'Tomar Pausas Saludables',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -45,7 +48,7 @@ class _Practice3State extends State<Practice3> {
               ),
             ),
             Text(
-              '(3 pts)',
+              '(2 pts)',
               style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
@@ -53,7 +56,7 @@ class _Practice3State extends State<Practice3> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Establezca el tiempo (en minutos) que desea dedicar a trotar o caminar hoy para mejorar su resistencia',
+              'Establezca cuántas pausas saludables desea realizar hoy para mejorar su bienestar. Se recomienda pausas entre 10 y 15 minutos',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -64,8 +67,8 @@ class _Practice3State extends State<Practice3> {
                 // Botón de decremento
                 ElevatedButton(
                   onPressed: () {
-                    controller.decrement(3);
-                  },
+                    controller.decrement(7);
+                  }, // método para reducir número de pausas
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -78,14 +81,14 @@ class _Practice3State extends State<Practice3> {
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p3Value}',
+                  '${controller.p7Value}', // valor del número de pausas
                   style: const TextStyle(fontSize: 40),
                 )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
                   onPressed: () {
-                    controller.increment(3);
+                    controller.increment(7);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -102,8 +105,9 @@ class _Practice3State extends State<Practice3> {
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-                controller.choosen(3);
-                debugPrint('${controller.p3choosenValue}');
+                task=Task(name:'Pausa activa',goal: '${controller.p7Value} pausas',
+                counter:0,state:false);
+                controller.addpractices(task);
                 Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(

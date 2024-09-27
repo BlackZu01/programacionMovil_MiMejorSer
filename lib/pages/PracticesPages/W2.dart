@@ -3,16 +3,18 @@ import 'package:get/get.dart';
 import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
 
-class Practice4 extends StatefulWidget {
-  const Practice4({super.key});
+import '../../Controller/PracticeClass.dart';
+
+class Practice2 extends StatefulWidget {
+  const Practice2({super.key});
 
   @override
-  _Practice4State createState() => _Practice4State();
+  _Practice2State createState() => _Practice2State();
 }
 
-class _Practice4State extends State<Practice4> {
+class _Practice2State extends State<Practice2> {
   Practicecontroller controller = Get.find();
-  final TextEditingController exerciseController = TextEditingController();
+  final TextEditingController foodController = TextEditingController();
   String error = "";
   bool error2 = false;
 
@@ -20,7 +22,7 @@ class _Practice4State extends State<Practice4> {
     error2 = true;
     setState(() {
       error2 = true;
-      error = "¡Este ejercicio ya ha sido agregado!";
+      error = "¡Este alimento ya ha sido agregado!";
     });
   }
 
@@ -33,13 +35,14 @@ class _Practice4State extends State<Practice4> {
 
   @override
   Widget build(BuildContext context) {
+    Task task;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Ejercicio'),
+        title: const Text('Seguimiento de Comida Saludable'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            controller.p4List.clear();
+            controller.p2List.clear();
             Get.off(() => Practices());
           },
           icon: const Icon(
@@ -55,15 +58,16 @@ class _Practice4State extends State<Practice4> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Registro de Ejercicios',
+              'Registro de Comidas Saludables',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.primary,
               ),
+               textAlign:TextAlign.center
             ),
             Text(
-              '(1 pt por cada ejercicio)',
+              '(1 pt por cada alimento saludable)',
               style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary
@@ -71,18 +75,20 @@ class _Practice4State extends State<Practice4> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Escribe el tipo de ejercicio que deseas realizar y añádelo a la lista.',
+              'Escribe los alimentos saludable que desea consumir',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            // Texto "Tipo de ejercicio" sobre el campo de entrada
-             Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Tipo de ejercicio', // Texto encima del campo de entrada
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
-                color:Theme.of(context).colorScheme.primary),
+                'Tipo de alimento', // Texto encima del campo de entrada
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
             const SizedBox(height: 5),
@@ -90,7 +96,7 @@ class _Practice4State extends State<Practice4> {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: exerciseController,
+                    controller: foodController,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onPrimaryContainer, // Mejora la visibilidad del texto
                     ),
@@ -98,7 +104,7 @@ class _Practice4State extends State<Practice4> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'Ej: Barras, Levantamiento de pesas...',
+                      hintText: 'Ej: Manzana, Ensalada, Naranja...',
                       hintStyle: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
                       ),
@@ -110,12 +116,12 @@ class _Practice4State extends State<Practice4> {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    if (exerciseController.text.isNotEmpty) {
-                      if (controller.p4.contains(exerciseController.text)) {
+                    if (foodController.text.isNotEmpty) {
+                      if (controller.p2.contains(foodController.text)) {
                         repeat();
                       } else {
-                        controller.add(4, exerciseController.text);
-                        exerciseController.clear();
+                        controller.add(2, foodController.text);
+                        foodController.clear();
                         solve();
                       }
                     }
@@ -141,7 +147,7 @@ class _Practice4State extends State<Practice4> {
             const SizedBox(height: 20),
             Expanded(
               child: Obx(() => ListView.builder(
-                    itemCount: controller.p4.length,
+                    itemCount: controller.p2.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
@@ -154,11 +160,11 @@ class _Practice4State extends State<Practice4> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          title: Text(controller.p4[index]),
+                          title: Text(controller.p2[index]),
                           trailing: IconButton(
                             icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
                             onPressed: () {
-                              controller.remove(4, index);
+                              controller.remove(2, index);
                             },
                           ),
                         ),
@@ -169,7 +175,10 @@ class _Practice4State extends State<Practice4> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                controller.choosen(4);
+                controller.choosen(2);
+                task=Task(name:'Alimentación sana',goal:'${controller.p2List.length} ejercicios',
+                counter:0,state:false);
+                controller.addpractices(task);
                 Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
@@ -187,4 +196,3 @@ class _Practice4State extends State<Practice4> {
     );
   }
 }
-

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
+import 'package:my_app/Controller/PracticeClass.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({Key? key}) : super(key: key);
@@ -11,26 +13,22 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPage extends State<InitialPage> {
+  final Accountcontroller controlleraccount = Get.find();
+  final Practicecontroller controllerp = Get.find();
   int completedGoals = 0;
-  int totalGoals = 4;
-
-  List<Task> tasks = [
-    Task(name: 'EJERCICIO', duration: '30 minutes', status: 'TO DO'),
-    Task(name: 'LEER', duration: '20 pages', status: 'TO DO'),
-    Task(name: 'ESTUDIAR', duration: '30 minutes', status: 'TO DO'),
-    Task(name: 'TOMAR AGUA', duration: '2 minutes', status: 'TO DO')
-  ];
-  final Accountcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    
+   
+     // Obtener el número total de tareas
     return Scaffold(
       backgroundColor: const Color(0xFFF5F4FB),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Obx(() => Text(
-              'Saludos, ${controller.nameValue} 👋',
+              'Saludos, ${controlleraccount.nameValue} 👋',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
@@ -61,7 +59,10 @@ class _InitialPage extends State<InitialPage> {
                   ),
                 ],
               ),
-              child: Column(
+              child:
+              //  int totalTasks = controllerp.getnpractices;
+              Obx(() { int totalTasks = controllerp.getnpractices;
+               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
@@ -72,17 +73,16 @@ class _InitialPage extends State<InitialPage> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text('$completedGoals/$totalGoals objetivos completados'),
+                  Text('$completedGoals/$totalTasks objetivos completados'),
                   const SizedBox(height: 10),
                   LinearProgressIndicator(
-                    value:
-                        completedGoals / totalGoals, // Progreso en la barrita
+                    value: totalTasks > 0 ? completedGoals / totalTasks : 0, // Asegurarse de que no se divida entre 0
                     backgroundColor: Colors.grey[300],
-                    valueColor:
-                        const AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.deepPurple),
                   ),
                 ],
-              ),
+              );
+              }),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -94,71 +94,64 @@ class _InitialPage extends State<InitialPage> {
             ),
             const SizedBox(height: 20),
 
-            // Generar la lista de tareas (Por corregir)
+            // Mostrar tareas o mensaje de que no hay tareas seleccionadas
             Expanded(
-              child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return TaskCard(
-                    task: tasks[index],
-                    onStatusChange: () {
-                      setState(() {
-                        if (tasks[index].status == 'TO DO') {
-                          tasks[index].status = 'COMPLETE';
-                          completedGoals++;
-                        } else {
-                          tasks[index].status = 'TO DO';
-                          completedGoals--;
-                        }
-                      });
-                    },
-                  );
+              child: Obx((){
+                var tasks = controllerp.getpracticeslist;
+                return tasks.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'No has seleccionado tareas.',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  : Obx(()=>ListView.builder(
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
+                        return TaskCard(
+                          task: tasks[index],
+                          onStatusChange: () {
+                            setState(() {
+                              if (tasks[index].state == false) {
+                                tasks[index].state = true;
+                                completedGoals++;
+                              } else {
+                                tasks[index].state = false;
+                                completedGoals--;
+                              }
+                            });
+                          },
+                        );
+                      },
+                    ));
+              })
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.to(() => Practices());
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+                child: const Text(
+                  'Añadir Practicas',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
             ),
-            Center(child:ElevatedButton(
-              onPressed: () {
-                Get.off(()=>Practices());
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Theme.of(context).colorScheme.inversePrimary, // Color de fondo
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(30.0), // Bordes redondeados
-                ),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 30, vertical: 15), // Espaciado
-              ),
-              child: const Text(
-                'Añadir Practicas',
-                style: TextStyle(fontSize: 18), // Estilo del texto
-              ),
-            ))
           ],
         ),
       ),
     );
   }
-}
-
-// Modelo de tarea booleano
-class Task {
-  String name;
-  String duration;
-  String status;
-
-  Task({required this.name, required this.duration, required this.status});
-}
-
-// Modelo de tarea con contadores
-class TaskCounter {
-  String name;
-  int numberTimes;
-  String status;
-
-  TaskCounter(
-      {required this.name, required this.numberTimes, required this.status});
 }
 
 // Widget TaskCard
@@ -187,14 +180,10 @@ class TaskCard extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: task.status == 'TO DO'
-                ? Colors.orange[100]
-                : Colors.purple[100],
+            backgroundColor: task.getstate == false ? Colors.orange[100] : Colors.purple[100],
             child: Icon(
-              task.status == 'TO DO'
-                  ? Icons.check_box_outline_blank
-                  : Icons.check,
-              color: task.status == 'TO DO' ? Colors.orange : Colors.purple,
+              task.getstate == false ? Icons.check_box_outline_blank : Icons.check,
+              color: task.getstate == false ? Colors.orange : Colors.purple,
             ),
           ),
           const SizedBox(width: 16),
@@ -202,30 +191,32 @@ class TaskCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                task.name,
+                task.getname,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              Text(task.duration),
+              Text(task.getgoal),
             ],
           ),
           const Spacer(),
+          IconButton(onPressed: (){
+
+          }, icon:const Icon(Icons.info,color: Colors.blue,)),
+          const Spacer(),
           GestureDetector(
-            onTap: onStatusChange, // Cambia el estado de la tarea
+            onTap: onStatusChange,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
-                color: task.status == 'TO DO'
-                    ? Colors.orange[100]
-                    : Colors.purple[100],
+                color: task.getstate == false ? Colors.orange[100] : Colors.purple[100],
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                task.status,
+                task.getstate ? "Complete" : "TO DO",
                 style: TextStyle(
-                  color: task.status == 'TO DO' ? Colors.orange : Colors.purple,
+                  color: task.getstate == false ? Colors.orange : Colors.purple,
                   fontWeight: FontWeight.bold,
                 ),
               ),

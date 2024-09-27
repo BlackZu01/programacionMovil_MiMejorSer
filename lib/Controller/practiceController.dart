@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_app/Controller/PracticeClass.dart';
+
+
 
 class Practicecontroller extends GetxController{
   
+  var npractices=0.obs;
+  
+  int get getnpractices=>npractices.value;
+
+  var practiceslist=<Task>[].obs;
+
+
+List<Task> get getpracticeslist =>practiceslist;
+
+  void addpractices(Task value){
+    practiceslist.add(value);
+  }
+
+  void removepractices(String value){
+    practiceslist.removeWhere((practice)=>practice.name==value);
+  }
+
+Task getpractices(String value){
+  for (var practice in practiceslist) {
+    if (practice.getname==value){
+      return practice;
+    }
+  }
+  return Task(name:"",goal:"",counter:0,state: false);
+}
   // practices1  
   var p1=7.obs; //Valor meta
   var p1inpractice=0.obs; //Contador
@@ -67,6 +95,17 @@ class Practicecontroller extends GetxController{
   bool get p6choosenValue=>p6choosen.value;
   bool get p6finishValue=>p6finish.value;
 
+ //practices7
+  var p7=20.obs;
+  var p7inpractice=0.obs;
+  var p7choosen=false.obs;
+  var p7finish=false.obs;
+
+  int get  p7Value=>p7.value;
+  int get p7inpracticeValue=>p7inpractice.value;
+  bool get p7choosenValue=>p7choosen.value;
+  bool get p7finishValue=>p7finish.value;
+
 
   //practice8
   var p8=20.obs;
@@ -96,6 +135,11 @@ class Practicecontroller extends GetxController{
        p6.value+=10;
      }
      break;
+     case 7:
+     if(p7.value!=5){
+      p7.value++;
+     }
+     break;
      case 8:
         if(p8.value!=90){
         p8.value+=5;
@@ -121,6 +165,10 @@ class Practicecontroller extends GetxController{
        p6.value-=10;
       }
       break;
+    case 7:
+    if(p7.value!=1){
+      p7.value--;
+    }
     case 8:
      if(p8.value!=20){
         p8.value-=5;
@@ -140,6 +188,9 @@ class Practicecontroller extends GetxController{
       break;
       case 6:
       p6.value=10;
+      break;
+      case 7:
+      p7.value=1;
       break;
       case 8:
       p8.value=20;
@@ -208,8 +259,9 @@ class Practicecontroller extends GetxController{
       case 6:p6choosen.value=true;
       break;
       case 8:p8choosen.value=true;
-
+      break;
     }
+    npractices++;
   }
 
   void nochoosen(int index){
@@ -230,6 +282,7 @@ class Practicecontroller extends GetxController{
       break;
 
     }
+    npractices--;
   }
 
 
@@ -249,3 +302,4 @@ class Practicecontroller extends GetxController{
 
 
 }
+

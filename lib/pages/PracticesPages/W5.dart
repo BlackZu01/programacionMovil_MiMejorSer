@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
 
+import '../../Controller/PracticeClass.dart';
+
 class Practice5 extends StatefulWidget {
   const Practice5({super.key});
 
@@ -59,6 +61,7 @@ class _Practice5State extends State<Practice5> {
 
   @override
   Widget build(BuildContext context) {
+    Task task;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Seguimiento de Estudio'),
@@ -221,7 +224,10 @@ class _Practice5State extends State<Practice5> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                controller.choosen(5); // Guardar el seguimiento de estudio
+                controller.choosen(5); 
+                task=Task(name:'Estudiar',goal: '${controller.p5List.length} Temas',
+                counter:0,state:false);
+                controller.addpractices(task);
                 Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/PracticesWidgets/W1.dart';
-import 'package:my_app/PracticesWidgets/W2.dart';
-import 'package:my_app/PracticesWidgets/W3.dart';
-import 'package:my_app/PracticesWidgets/W4.dart';
-import 'package:my_app/PracticesWidgets/W5.dart';
-import 'package:my_app/PracticesWidgets/W6.dart';
-import 'package:my_app/PracticesWidgets/W8.dart';
+import 'package:my_app/pages/PracticesPages/W1.dart';
+import 'package:my_app/pages/PracticesPages/W2.dart';
+import 'package:my_app/pages/PracticesPages/W3.dart';
+import 'package:my_app/pages/PracticesPages/W4.dart';
+import 'package:my_app/pages/PracticesPages/W5.dart';
+import 'package:my_app/pages/PracticesPages/W6.dart';
+import 'package:my_app/pages/PracticesPages/W7.dart';
+import 'package:my_app/pages/PracticesPages/W8.dart';
 
 
 // ignore: use_key_in_widget_constructors
@@ -24,6 +25,8 @@ class Practices extends StatelessWidget {
     {"icon": Icons.tv_off, "text": "Tiempo fuera de las pantallas"},
     {"icon": Icons.schedule, "text": "Tiempo libre"},
   ];
+
+  get name => null;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +74,8 @@ class Practices extends StatelessWidget {
                          case 4:Get.off(()=>const Practice5());
                         break;
                         case 5:Get.off(()=>const Practice6());
+                        break;
+                        case 6:Get.off(()=>const Practice7());
                         break;
                         case 7: Get.off(()=>const Practice8());
                         break;

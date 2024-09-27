@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_app/Controller/PracticeClass.dart';
 import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
 
-class Practice8 extends StatefulWidget {
-  const Practice8({super.key});
+class Practice1 extends StatefulWidget {
+  const Practice1({super.key});
 
   @override
-  _Practice8State createState() => _Practice8State();
+  _Practice1State createState() => _Practice1State();
 }
 
-class _Practice8State extends State<Practice8> {
+class _Practice1State extends State<Practice1> {
   Practicecontroller controller = Get.find();
 
+ 
   @override
   Widget build(BuildContext context) {
+    Task task;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Siesta'),
+        title: const Text('Seguimiento de Agua'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
-          onPressed: () {
-            controller.reset(8);
-            Get.off(() => Practices());
+          onPressed: () {    
+           Get.off(()=>Practices());
+           controller.reset(1);
           },
           icon: const Icon(
             Icons.arrow_back_ios,
             size: 20,
             color: Colors.black,
           ),
-        ),
+        )
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Tomar una Siesta',
+             Text(
+              'Consumo de Agua',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.primary
               ),
             ),
             Text(
@@ -53,7 +56,7 @@ class _Practice8State extends State<Practice8> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Establezca como meta la cantidad de tiempo que desea dormir hoy para una siesta reparadora.',
+              'Establezca el numero de vasos de agua que desea tomar hoy para mantenerse hidratado.',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -63,7 +66,7 @@ class _Practice8State extends State<Practice8> {
               children: [
                 // Botón de decremento
                 ElevatedButton(
-                  onPressed:() {controller.decrement(8);}, // método para reducir tiempo
+                  onPressed:() {controller.decrement(1);},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -76,13 +79,13 @@ class _Practice8State extends State<Practice8> {
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p8Value} min', // valor del tiempo en minutos
+                  '${controller.p1Value}',
                   style: const TextStyle(fontSize: 40),
                 )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
-                  onPressed: (){controller.increment(8);}, 
+                  onPressed:() {controller.increment(1);},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -97,9 +100,12 @@ class _Practice8State extends State<Practice8> {
             const SizedBox(height: 40),
             // Botón de aceptar
             ElevatedButton(
-              onPressed: () {
-                controller.choosen(8);
-                Get.off(() => Practices());
+              onPressed: (){
+              controller.choosen(1);
+             task=Task(name:'Tomar agua',goal:'${controller.p1Value} vasos de agua',counter:0,state:false);
+              controller.addpractices(task);
+              // debugPrint('${controller.getpracticeslist}');
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

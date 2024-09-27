@@ -10,6 +10,7 @@ import 'package:my_app/PracticesWidgets/W3.dart';
 import 'package:my_app/PracticesWidgets/W4.dart';
 import 'package:my_app/PracticesWidgets/W5.dart';
 import 'package:my_app/PracticesWidgets/W6.dart';
+import 'package:my_app/PracticesWidgets/W7.dart';
 import 'package:my_app/PracticesWidgets/W8.dart';
 import 'package:my_app/pages/initial.dart';
 import 'package:my_app/pages/practices.dart';
@@ -44,7 +45,7 @@ darkTheme: FlexThemeData.dark(
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,,
-    initialRoute: '/Home',
+    initialRoute: '/Initial',
     getPages: [
       GetPage(name:'/Home',page:() =>  const HomePage()),
       GetPage(name:'/Login',page: () => LoginPage()),
@@ -58,6 +59,7 @@ darkTheme: FlexThemeData.dark(
       GetPage(name:'/Practice4',page:()=> const Practice4()),
       GetPage(name:'/Practice5',page:()=> const Practice5()),
       GetPage(name:'/Practice6',page:()=> const Practice6()),
+      GetPage(name:'/Practice7',page:()=> const Practice7()),
       GetPage(name:'/Practice8',page:()=> const Practice8())
     ],
   ));

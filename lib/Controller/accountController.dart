@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class Accountcontroller extends GetxController{
  var email ="".obs;
   var password="".obs;
-  var name="".obs;
+  var name="Julian".obs;
   var emailList = <String>[].obs;
   var passwordList = <String>[].obs;
     var nameList = <String>[].obs;
