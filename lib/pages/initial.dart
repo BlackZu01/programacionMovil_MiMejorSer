@@ -202,7 +202,7 @@ class TaskCard extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(onPressed: (){
-
+           
           }, icon:const Icon(Icons.info,color: Colors.blue,)),
           const Spacer(),
           GestureDetector(
