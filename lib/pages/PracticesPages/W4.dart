@@ -174,7 +174,7 @@ class _Practice4State extends State<Practice4> {
               onPressed: () {
                 controller.choosen(4);
                 task=Task(name:'Gimnasio',goal: '${controller.p4List.length} ejercicios',
-                counter:0,state:false);
+                pts:1,state:false);
                 controller.addpractices(task);
                 Get.off(() => Practices());
               },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
 import 'package:my_app/Controller/practiceController.dart';
+import 'package:my_app/pages/PracticeWidgets/WP1.dart';
 import 'package:my_app/pages/practices.dart';
 import 'package:my_app/Controller/PracticeClass.dart';
 import 'package:my_app/pages/task_manager.dart';
@@ -30,16 +31,15 @@ class _InitialPage extends State<InitialPage> {
         toolbarHeight: 100,
         elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF6A5ACD),
-                Color(0xFF836FFF)
+               Colors.greenAccent.shade200, Colors.tealAccent.shade400,
               ], // Degradado de colores
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26, // Sombra suave
                 offset: Offset(0, 4),
@@ -57,22 +57,13 @@ class _InitialPage extends State<InitialPage> {
             splashRadius: 24, // Radio del efecto de splash
           ),
         ),
-        title: const Text(
-          'Objetivos',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1.2, // Espaciado entre letras
-          ),
-        ),
         centerTitle: true, // Centrar el título
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
               onPressed: () {
-                goToPractices(context);
+                Get.off(()=> Practices());
               },
               icon: const Icon(Icons.add_circle_outline,
                   color: Colors.white, size: 28),
@@ -83,7 +74,7 @@ class _InitialPage extends State<InitialPage> {
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
               onPressed: () {
-                goToTaskManager(context);
+                Get.off(()=>const TaskAdminPage());
               },
               icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
               splashRadius: 24,
@@ -297,7 +288,16 @@ class TaskCard extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(onPressed: (){
-           
+           showDialog(context: context, builder: (BuildContext context){
+                switch(task.getname){
+                case 'Tomar agua':
+                return(WP1(name: task.getname));
+                default:
+                return(WP1(name: ""));
+                break;
+              }
+             
+           });
           }, icon:const Icon(Icons.info,color: Colors.blue,)),
           const Spacer(),
           GestureDetector(
@@ -309,7 +309,7 @@ class TaskCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                task.getstate ? "Complete" : "TO DO",
+                task.getstate ? "Completa" : "Pendiente",
                 style: TextStyle(
                   color: task.getstate == false ? Colors.orange : Colors.purple,
                   fontWeight: FontWeight.bold,

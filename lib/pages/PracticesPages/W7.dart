@@ -106,7 +106,7 @@ class _Practice7State extends State<Practice7> {
             ElevatedButton(
               onPressed: () {
                 task=Task(name:'Pausa activa',goal: '${controller.p7Value} pausas',
-                counter:0,state:false);
+                pts:2,state:false);
                 controller.addpractices(task);
                 Get.off(() => Practices());
               },

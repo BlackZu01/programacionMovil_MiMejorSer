@@ -102,7 +102,7 @@ class _Practice1State extends State<Practice1> {
             ElevatedButton(
               onPressed: (){
               controller.choosen(1);
-             task=Task(name:'Tomar agua',goal:'${controller.p1Value} vasos de agua',counter:0,state:false);
+             task=Task(name:'Tomar agua',goal:'${controller.p1Value} vasos de agua',pts:2,state:false);
               controller.addpractices(task);
               // debugPrint('${controller.getpracticeslist}');
               Get.off(()=>Practices());

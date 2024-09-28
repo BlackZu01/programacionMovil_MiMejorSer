@@ -176,8 +176,8 @@ class _Practice2State extends State<Practice2> {
             ElevatedButton(
               onPressed: () {
                 controller.choosen(2);
-                task=Task(name:'Alimentación sana',goal:'${controller.p2List.length} ejercicios',
-                counter:0,state:false);
+                task=Task(name:'Alimentación sana',goal:'${controller.p2List.length} ',
+                pts:1,state:false);
                 controller.addpractices(task);
                 Get.off(() => Practices());
               },

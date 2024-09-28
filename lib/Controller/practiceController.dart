@@ -19,18 +19,27 @@ List<Task> get getpracticeslist =>practiceslist;
     practiceslist.add(value);
   }
 
-  void removepractices(String value){
+  void removepractice(String value){
     practiceslist.removeWhere((practice)=>practice.name==value);
   }
 
-Task getpractices(String value){
+Task getpractice(String value){
   for (var practice in practiceslist) {
     if (practice.getname==value){
       return practice;
     }
   }
-  return Task(name:"",goal:"",counter:0,state: false);
+  return Task(name:"",goal:"",pts:0,state: false);
 }
+
+addcounter(String name){
+  for (var practice in practiceslist) {
+    if (practice.getname==name){
+      practice.counter++;
+    }
+  }
+}
+
   // practices1  
   var p1=7.obs; //Valor meta
   var p1inpractice=0.obs; //Contador

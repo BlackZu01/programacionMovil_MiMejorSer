@@ -103,7 +103,7 @@ class _Practice8State extends State<Practice8> {
               onPressed: () {
                 controller.choosen(8);
                 task=Task(name:'Tomar una siesta',goal: '${controller.p8Value} minutos',
-                counter:0,state:false);
+                pts:1,state:false);
                 controller.addpractices(task);
                 Get.off(() => Practices());
               },

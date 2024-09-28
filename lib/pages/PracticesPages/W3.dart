@@ -107,7 +107,7 @@ class _Practice3State extends State<Practice3> {
               onPressed: () {
                 controller.choosen(3);
                 task=Task(name:'Caminar/Trotar',goal:'${controller.p3Value} minutos',
-                counter: 0,state:false);
+                pts: 3,state:false);
                 controller.addpractices(task);
                 Get.off(() => Practices());
               },

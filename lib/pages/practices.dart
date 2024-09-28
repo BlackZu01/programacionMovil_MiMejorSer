@@ -42,8 +42,8 @@ class Practices extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.lightGreenAccent.shade200,
-                Colors.greenAccent.shade400
+                Colors.greenAccent.shade200, Colors.tealAccent.shade400,
+                Theme.of(context).colorScheme.inversePrimary,
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -55,7 +55,7 @@ class Practices extends StatelessWidget {
               const EdgeInsets.only(left: 16), // Padding en el lado izquierdo
           child: IconButton(
             onPressed: () {
-              goToInit(context, controller.nameValue);
+              Get.off(()=>const InitialPage());
             },
             icon: const Icon(
               Icons.home_outlined,
@@ -80,7 +80,7 @@ class Practices extends StatelessWidget {
                 right: 8), // Padding para la parte derecha
             child: IconButton(
               onPressed: () {
-                goToTaskManager(context);
+                Get.off(()=>const TaskAdminPage());
               },
               icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
             ),

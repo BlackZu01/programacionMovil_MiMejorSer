@@ -107,7 +107,7 @@ class _Practice6State extends State<Practice6> {
               onPressed: () {
                 controller.choosen(6);
                 task=Task(name:'Leer',goal: '${controller.p6Value} minutos',
-                counter:0,state:false);
+                pts:2,state:false);
                 controller.addpractices(task);
                 Get.off(() => Practices());
               },
