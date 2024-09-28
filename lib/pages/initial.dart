@@ -4,6 +4,7 @@ import 'package:my_app/Controller/accountController.dart';
 import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
 import 'package:my_app/Controller/PracticeClass.dart';
+import 'package:my_app/pages/task_manager.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({Key? key}) : super(key: key);
@@ -26,18 +27,112 @@ class _InitialPage extends State<InitialPage> {
       backgroundColor: const Color(0xFFF5F4FB),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        toolbarHeight: 100,
         elevation: 0,
-        title: Obx(() => Text(
-              'Saludos, ${controlleraccount.nameValue} 👋',
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF6A5ACD),
+                Color(0xFF836FFF)
+              ], // Degradado de colores
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26, // Sombra suave
+                offset: Offset(0, 4),
+                blurRadius: 8,
               ),
-            )),
-        centerTitle: false,
-        actions: const [
-          Icon(Icons.notifications_none, color: Colors.black),
+            ],
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: IconButton(
+            onPressed: () {},
+            icon:
+                const Icon(Icons.home_outlined, size: 30, color: Colors.white),
+            splashRadius: 24, // Radio del efecto de splash
+          ),
+        ),
+        title: const Text(
+          'Objetivos',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.2, // Espaciado entre letras
+          ),
+        ),
+        centerTitle: true, // Centrar el título
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: IconButton(
+              onPressed: () {
+                goToPractices(context);
+              },
+              icon: const Icon(Icons.add_circle_outline,
+                  color: Colors.white, size: 28),
+              splashRadius: 24,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: IconButton(
+              onPressed: () {
+                goToTaskManager(context);
+              },
+              icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
+              splashRadius: 24,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: PopupMenuButton(
+              icon: const Icon(Icons.person_outline,
+                  size: 30, color: Colors.white),
+              offset: const Offset(0, 50),
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Nombre: ${controlleraccount.nameValue}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        'Correo: ${controlleraccount.emailValue}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      const Divider(),
+                      const Text(
+                        'Puntos: 100',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
       body: Padding(

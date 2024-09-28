@@ -15,43 +15,45 @@ import 'package:my_app/pages/PracticesPages/W8.dart';
 import 'package:my_app/pages/initial.dart';
 import 'package:my_app/pages/practices.dart';
 import 'package:my_app/pages/welcome.dart';
+import 'package:my_app/pages/task_manager.dart';
 import 'package:lottie/lottie.dart';
 import 'login.dart';
 import 'signup.dart';
 
 void main() {
-  Get.put(Accountcontroller(),permanent: true);
-  Get.put(Practicecontroller(),permanent:true);
+  Get.put(Accountcontroller(), permanent: true);
+  Get.put(Practicecontroller(), permanent: true);
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     theme: FlexThemeData.light(
-  scheme: FlexScheme.greenM3,
-  surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-  blendLevel: 7,
-  visualDensity: FlexColorScheme.comfortablePlatformDensity,
-  useMaterial3: true,
-  swapLegacyOnMaterial3: true,
-),
-darkTheme: FlexThemeData.dark(
-  scheme: FlexScheme.greenM3,
-  surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-  blendLevel: 13,
-  visualDensity: FlexColorScheme.comfortablePlatformDensity,
-  useMaterial3: true,
-  swapLegacyOnMaterial3: true,
-  // To use the Playground font, add GoogleFonts package and uncomment
-  // fontFamily: GoogleFonts.notoSans().fontFamily,
-),
+      scheme: FlexScheme.greenM3,
+      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+      blendLevel: 7,
+      visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      useMaterial3: true,
+      swapLegacyOnMaterial3: true,
+    ),
+    darkTheme: FlexThemeData.dark(
+      scheme: FlexScheme.greenM3,
+      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+      blendLevel: 13,
+      visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      useMaterial3: true,
+      swapLegacyOnMaterial3: true,
+      // To use the Playground font, add GoogleFonts package and uncomment
+      // fontFamily: GoogleFonts.notoSans().fontFamily,
+    ),
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,,
     initialRoute: '/Initial',
     getPages: [
-      GetPage(name:'/Home',page:() =>  const HomePage()),
-      GetPage(name:'/Login',page: () => LoginPage()),
-      GetPage(name:'/SignUp',page: () => const SignupPage()),
+      GetPage(name: '/Home', page: () => const HomePage()),
+      GetPage(name: '/Login', page: () => LoginPage()),
+      GetPage(name: '/SignUp', page: () => const SignupPage()),
       GetPage(name: '/Welcome', page: () => const QuestionPage()),
       GetPage(name: '/Initial', page: () => const InitialPage()),
+      GetPage(name: '/task_manager', page: () => const TaskAdminPage()),
       GetPage(name: '/Practices', page: () => Practices()),
       GetPage(name:'/Practice1',page:()=> const Practice1()),
       GetPage(name:'/Practice2',page:()=> const Practice2()),
@@ -67,8 +69,6 @@ darkTheme: FlexThemeData.dark(
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class HomePage extends StatelessWidget {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Get.off(()=>LoginPage());
+                          Get.off(() => LoginPage());
                         },
                         shape: RoundedRectangleBorder(
                             side: const BorderSide(color: Colors.black),
@@ -147,7 +147,7 @@ class HomePage extends StatelessWidget {
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
-                            Get.to(()=>const SignupPage());            
+                            Get.to(() => const SignupPage());
                           },
                           color: Colors.yellow,
                           elevation: 0,
