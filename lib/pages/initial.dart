@@ -151,9 +151,10 @@ class _InitialPage extends State<InitialPage> {
                return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Ya casi has completado tus objetivos diarios, sigue así!",
-                    style: TextStyle(
+                   Text(((completedGoals/totalTasks)!=1)?
+                    "Vamos, animo y completa tus tareas diarias":
+                    "Felicidades,has completado tus tareas",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
@@ -164,7 +165,7 @@ class _InitialPage extends State<InitialPage> {
                   LinearProgressIndicator(
                     value: totalTasks > 0 ? completedGoals / totalTasks : 0, // Asegurarse de que no se divida entre 0
                     backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.secondary),
                   ),
                 ],
               );
@@ -266,10 +267,12 @@ class TaskCard extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: task.getstate == false ? Colors.orange[100] : Colors.purple[100],
+            backgroundColor: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
+            : Theme.of(context).colorScheme.secondaryContainer,
             child: Icon(
               task.getstate == false ? Icons.check_box_outline_blank : Icons.check,
-              color: task.getstate == false ? Colors.orange : Colors.purple,
+              color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
+              : Theme.of(context).colorScheme.secondary
             ),
           ),
           const SizedBox(width: 16),
@@ -294,24 +297,26 @@ class TaskCard extends StatelessWidget {
                 return(WP1(name: task.getname));
                 default:
                 return(WP1(name: ""));
-                break;
+                // break;
               }
              
            });
-          }, icon:const Icon(Icons.info,color: Colors.blue,)),
-          const Spacer(),
+          }, icon: Icon(Icons.info,color: Theme.of(context).colorScheme.primary,)),
+          
           GestureDetector(
             onTap: onStatusChange,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
-                color: task.getstate == false ? Colors.orange[100] : Colors.purple[100],
+                color: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
+                : Theme.of(context).colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 task.getstate ? "Completa" : "Pendiente",
                 style: TextStyle(
-                  color: task.getstate == false ? Colors.orange : Colors.purple,
+                  color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
+                  : Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),

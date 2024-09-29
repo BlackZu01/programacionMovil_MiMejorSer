@@ -17,7 +17,8 @@ class _Practice4State extends State<Practice4> {
   final TextEditingController exerciseController = TextEditingController();
   String error = "";
   bool error2 = false;
-
+  final String name="Gimnasio"; 
+  List<String> list=[];
   void repeat() {
     error2 = true;
     setState(() {
@@ -36,14 +37,20 @@ class _Practice4State extends State<Practice4> {
   @override
   Widget build(BuildContext context) {
     Task task;
+    list=controller.p4List;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Ejercicio'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            controller.p4List.clear();
+             if(controller.editingValue){
+               controller.setterList(4, list);
+            Get.off(()=>Practices());
+            controller.changeEditing(false);
+           }else{
+           controller.reset(4);        
             Get.off(() => Practices());
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -138,7 +145,7 @@ class _Practice4State extends State<Practice4> {
             error2
                 ? Text(
                     error,
-                    style: const TextStyle(color: Colors.red, fontSize: 16),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 16),
                   )
                 : const SizedBox.shrink(),
             const SizedBox(height: 20),
@@ -172,11 +179,20 @@ class _Practice4State extends State<Practice4> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                String plural="";
+                 if(controller.p4List.length>1){
+                  plural="s";
+                }
+                 if(controller.p4ChoosenValue){
+                controller.editpractice(name,'${controller.p4List.length} ejercicio$plural');
+                controller.editPracticeList(name, controller.p4List);
+              }else{
                 controller.choosen(4);
-                task=Task(name:'Gimnasio',goal: '${controller.p4List.length} ejercicios',
-                pts:1,state:false);
-                controller.addpractices(task);
-                Get.off(() => Practices());
+              task=Task(name:name,goal:'${controller.p4List.length} ejercicio$plural',pts:2,state:false);
+              task.addList(controller.p4List);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

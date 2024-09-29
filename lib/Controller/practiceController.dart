@@ -12,6 +12,13 @@ class Practicecontroller extends GetxController{
 
   var practiceslist=<Task>[].obs;
 
+ var editing=false.obs;
+
+ bool get editingValue=>editing.value;
+
+ changeEditing(bool value){
+  editing.value=value;
+ }
 
 List<Task> get getpracticeslist =>practiceslist;
 
@@ -21,6 +28,8 @@ List<Task> get getpracticeslist =>practiceslist;
 
   void removepractice(String value){
     practiceslist.removeWhere((practice)=>practice.name==value);
+    nochoosen(indexTask(value));
+    
   }
 
 Task getpractice(String value){
@@ -40,26 +49,55 @@ addcounter(String name){
   }
 }
 
+editpractice(String name,String goal){
+    for (var practice in practiceslist) {
+    if (practice.getname==name){
+      practice.goal=goal;
+    }
+  }
+}
+
+editPracticeList(String name,List<String> l){
+    for (var practice in practiceslist) {
+    if (practice.getname==name){
+      practice.list.value=l;
+    }
+  }
+}
+
+int indexTask(String name){
+  switch(name){
+    case 'Tomar agua':return 1;
+    case 'Alimentacion sana':return 2;
+    case 'Caminar/Trotar':return 3;
+    case 'Gimnasio':return 4;
+    case 'Estudiar':return 5;
+    case 'Leer':return 6;
+    case 'Pausa activa':return 7;
+    case 'Tomar una siesta':return 8;
+    case 'Tiempo fuera de las pantallas':return 9;
+    case 'Actividad/Hobby':return 10;
+    default:0;
+  }
+  return 0;
+}
+
   // practices1  
   var p1=7.obs; //Valor meta
   var p1inpractice=0.obs; //Contador
   var p1choosen=false.obs; //Valor para verificar si ha sido eligido
-  var p1finish=false.obs; //Valor para verificar si una practica ha sido terminada
 
   int get  p1Value=>p1.value; 
   int get p1inpracticeValue=>p8inpractice.value; 
   bool get p1choosenValue=>p1choosen.value; 
-  bool get p1finishValue=>p1finish.value;
 
   // practices 2
  var p2 = <String>[].obs;
  var p2inpractice=<bool>[].obs;
  var p2choosen=false.obs;
- var p2finish=false.obs;
 
  List<String> get p2List =>p2;
  bool get p2ChoosenValue=>p2choosen.value;
- bool get p2FinishValue=>p2finish.value;
 
  //  practice3
   var p3=10.obs;
@@ -70,62 +108,53 @@ addcounter(String name){
   int get  p3Value=>p3.value;
   int get p3inpracticeValue=>p3inpractice.value;
   bool get p3choosenValue=>p3choosen.value;
-  bool get p3finishValue=>p3finish.value;
 
    // practices 4
  var p4 = <String>[].obs;
  var p4inpractice=<bool>[].obs;
  var p4choosen=false.obs;
- var p4finish=false.obs;
 
  List<String> get p4List =>p4;
  bool get p4ChoosenValue=>p4choosen.value;
- bool get p4FinishValue=>p4finish.value;
 
   // practices 5
  var p5 = <String,int>{}.obs;
  var p5inpractice=<bool>[].obs;
  var p5choosen=false.obs;
- var p5finish=false.obs;
+ var listp5=<String>[].obs;
 
  Map<String,int> get p5List =>p5;
+ List<String> get getListp5=>listp5;
  bool get p5ChoosenValue=>p5choosen.value;
- bool get p5FinishValue=>p5finish.value;
 
 
 //  practice6
   var p6=10.obs;
   var p6inpractice=0.obs;
   var p6choosen=false.obs;
-  var p6finish=false.obs;
 
   int get  p6Value=>p6.value;
   int get p6inpracticeValue=>p6inpractice.value;
   bool get p6choosenValue=>p6choosen.value;
-  bool get p6finishValue=>p6finish.value;
 
  //practices7
-  var p7=20.obs;
+  var p7=1.obs;
   var p7inpractice=0.obs;
   var p7choosen=false.obs;
-  var p7finish=false.obs;
 
   int get  p7Value=>p7.value;
   int get p7inpracticeValue=>p7inpractice.value;
   bool get p7choosenValue=>p7choosen.value;
-  bool get p7finishValue=>p7finish.value;
 
 
   //practice8
   var p8=20.obs;
   var p8inpractice=0.obs;
   var p8choosen=false.obs;
-  var p8finish=false.obs;
 
   int get  p8Value=>p8.value;
   int get p8inpracticeValue=>p8inpractice.value;
   bool get p8choosenValue=>p8choosen.value;
-  bool get p8finishValue=>p8finish.value;
 
   increment(int index){
     switch(index){
@@ -192,8 +221,14 @@ addcounter(String name){
       case 1:
       p1.value=7;
       break;
+      case 2:p2List.clear();
+      break;
       case 3:
       p3.value=10;
+      break;
+      case 4:p4List.clear();
+      break;
+      case 5:p5List.clear();
       break;
       case 6:
       p6.value=10;
@@ -217,6 +252,7 @@ addcounter(String name){
       p4.add(value);
       break;
       case 5:
+      listp5.add(value);
     }
    }
 
@@ -267,6 +303,8 @@ addcounter(String name){
       break;
       case 6:p6choosen.value=true;
       break;
+      case 7:p7choosen.value=true;
+      break;
       case 8:p8choosen.value=true;
       break;
     }
@@ -287,23 +325,42 @@ addcounter(String name){
       break;
       case 6:p6choosen.value=false;
       break;
+      case 7:p7choosen.value=false;
+      break;
       case 8:p8choosen.value=false;
       break;
 
     }
+    reset(index);
     npractices--;
   }
 
+ setterCounter(int index,int counter){
+    switch(index){
+      case 1:p1.value=counter; 
+      break;
+      case 3:p3.value=counter; 
+      break;
+      case 6:p6.value=counter; 
+      break;
+      case 7:p7.value=counter; 
+      break;
+      case 8:p8.value=counter; 
+      break;
+    }
+ }
 
- void resetpractice(){
-    p1inpractice.value=0;
-    p1finish.value=false;
-
-    p4.clear();
-    p4finish.value=false;
-
-    
+  setterList(int index,List<String> list){
+    switch(index){
+     case 2:
+     p2.value=list;
+     break;
+      case 4:
+     p4.value=list;
+     break;
+    }
   }
+
 
   
 

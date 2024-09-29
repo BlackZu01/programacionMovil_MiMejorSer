@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
 import 'package:my_app/Controller/practiceController.dart';
+import 'package:my_app/pages/edit.dart';
 import 'package:my_app/pages/initial.dart';
 import 'package:my_app/pages/practices.dart';
 
@@ -17,15 +18,12 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
   final Practicecontroller controllerPractice = Get.find();
   int completedGoals = 0;
 
-  void _editTask(int index) {
-    // Lógica para editar tarea
+  void _editTask(String name) {
+    controllerPractice.changeEditing(true);
+    route(name);
   }
 
-  void _deleteTask(int index) {
-    setState(() {
-      controllerPractice.getpracticeslist.removeAt(index);
-    });
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -170,11 +168,11 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                 children: [
                                   IconButton(
                                     icon: const Icon(Icons.edit, color: Colors.teal),
-                                    onPressed: () => _editTask(index),
+                                    onPressed: () => _editTask(tasks[index].getname),
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.delete, color: Colors.red),
-                                    onPressed: () => _deleteTask(index),
+                                    icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+                                    onPressed: () => controllerPractice.removepractice(tasks[index].getname),
                                   ),
                                   
                                 ],

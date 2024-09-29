@@ -14,18 +14,26 @@ class Practice3 extends StatefulWidget {
 
 class _Practice3State extends State<Practice3> {
   Practicecontroller controller = Get.find();
+ final String name="Caminar/Trotar";
+ int n=0;
 
   @override
   Widget build(BuildContext context) {
     Task task;
+    n=controller.p3Value;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Caminar o Trote'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            Get.off(() => Practices());
-            controller.reset(3);
+            if(controller.editingValue){
+            Get.off(()=>Practices());
+            controller.setterCounter(3, n);
+            controller.changeEditing(false);
+           }else{
+            Get.off(()=>Practices());
+           controller.reset(3);
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -105,11 +113,14 @@ class _Practice3State extends State<Practice3> {
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
+               if(controller.p3choosenValue){
+                controller.editpractice(name,'${controller.p3Value} minutos');
+              }else{
                 controller.choosen(3);
-                task=Task(name:'Caminar/Trotar',goal:'${controller.p3Value} minutos',
-                pts: 3,state:false);
-                controller.addpractices(task);
-                Get.off(() => Practices());
+              task=Task(name:name,goal:'${controller.p3Value} minutos',pts:2,state:false);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

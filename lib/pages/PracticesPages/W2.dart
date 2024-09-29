@@ -17,7 +17,8 @@ class _Practice2State extends State<Practice2> {
   final TextEditingController foodController = TextEditingController();
   String error = "";
   bool error2 = false;
-
+  final String name="Alimentación sana";
+  List<String> list=[];
   void repeat() {
     error2 = true;
     setState(() {
@@ -36,14 +37,20 @@ class _Practice2State extends State<Practice2> {
   @override
   Widget build(BuildContext context) {
     Task task;
+  list=controller.p2List;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Comida Saludable'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            controller.p2List.clear();
-            Get.off(() => Practices());
+             if(controller.editingValue){
+            Get.off(()=>Practices());
+            controller.setterList(2, list);
+            controller.changeEditing(false);
+           }else{
+            controller.reset(2);
+            Get.off(()=>Practices());
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -141,7 +148,7 @@ class _Practice2State extends State<Practice2> {
             error2
                 ? Text(
                     error,
-                    style: const TextStyle(color: Colors.red, fontSize: 16),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 16),
                   )
                 : const SizedBox.shrink(),
             const SizedBox(height: 20),
@@ -175,11 +182,20 @@ class _Practice2State extends State<Practice2> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                String plural="";
+                 if(controller.p2List.length>1){
+                  plural="s";
+                }
+               if(controller.p2ChoosenValue){
+                controller.editpractice(name,'${controller.p2List.length} alimento$plural');
+                controller.editPracticeList(name, controller.p2List);
+              }else{
                 controller.choosen(2);
-                task=Task(name:'Alimentación sana',goal:'${controller.p2List.length} ',
-                pts:1,state:false);
-                controller.addpractices(task);
-                Get.off(() => Practices());
+              task=Task(name:name,goal:'${controller.p2List.length} alimentos$plural',pts:2,state:false);
+              task.addList(controller.p2List);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

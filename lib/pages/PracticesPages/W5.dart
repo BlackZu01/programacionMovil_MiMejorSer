@@ -19,7 +19,7 @@ class _Practice5State extends State<Practice5> {
   bool error2 = false;
   int hours = 1;
   int totalhours=0;
- 
+  final String name="Estudiar";
 
   void repeat() {
     setState(() {
@@ -64,12 +64,16 @@ class _Practice5State extends State<Practice5> {
     Task task;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Estudio'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            controller.p5List.clear();
-            Get.off(() => Practices());
+           if(controller.editingValue){
+            Get.off(()=>Practices());
+            controller.changeEditing(false);
+           }else{
+            Get.off(()=>Practices());
+           controller.reset(5);
+           } 
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -188,7 +192,7 @@ class _Practice5State extends State<Practice5> {
             error2
                 ? Text(
                     error,
-                    style: const TextStyle(color: Colors.red, fontSize: 16),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 16),
                   )
                 : const SizedBox.shrink(),
             const SizedBox(height: 20),
@@ -198,6 +202,8 @@ class _Practice5State extends State<Practice5> {
                     itemBuilder: (context, index) {
                       String subject = controller.p5.keys.toList()[index];
                       int hours = controller.p5[subject]!;
+                      String text="$subject - $hours horas";
+                      controller.add(5,text);
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         padding: const EdgeInsets.all(10),
@@ -209,7 +215,7 @@ class _Practice5State extends State<Practice5> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          title: Text('$subject - $hours horas'),
+                          title: Text(text),
                           trailing: IconButton(
                             icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
                             onPressed: () {
@@ -224,11 +230,20 @@ class _Practice5State extends State<Practice5> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                controller.choosen(5); 
-                task=Task(name:'Estudiar',goal: '${controller.p5List.length} Temas',
-                pts:1,state:false);
-                controller.addpractices(task);
-                Get.off(() => Practices());
+                String plural="";
+                if(controller.p5List.length>1){
+                  plural="s";
+                }
+                if(controller.p5ChoosenValue){
+                controller.editpractice(name,'${controller.p5List.length} tema$plural');
+                controller.editPracticeList(name, controller.listp5);
+              }else{
+                controller.choosen(5);
+              task=Task(name:name,goal:'${controller.listp5.length} temas$plural',pts:2,state:false);
+              task.addList(controller.listp5);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

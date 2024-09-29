@@ -13,19 +13,26 @@ class Practice1 extends StatefulWidget {
 
 class _Practice1State extends State<Practice1> {
   Practicecontroller controller = Get.find();
-
+  final String name="Tomar agua";
+  int n=0;
  
   @override
   Widget build(BuildContext context) {
     Task task;
+    n=controller.p1Value;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Agua'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {    
-           Get.off(()=>Practices());
+           if(controller.editingValue){
+            Get.off(()=>Practices());
+            controller.setterCounter(1, n);
+            controller.changeEditing(false);
+           }else{
+            Get.off(()=>Practices());
            controller.reset(1);
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -101,10 +108,13 @@ class _Practice1State extends State<Practice1> {
             // Botón de aceptar
             ElevatedButton(
               onPressed: (){
-              controller.choosen(1);
-             task=Task(name:'Tomar agua',goal:'${controller.p1Value} vasos de agua',pts:2,state:false);
+              if(controller.p1choosenValue){
+                controller.editpractice(name,'${controller.p1Value} vasos');
+              }else{
+                controller.choosen(1);
+              task=Task(name:name,goal:'${controller.p1Value} vasos',pts:2,state:false);
               controller.addpractices(task);
-              // debugPrint('${controller.getpracticeslist}');
+              }
               Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(

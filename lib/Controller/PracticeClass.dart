@@ -9,6 +9,8 @@ class Task {
   int pts;
   var counter=0.obs;
   bool state;
+  var list = <String>[].obs;
+  
 
   Task({required this.name, required this.goal,required this.pts,required this.state});
 
@@ -16,21 +18,12 @@ class Task {
   String get getgoal=>goal;
   int get getcount=>counter.value;
   bool get getstate=>state;
+  List<String> get getList =>list;
+
+
+  void addList(List<String> l){
+   list.value=l;
+  }
+
 }
 
-// void main() {
-//   // Lista de objetos Practices
-//   List<Practices> practicesList = [
-//     Practices(name: 'Gym', meta: '3 veces por semana', estado: true),
-//     Practices(name: 'Estudiar', meta: '2 horas al día', estado: true),
-//     Practices(name: 'Tomar agua', meta: '8 vasos al día', estado: false),
-//   ];
-
-//   // Eliminar objeto de la lista donde el nombre es 'Estudiar'
-//   practicesList.removeWhere((practice) => practice.name == 'Estudiar');
-
-//   // Imprimir la lista actualizada
-//   practicesList.forEach((practice) {
-//     print('Name: ${practice.name}, Meta: ${practice.meta}, Estado: ${practice.estado}');
-//   });
-// }
