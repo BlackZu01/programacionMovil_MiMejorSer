@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/Controller/practiceController.dart';
+import 'package:my_app/pages/PracticeWidgets/WP1.dart';
 import 'package:my_app/pages/practices.dart';
+import 'package:my_app/Controller/PracticeClass.dart';
 import 'package:my_app/pages/task_manager.dart';
 
 class InitialPage extends StatefulWidget {
@@ -12,19 +15,15 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPage extends State<InitialPage> {
+  final Accountcontroller controlleraccount = Get.find();
+  final Practicecontroller controllerp = Get.find();
   int completedGoals = 0;
-  int totalGoals = 4;
-
-  List<Task> tasks = [
-    Task(name: 'EJERCICIO', duration: '30 minutes', status: 'TO DO'),
-    Task(name: 'LEER', duration: '20 pages', status: 'TO DO'),
-    Task(name: 'ESTUDIAR', duration: '30 minutes', status: 'TO DO'),
-    Task(name: 'TOMAR AGUA', duration: '2 minutes', status: 'TO DO')
-  ];
-  final Accountcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    
+   
+     // Obtener el número total de tareas
     return Scaffold(
       backgroundColor: const Color(0xFFF5F4FB),
       appBar: AppBar(
@@ -32,16 +31,15 @@ class _InitialPage extends State<InitialPage> {
         toolbarHeight: 100,
         elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF6A5ACD),
-                Color(0xFF836FFF)
+               Colors.greenAccent.shade200, Colors.tealAccent.shade400,
               ], // Degradado de colores
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26, // Sombra suave
                 offset: Offset(0, 4),
@@ -59,22 +57,13 @@ class _InitialPage extends State<InitialPage> {
             splashRadius: 24, // Radio del efecto de splash
           ),
         ),
-        title: const Text(
-          'Objetivos',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1.2, // Espaciado entre letras
-          ),
-        ),
         centerTitle: true, // Centrar el título
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
               onPressed: () {
-                goToPractices(context);
+                Get.off(()=> Practices());
               },
               icon: const Icon(Icons.add_circle_outline,
                   color: Colors.white, size: 28),
@@ -85,7 +74,7 @@ class _InitialPage extends State<InitialPage> {
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
               onPressed: () {
-                goToTaskManager(context);
+                Get.off(()=>const TaskAdminPage());
               },
               icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
               splashRadius: 24,
@@ -107,7 +96,7 @@ class _InitialPage extends State<InitialPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Nombre: ${controller.nameValue}',
+                        'Nombre: ${controlleraccount.nameValue}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -115,7 +104,7 @@ class _InitialPage extends State<InitialPage> {
                         ),
                       ),
                       Text(
-                        'Correo: ${controller.emailValue}',
+                        'Correo: ${controlleraccount.emailValue}',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey.shade700,
@@ -156,28 +145,31 @@ class _InitialPage extends State<InitialPage> {
                   ),
                 ],
               ),
-              child: Column(
+              child:
+              //  int totalTasks = controllerp.getnpractices;
+              Obx(() { int totalTasks = controllerp.getnpractices;
+               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Ya casi has completado tus objetivos diarios, sigue así!",
-                    style: TextStyle(
+                   Text(((completedGoals/totalTasks)!=1)?
+                    "Vamos, animo y completa tus tareas diarias":
+                    "Felicidades,has completado tus tareas",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text('$completedGoals/$totalGoals objetivos completados'),
+                  Text('$completedGoals/$totalTasks objetivos completados'),
                   const SizedBox(height: 10),
                   LinearProgressIndicator(
-                    value:
-                        completedGoals / totalGoals, // Progreso en la barrita
+                    value: totalTasks > 0 ? completedGoals / totalTasks : 0, // Asegurarse de que no se divida entre 0
                     backgroundColor: Colors.grey[300],
-                    valueColor:
-                        const AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.secondary),
                   ),
                 ],
-              ),
+              );
+              }),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -189,85 +181,64 @@ class _InitialPage extends State<InitialPage> {
             ),
             const SizedBox(height: 20),
 
-            // Generar la lista de tareas (Por corregir)
+            // Mostrar tareas o mensaje de que no hay tareas seleccionadas
             Expanded(
-              child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return TaskCard(
-                    task: tasks[index],
-                    onStatusChange: () {
-                      setState(() {
-                        if (tasks[index].status == 'TO DO') {
-                          tasks[index].status = 'COMPLETE';
-                          completedGoals++;
-                        } else {
-                          tasks[index].status = 'TO DO';
-                          completedGoals--;
-                        }
-                      });
-                    },
-                  );
-                },
-              ),
+              child: Obx((){
+                var tasks = controllerp.getpracticeslist;
+                return tasks.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'No has seleccionado tareas.',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  : Obx(()=>ListView.builder(
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
+                        return TaskCard(
+                          task: tasks[index],
+                          onStatusChange: () {
+                            setState(() {
+                              if (tasks[index].state == false) {
+                                tasks[index].state = true;
+                                completedGoals++;
+                              } else {
+                                tasks[index].state = false;
+                                completedGoals--;
+                              }
+                            });
+                          },
+                        );
+                      },
+                    ));
+              })
             ),
             Center(
-                child: ElevatedButton(
-              onPressed: () {
-                Get.off(() => Practices());
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context)
-                    .colorScheme
-                    .inversePrimary, // Color de fondo
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(30.0), // Bordes redondeados
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.to(() => Practices());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 ),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 30, vertical: 15), // Espaciado
+                child: const Text(
+                  'Añadir Practicas',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
-              child: const Text(
-                'Añadir Practicas',
-                style: TextStyle(fontSize: 18), // Estilo del texto
-              ),
-            ))
+            ),
           ],
         ),
       ),
     );
   }
-}
-
-void goToInit(BuildContext context, String text) {
-  Get.off(() => const InitialPage());
-}
-
-void goToPractices(BuildContext context) {
-  Get.off(() => Practices());
-}
-
-void goToTaskManager(BuildContext context) {
-  Get.off(() => const TaskAdminPage());
-}
-
-// Modelo de tarea booleano
-class Task {
-  String name;
-  String duration;
-  String status;
-
-  Task({required this.name, required this.duration, required this.status});
-}
-
-// Modelo de tarea con contadores
-class TaskCounter {
-  String name;
-  int numberTimes;
-  String status;
-
-  TaskCounter(
-      {required this.name, required this.numberTimes, required this.status});
 }
 
 // Widget TaskCard
@@ -296,14 +267,12 @@ class TaskCard extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: task.status == 'TO DO'
-                ? Colors.orange[100]
-                : Colors.purple[100],
+            backgroundColor: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
+            : Theme.of(context).colorScheme.secondaryContainer,
             child: Icon(
-              task.status == 'TO DO'
-                  ? Icons.check_box_outline_blank
-                  : Icons.check,
-              color: task.status == 'TO DO' ? Colors.orange : Colors.purple,
+              task.getstate == false ? Icons.check_box_outline_blank : Icons.check,
+              color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
+              : Theme.of(context).colorScheme.secondary
             ),
           ),
           const SizedBox(width: 16),
@@ -311,30 +280,43 @@ class TaskCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                task.name,
+                task.getname,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              Text(task.duration),
+              Text(task.getgoal),
             ],
           ),
           const Spacer(),
+          IconButton(onPressed: (){
+           showDialog(context: context, builder: (BuildContext context){
+                switch(task.getname){
+                case 'Tomar agua':
+                return(WP1(name: task.getname));
+                default:
+                return(WP1(name: ""));
+                // break;
+              }
+             
+           });
+          }, icon: Icon(Icons.info,color: Theme.of(context).colorScheme.primary,)),
+          
           GestureDetector(
-            onTap: onStatusChange, // Cambia el estado de la tarea
+            onTap: onStatusChange,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
-                color: task.status == 'TO DO'
-                    ? Colors.orange[100]
-                    : Colors.purple[100],
+                color: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
+                : Theme.of(context).colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                task.status,
+                task.getstate ? "Completa" : "Pendiente",
                 style: TextStyle(
-                  color: task.status == 'TO DO' ? Colors.orange : Colors.purple,
+                  color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
+                  : Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -3,34 +3,27 @@ import 'package:get/get.dart';
 import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
 
-class Practice5 extends StatefulWidget {
-  const Practice5({super.key});
+import '../../Controller/PracticeClass.dart';
+
+class Practice4 extends StatefulWidget {
+  const Practice4({super.key});
 
   @override
-  _Practice5State createState() => _Practice5State();
+  _Practice4State createState() => _Practice4State();
 }
 
-class _Practice5State extends State<Practice5> {
+class _Practice4State extends State<Practice4> {
   Practicecontroller controller = Get.find();
   final TextEditingController exerciseController = TextEditingController();
   String error = "";
   bool error2 = false;
-  int hours = 1;
-  int totalhours=0;
- 
-
+  final String name="Gimnasio"; 
+  List<String> list=[];
   void repeat() {
+    error2 = true;
     setState(() {
       error2 = true;
-      error = "¡Ya has agregado este tema o asignatura para estudiar!";
-    });
-  }
-
-  void passhours(){
-    error2=true;
-    setState(() {
-      error2=true;
-      error = "¡Estudiar mas de 12 horas es excesivo. Replantea tu horario!";
+      error = "¡Este ejercicio ya ha sido agregado!";
     });
   }
 
@@ -41,32 +34,23 @@ class _Practice5State extends State<Practice5> {
     });
   }
 
-  void increaseHours() {
-    setState(() {
-      if(hours<12){
-       hours++;
-      }
-    });
-  }
-
-  void decreaseHours() {
-    if (hours > 1) {
-      setState(() {
-        hours--;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    Task task;
+    list=controller.p4List;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Estudio'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            controller.p5List.clear();
+             if(controller.editingValue){
+               controller.setterList(4, list);
+            Get.off(()=>Practices());
+            controller.changeEditing(false);
+           }else{
+           controller.reset(4);        
             Get.off(() => Practices());
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -81,7 +65,7 @@ class _Practice5State extends State<Practice5> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Registro de Estudios',
+              'Registro de Ejercicios',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -89,7 +73,7 @@ class _Practice5State extends State<Practice5> {
               ),
             ),
             Text(
-              '(2 pts por cada tema o asignatura)',
+              '(1 pt por cada ejercicio)',
               style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary
@@ -97,16 +81,18 @@ class _Practice5State extends State<Practice5> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Escribe que asignatura o tema deseas estudiar y cuantas horas deseas estudiar eso',
+              'Escribe el tipo de ejercicio que deseas realizar y añádelo a la lista.',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            Align(
+            // Texto "Tipo de ejercicio" sobre el campo de entrada
+             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Asignatura o tema que desea estudiar',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary),
+                'Tipo de ejercicio', // Texto encima del campo de entrada
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
+                color:Theme.of(context).colorScheme.primary),
               ),
             ),
             const SizedBox(height: 5),
@@ -116,13 +102,13 @@ class _Practice5State extends State<Practice5> {
                   child: TextField(
                     controller: exerciseController,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer, // Mejora la visibilidad del texto
                     ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'Ej: Calculo, Ciencia, Ingles',
+                      hintText: 'Ej: Barras, Levantamiento de pesas...',
                       hintStyle: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
                       ),
@@ -135,20 +121,12 @@ class _Practice5State extends State<Practice5> {
                 ElevatedButton(
                   onPressed: () {
                     if (exerciseController.text.isNotEmpty) {
-                      if (controller.p5.containsKey(exerciseController.text)) {
+                      if (controller.p4.contains(exerciseController.text)) {
                         repeat();
                       } else {
-                        if(totalhours+hours>=13){
-                          passhours();
-                        }else{
-                          controller.p5modify(exerciseController.text, hours, 1); 
-                          totalhours+=hours;
+                        controller.add(4, exerciseController.text);
                         exerciseController.clear();
                         solve();
-                        setState(() {
-                          hours = 1; 
-                        });
-                        }
                       }
                     }
                   },
@@ -164,37 +142,17 @@ class _Practice5State extends State<Practice5> {
               ],
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: decreaseHours,
-                  icon: Icon(Icons.remove, color: Theme.of(context).colorScheme.primary),
-                ),
-                Text(
-                  '$hours horas',
-                  style: TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.primary),
-                ),
-                IconButton(
-                  onPressed: increaseHours,
-                  icon: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
             error2
                 ? Text(
                     error,
-                    style: const TextStyle(color: Colors.red, fontSize: 16),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 16),
                   )
                 : const SizedBox.shrink(),
             const SizedBox(height: 20),
             Expanded(
               child: Obx(() => ListView.builder(
-                    itemCount: controller.p5.length,
+                    itemCount: controller.p4.length,
                     itemBuilder: (context, index) {
-                      String subject = controller.p5.keys.toList()[index];
-                      int hours = controller.p5[subject]!;
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         padding: const EdgeInsets.all(10),
@@ -206,11 +164,11 @@ class _Practice5State extends State<Practice5> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          title: Text('$subject - $hours horas'),
+                          title: Text(controller.p4[index]),
                           trailing: IconButton(
                             icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
                             onPressed: () {
-                             controller.p5modify(subject, 0, 0); // Elimina el elemento
+                              controller.remove(4, index);
                             },
                           ),
                         ),
@@ -221,8 +179,20 @@ class _Practice5State extends State<Practice5> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                controller.choosen(5); // Guardar el seguimiento de estudio
-                Get.off(() => Practices());
+                String plural="";
+                 if(controller.p4List.length>1){
+                  plural="s";
+                }
+                 if(controller.p4ChoosenValue){
+                controller.editpractice(name,'${controller.p4List.length} ejercicio$plural');
+                controller.editPracticeList(name, controller.p4List);
+              }else{
+                controller.choosen(4);
+              task=Task(name:name,goal:'${controller.p4List.length} ejercicio$plural',pts:2,state:false);
+              task.addList(controller.p4List);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -239,3 +209,4 @@ class _Practice5State extends State<Practice5> {
     );
   }
 }
+

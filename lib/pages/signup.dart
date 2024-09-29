@@ -27,7 +27,7 @@ class _SignupPageState extends State<SignupPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         leading: IconButton(
           onPressed: () {
            Get.off(()=>HomePage());
@@ -49,10 +49,11 @@ class _SignupPageState extends State<SignupPage> {
                   children: <Widget>[
                     FadeInUp(
                       duration: const Duration(milliseconds: 1000),
-                      child: const Text(
+                      child: Text(
                         "Registrarse",
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                            fontSize: 30, fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -60,7 +61,7 @@ class _SignupPageState extends State<SignupPage> {
                       duration: const Duration(milliseconds: 1200),
                       child: Text(
                         "Crea una cuenta nueva",
-                        style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                        style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
                   ],
@@ -160,15 +161,16 @@ class _SignupPageState extends State<SignupPage> {
                          
                         }
                       },
-                      color: Colors.greenAccent,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Registrarse",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
+                            fontWeight: FontWeight.w600, fontSize: 18,
+                            color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
                   ),
@@ -206,8 +208,8 @@ class _SignupPageState extends State<SignupPage> {
       children: <Widget>[
         Text(
           label,
-          style: const TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.primary),
         ),
         const SizedBox(height: 5),
         TextFormField(
@@ -217,10 +219,10 @@ class _SignupPageState extends State<SignupPage> {
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
             ),
           ),
           validator: validator, // Añadir validación

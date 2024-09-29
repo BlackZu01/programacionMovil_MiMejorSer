@@ -3,26 +3,37 @@ import 'package:get/get.dart';
 import 'package:my_app/Controller/practiceController.dart';
 import 'package:my_app/pages/practices.dart';
 
-class Practice8 extends StatefulWidget {
-  const Practice8({super.key});
+import '../../Controller/PracticeClass.dart';
+
+class Practice7 extends StatefulWidget {
+  const Practice7({super.key});
 
   @override
-  _Practice8State createState() => _Practice8State();
+  _Practice7State createState() => _Practice7State();
 }
 
-class _Practice8State extends State<Practice8> {
+class _Practice7State extends State<Practice7> {
   Practicecontroller controller = Get.find();
 
+final String name="Pausa activa";
+int n=0;
   @override
   Widget build(BuildContext context) {
+    n=controller.p7Value;
+    Task task;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seguimiento de Siesta'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            controller.reset(8);
-            Get.off(() => Practices());
+           if(controller.editingValue){
+            Get.off(()=>Practices());
+            controller.setterCounter(7, n);
+            controller.changeEditing(false);
+           }else{
+            Get.off(()=>Practices());
+           controller.reset(7);
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -37,7 +48,7 @@ class _Practice8State extends State<Practice8> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Tomar una Siesta',
+              'Tomar Pausas Saludables',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -48,12 +59,12 @@ class _Practice8State extends State<Practice8> {
               '(2 pts)',
               style: TextStyle(
                 fontSize: 18,
-                color: Theme.of(context).colorScheme.primary
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Establezca como meta la cantidad de tiempo que desea dormir hoy para una siesta reparadora.',
+              'Establezca cuántas pausas saludables desea realizar hoy para mejorar su bienestar. Se recomienda pausas entre 10 y 15 minutos',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -63,7 +74,9 @@ class _Practice8State extends State<Practice8> {
               children: [
                 // Botón de decremento
                 ElevatedButton(
-                  onPressed:() {controller.decrement(8);}, // método para reducir tiempo
+                  onPressed: () {
+                    controller.decrement(7);
+                  }, // método para reducir número de pausas
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -76,13 +89,15 @@ class _Practice8State extends State<Practice8> {
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p8Value} min', // valor del tiempo en minutos
+                  '${controller.p7Value}', // valor del número de pausas
                   style: const TextStyle(fontSize: 40),
                 )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
-                  onPressed: (){controller.increment(8);}, 
+                  onPressed: () {
+                    controller.increment(7);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -98,8 +113,14 @@ class _Practice8State extends State<Practice8> {
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-                controller.choosen(8);
-                Get.off(() => Practices());
+                 if(controller.p7choosenValue){
+                controller.editpractice(name,'${controller.p7Value} pausas');
+              }else{
+                controller.choosen(7);
+              task=Task(name:name,goal:'${controller.p7Value} pausas',pts:2,state:false);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

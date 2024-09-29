@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/Controller/practiceController.dart';
+import 'package:my_app/pages/edit.dart';
 import 'package:my_app/pages/initial.dart';
+import 'package:my_app/pages/practices.dart';
 
 class TaskAdminPage extends StatefulWidget {
   const TaskAdminPage({Key? key}) : super(key: key);
@@ -12,36 +14,16 @@ class TaskAdminPage extends StatefulWidget {
 }
 
 class _TaskAdminPageState extends State<TaskAdminPage> {
-  final Accountcontroller controller = Get.find();
+  final Accountcontroller controllerAccount = Get.find();
+  final Practicecontroller controllerPractice = Get.find();
+  int completedGoals = 0;
 
-  List<Task> tasks = [
-    Task(name: 'EJERCICIO', duration: '30 minutos'),
-    Task(name: 'LEER', duration: '20 páginas'),
-    Task(name: 'ESTUDIAR', duration: '30 minutos'),
-    Task(name: 'TOMAR AGUA', duration: '2 minutos'),
-  ];
-
-  void _addTask() {
-    // Lógica para añadir tarea
+  void _editTask(String name) {
+    controllerPractice.changeEditing(true);
+    route(name);
   }
 
-  void _editTask(int index) {
-    // Lógica para editar tarea
-  }
-
-  void _deleteTask(int index) {
-    setState(() {
-      tasks.removeAt(index);
-    });
-  }
-
-  void goToInit(BuildContext context, String text) {
-    Get.off(() => const InitialPage());
-  }
-
-  void goToPractices(BuildContext context) {
-    Get.off(() => Practices());
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +46,7 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
           padding: const EdgeInsets.only(left: 12.0), // Padding a la izquierda
           child: IconButton(
             onPressed: () {
-              goToInit(context, controller.nameValue);
+              Get.off(() => const InitialPage()); // Regresar a la página inicial
             },
             icon: const Icon(
               Icons.home_outlined,
@@ -78,21 +60,22 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
             padding: const EdgeInsets.only(right: 12.0), // Padding a la derecha
             child: IconButton(
               onPressed: () {
-                goToPractices(context);
+                Get.to(() => Practices()); // Ir a la página de prácticas
               },
-              icon: const Icon(Icons.add_circle_outline,
-                  color: Colors.white, size: 30),
+              icon: const Icon(Icons.add_circle_outline, color: Colors.white, size: 30),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 12.0), // Padding a la derecha
+            padding: const EdgeInsets.only(right: 8),
             child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.list_alt, color: Colors.white, size: 30),
+              onPressed: () {
+              },
+              icon: const Icon(Icons.list_alt, color: Color.fromARGB(255, 206, 204, 204), size: 28),
+              splashRadius: 24,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 12.0), // Padding a la derecha
+            padding: const EdgeInsets.only(right: 16),
             child: PopupMenuButton(
               icon: const Icon(Icons.person_outline,
                   size: 30, color: Colors.white),
@@ -107,7 +90,7 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Nombre: ${controller.nameValue}',
+                        'Nombre: ${controllerAccount.nameValue}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -115,7 +98,7 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                         ),
                       ),
                       Text(
-                        'Correo: ${controller.emailValue}',
+                        'Correo: ${controllerAccount.emailValue}',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey.shade700,
@@ -134,12 +117,13 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Administrar Tareas Diarias',
@@ -151,59 +135,60 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: tasks.isEmpty
-                  ? const Center(
-                      child: Text(
-                        'No hay tareas. Añade una nueva tarea.',
-                        style: TextStyle(fontSize: 18, color: Colors.black54),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            title: Text(
-                              tasks[index].name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.teal,
+              child: Obx(() {
+                var tasks = controllerPractice.getpracticeslist;
+                return tasks.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'No hay tareas. Añade una nueva tarea.',
+                          style: TextStyle(fontSize: 18, color: Colors.black54),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: tasks.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                              title: Text(
+                                tasks[index].getname,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal,
+                                ),
+                              ),
+                              subtitle: Text(tasks[index].getgoal),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.edit, color: Colors.teal),
+                                    onPressed: () => _editTask(tasks[index].getname),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+                                    onPressed: () => controllerPractice.removepractice(tasks[index].getname),
+                                  ),
+                                  
+                                ],
                               ),
                             ),
-                            subtitle: Text(tasks[index].duration),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit,
-                                      color: Colors.teal),
-                                  onPressed: () => _editTask(index),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red),
-                                  onPressed: () => _deleteTask(index),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                          );
+                        },
+                      );
+              }),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          goToPractices(context);
+          Get.to(() => Practices()); // Ir a la página de añadir prácticas
         },
         backgroundColor: Colors.teal,
         child: const Icon(Icons.add, color: Colors.white),
@@ -212,9 +197,5 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
   }
 }
 
-class Task {
-  String name;
-  String duration;
 
-  Task({required this.name, required this.duration});
-}
+

@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         leading: IconButton(
           onPressed: () {
            Get.off(()=>HomePage());
@@ -56,10 +56,11 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       FadeInUp(
                           duration: const Duration(milliseconds: 1000),
-                          child: const Text(
+                          child: Text(
                             "Iniciar sesión",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: 30, fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary),
                           )),
                       const SizedBox(
                         height: 20,
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "Inicia sesión con tu cuenta",
                             style: TextStyle(
-                                fontSize: 15, color: Colors.grey[700]),
+                                fontSize: 15, color: Theme.of(context).colorScheme.primary),
                           )),
                     ],
                   ),
@@ -134,15 +135,17 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             }
                           },
-                          color: Colors.greenAccent,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          child: const Text(
+                          child: Text(
                             "Iniciar sesión",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
+                                fontWeight: FontWeight.w600, fontSize: 18,
+                                color:Theme.of(context).colorScheme.primary ,
+                                ),
                           ),
                         ),
                       ),
@@ -188,8 +191,8 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           label,
-          style: const TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+          style:  TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.primary),
         ),
         const SizedBox(
           height: 5,
