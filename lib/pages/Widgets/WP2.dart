@@ -1,37 +1,39 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/PracticeClass.dart';
 import 'package:my_app/Controller/practiceController.dart';
 
-class WP1 extends StatelessWidget {
+class WP2 extends StatelessWidget {
   final Practicecontroller controller = Get.find();
+  final List<String> list;
   final String name;
 
-  WP1({super.key, required this.name});
+  WP2({super.key, required this.list, required this.name});
 
   @override
   Widget build(BuildContext context) {
     Task task = controller.getpractice(name);
 
     return AlertDialog(
-      title: Center(child:Text(task.getname,style: TextStyle(
+      title: Center(child:Text('Lista',style: TextStyle(
         color:Theme.of(context).colorScheme.primary),
       )), // Título dinámico
       content: Container(
         width: double.maxFinite,
         constraints: const BoxConstraints(
-          maxWidth: 300, // Limita el ancho máximo del diálogo
+          maxWidth: 300, 
         ),
-        padding: const EdgeInsets.all(20), // Agrega padding a todo el contenido
+        padding: const EdgeInsets.all(20), 
         child: Column(
-          mainAxisSize: MainAxisSize.min, // Limita el tamaño a su contenido
+          mainAxisSize: MainAxisSize.min, 
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10), // Espaciado vertical
+              padding: const EdgeInsets.symmetric(vertical: 10), 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Obx(() => Text("Llevas ${task.getcount} vasos",style: const TextStyle(
+                  Obx(() => Text("Llevas ${task.getcount}",style: const TextStyle(
                     fontSize: 20 
                   ),),), // Se actualiza automáticamente
                   ElevatedButton(
@@ -64,4 +66,3 @@ class WP1 extends StatelessWidget {
     );
   }
 }
-

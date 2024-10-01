@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/PracticeClass.dart';
+import 'package:my_app/Controller/accountController.dart';
 
 
 
 class Practicecontroller extends GetxController{
   
+Accountcontroller controller=Get.find();
   var npractices=0.obs;
   
   int get getnpractices=>npractices.value;
@@ -38,7 +40,7 @@ Task getpractice(String value){
       return practice;
     }
   }
-  return Task(name:"",goal:"",pts:0,state: false);
+  return Task(name:"",goal:"",pts:0);
 }
 
 addcounter(String name){
@@ -63,6 +65,19 @@ editPracticeList(String name,List<String> l){
       practice.list.value=l;
     }
   }
+}
+
+int resetDay(){
+  int points=0;
+for(int i=0;i<practiceslist.length;i++){
+  if(practiceslist[i].getstate){
+   points+=practiceslist[i].getPoints;
+   practiceslist[i].falseTask();
+  }
+  practiceslist[i].resetCounter();
+}
+debugPrint('$points');
+return points;
 }
 
 int indexTask(String name){
@@ -362,7 +377,15 @@ int indexTask(String name){
   }
 
 
-  
+ void resetall(){
+    controller.reset();
+    practiceslist.value=[];
+    for(int i=1;i<=8;i++){
+      nochoosen(i);
+    }
+    npractices.value=0;
+
+  }
 
 
 

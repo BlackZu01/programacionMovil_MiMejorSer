@@ -9,7 +9,7 @@ import 'package:my_app/pages/PracticesPages/W5.dart';
 import 'package:my_app/pages/PracticesPages/W6.dart';
 import 'package:my_app/pages/PracticesPages/W7.dart';
 import 'package:my_app/pages/PracticesPages/W8.dart';
-import 'PracticesPages/W1.dart';
+import '../PracticesPages/W1.dart';
 
 void route(String name){
      switch(name){

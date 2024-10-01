@@ -188,7 +188,7 @@ class _Practice4State extends State<Practice4> {
                 controller.editPracticeList(name, controller.p4List);
               }else{
                 controller.choosen(4);
-              task=Task(name:name,goal:'${controller.p4List.length} ejercicio$plural',pts:2,state:false);
+              task=Task(name:name,goal:'${controller.p4List.length} ejercicio$plural',pts:2);
               task.addList(controller.p4List);
               controller.addpractices(task);
               }

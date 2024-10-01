@@ -3,12 +3,13 @@
 import 'package:get/get.dart';
 
 class Accountcontroller extends GetxController{
- var email ="".obs;
+  var email ="".obs;
   var password="".obs;
   var name="".obs;
   var emailList = <String>[].obs;
   var passwordList = <String>[].obs;
-    var nameList = <String>[].obs;
+  var nameList = <String>[].obs;
+  var pts=0.obs;
 
   String get emailValue =>email.value;
   String get passwordValue =>password.value;
@@ -16,6 +17,7 @@ class Accountcontroller extends GetxController{
   List<String> get emailGetList =>emailList;
   List<String> get passwordGetList =>passwordList;
   List<String> get nameGetList =>nameList;
+  int get getPts =>pts.value;
 
 
   void emailpassword(String emailvalue, String passwordValue){
@@ -31,6 +33,8 @@ class Accountcontroller extends GetxController{
   void reset(){
     email.value="";
     password.value="";
+    name.value="";
+    pts.value=0;
   }
   
   void addEmailList(String value){
@@ -53,6 +57,13 @@ class Accountcontroller extends GetxController{
     return nameList[index];
   }
 
+  setname(index){
+    name.value=obtainName(index);
+  }
+
+ addpts(int points){
+  pts.value+=points;
+ }
 
  
 
