@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/Widgets/edit.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/Widgets/edit.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 class TaskAdminPage extends StatefulWidget {
   const TaskAdminPage({Key? key}) : super(key: key);
@@ -22,8 +22,6 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
     controllerPractice.changeEditing(true);
     route(name);
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +44,8 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
           padding: const EdgeInsets.only(left: 12.0), // Padding a la izquierda
           child: IconButton(
             onPressed: () {
-              Get.off(() => const InitialPage()); // Regresar a la página inicial
+              Get.off(
+                  () => const InitialPage()); // Regresar a la página inicial
             },
             icon: const Icon(
               Icons.home_outlined,
@@ -62,15 +61,16 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
               onPressed: () {
                 Get.to(() => Practices()); // Ir a la página de prácticas
               },
-              icon: const Icon(Icons.add_circle_outline, color: Colors.white, size: 30),
+              icon: const Icon(Icons.add_circle_outline,
+                  color: Colors.white, size: 30),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
-              onPressed: () {
-              },
-              icon: const Icon(Icons.list_alt, color: Color.fromARGB(255, 206, 204, 204), size: 28),
+              onPressed: () {},
+              icon: const Icon(Icons.list_alt,
+                  color: Color.fromARGB(255, 206, 204, 204), size: 28),
               splashRadius: 24,
             ),
           ),
@@ -107,7 +107,7 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                       const Divider(),
                       Text(
                         'Puntos: ${controllerAccount.getPts}',
-                        style:const TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.green,
                         ),
@@ -154,7 +154,8 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
                               title: Text(
                                 tasks[index].getname,
                                 style: const TextStyle(
@@ -167,14 +168,19 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.edit, color: Colors.teal),
-                                    onPressed: () => _editTask(tasks[index].getname),
+                                    icon: const Icon(Icons.edit,
+                                        color: Colors.teal),
+                                    onPressed: () =>
+                                        _editTask(tasks[index].getname),
                                   ),
                                   IconButton(
-                                    icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
-                                    onPressed: () => controllerPractice.removepractice(tasks[index].getname),
+                                    icon: Icon(Icons.delete,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
+                                    onPressed: () => controllerPractice
+                                        .removepractice(tasks[index].getname),
                                   ),
-                                  
                                 ],
                               ),
                             ),
@@ -196,6 +202,3 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
     );
   }
 }
-
-
-

@@ -2,16 +2,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/main.dart';
-import 'package:my_app/pages/welcome.dart';
-
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/main.dart';
+import 'package:my_app/ui/pages/welcome.dart';
 
 class LoginPage extends StatefulWidget {
-
-
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -20,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
- final Accountcontroller controller = Get.find();
+  final Accountcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         leading: IconButton(
           onPressed: () {
-           Get.off(()=>HomePage());
+            Get.off(() => HomePage());
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -60,7 +56,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "Iniciar sesión",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary),
                           )),
                       const SizedBox(
@@ -71,7 +68,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "Inicia sesión con tu cuenta",
                             style: TextStyle(
-                                fontSize: 15, color: Theme.of(context).colorScheme.primary),
+                                fontSize: 15,
+                                color: Theme.of(context).colorScheme.primary),
                           )),
                     ],
                   ),
@@ -112,20 +110,21 @@ class _LoginPageState extends State<LoginPage> {
                             right: BorderSide(color: Colors.black),
                           ),
                         ),
-                        child:MaterialButton(
+                        child: MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
                             // Verificar si los datos coinciden
-                            int index=controller.emailGetList.indexOf(emailController.text);
-                            if (controller.emailGetList.contains(emailController.text) &&
-                               controller.confirmPassword(index)==
-                               passwordController.text
-                               ) {
-                                controller.setname(index);
-                              controller.emailpassword(emailController.text, passwordController.text);
-                              Get.off(()=>const InitialPage());
-                              
+                            int index = controller.emailGetList
+                                .indexOf(emailController.text);
+                            if (controller.emailGetList
+                                    .contains(emailController.text) &&
+                                controller.confirmPassword(index) ==
+                                    passwordController.text) {
+                              controller.setname(index);
+                              controller.emailpassword(emailController.text,
+                                  passwordController.text);
+                              Get.off(() => const InitialPage());
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -143,9 +142,10 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "Iniciar sesión",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18,
-                                color:Theme.of(context).colorScheme.primary ,
-                                ),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ),
                       ),
@@ -191,8 +191,10 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           label,
-          style:  TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.primary),
+          style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.primary),
         ),
         const SizedBox(
           height: 5,

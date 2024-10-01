@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
@@ -17,8 +17,8 @@ class _Practice2State extends State<Practice2> {
   final TextEditingController foodController = TextEditingController();
   String error = "";
   bool error2 = false;
-  final String name="Alimentación sana";
-  List<String> list=[];
+  final String name = "Alimentación sana";
+  List<String> list = [];
   void repeat() {
     error2 = true;
     setState(() {
@@ -37,20 +37,20 @@ class _Practice2State extends State<Practice2> {
   @override
   Widget build(BuildContext context) {
     Task task;
-  list=controller.p2List;
+    list = controller.p2List;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-             if(controller.editingValue){
-            Get.off(()=>Practices());
-            controller.setterList(2, list);
-            controller.changeEditing(false);
-           }else{
-            controller.reset(2);
-            Get.off(()=>Practices());
-           }
+            if (controller.editingValue) {
+              Get.off(() => Practices());
+              controller.setterList(2, list);
+              controller.changeEditing(false);
+            } else {
+              controller.reset(2);
+              Get.off(() => Practices());
+            }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -64,21 +64,17 @@ class _Practice2State extends State<Practice2> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Registro de Comidas Saludables',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-               textAlign:TextAlign.center
-            ),
+            Text('Registro de Comidas Saludables',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                textAlign: TextAlign.center),
             Text(
               '(1 pt por cada alimento saludable)',
               style: TextStyle(
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.primary
-              ),
+                  fontSize: 18, color: Theme.of(context).colorScheme.primary),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -92,7 +88,7 @@ class _Practice2State extends State<Practice2> {
               child: Text(
                 'Tipo de alimento', // Texto encima del campo de entrada
                 style: TextStyle(
-                  fontSize: 18, 
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -105,7 +101,9 @@ class _Practice2State extends State<Practice2> {
                   child: TextField(
                     controller: foodController,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer, // Mejora la visibilidad del texto
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onPrimaryContainer, // Mejora la visibilidad del texto
                     ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -113,7 +111,10 @@ class _Practice2State extends State<Practice2> {
                       ),
                       hintText: 'Ej: Manzana, Ensalada, Naranja...',
                       hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimaryContainer
+                            .withOpacity(0.6),
                       ),
                       fillColor: Theme.of(context).colorScheme.primaryContainer,
                       filled: true,
@@ -134,7 +135,8 @@ class _Practice2State extends State<Practice2> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
                     padding: const EdgeInsets.all(12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -148,7 +150,9 @@ class _Practice2State extends State<Practice2> {
             error2
                 ? Text(
                     error,
-                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 16),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontSize: 16),
                   )
                 : const SizedBox.shrink(),
             const SizedBox(height: 20),
@@ -169,7 +173,8 @@ class _Practice2State extends State<Practice2> {
                         child: ListTile(
                           title: Text(controller.p2[index]),
                           trailing: IconButton(
-                            icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
+                            icon: Icon(Icons.delete,
+                                color: Theme.of(context).colorScheme.primary),
                             onPressed: () {
                               controller.remove(2, index);
                             },
@@ -182,24 +187,30 @@ class _Practice2State extends State<Practice2> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                String plural="";
-                 if(controller.p2List.length>1){
-                  plural="s";
+                String plural = "";
+                if (controller.p2List.length > 1) {
+                  plural = "s";
                 }
-               if(controller.p2ChoosenValue){
-                controller.editpractice(name,'${controller.p2List.length} alimento$plural');
-                controller.editPracticeList(name, controller.p2List);
-              }else{
-                controller.choosen(2);
-              task=Task(name:name,goal:'${controller.p2List.length} alimentos$plural',pts:2);
-              task.addList(controller.p2List);
-              controller.addpractices(task);
-              }
-              Get.off(()=>Practices());
+                if (controller.p2ChoosenValue) {
+                  controller.editpractice(
+                      name, '${controller.p2List.length} alimento$plural');
+                  controller.editPracticeList(name, controller.p2List);
+                } else {
+                  controller.choosen(2);
+                  task = Task(
+                      name: name,
+                      goal: '${controller.p2List.length} alimentos$plural',
+                      pts: 2);
+                  task.addList(controller.p2List);
+                  controller.addpractices(task);
+                }
+                Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

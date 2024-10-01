@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
@@ -15,25 +15,25 @@ class Practice7 extends StatefulWidget {
 class _Practice7State extends State<Practice7> {
   Practicecontroller controller = Get.find();
 
-final String name="Pausa activa";
-int n=0;
+  final String name = "Pausa activa";
+  int n = 0;
   @override
   Widget build(BuildContext context) {
-    n=controller.p7Value;
+    n = controller.p7Value;
     Task task;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-           if(controller.editingValue){
-            Get.off(()=>Practices());
-            controller.setterCounter(7, n);
-            controller.changeEditing(false);
-           }else{
-            Get.off(()=>Practices());
-           controller.reset(7);
-           }
+            if (controller.editingValue) {
+              Get.off(() => Practices());
+              controller.setterCounter(7, n);
+              controller.changeEditing(false);
+            } else {
+              Get.off(() => Practices());
+              controller.reset(7);
+            }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -78,7 +78,8 @@ int n=0;
                     controller.decrement(7);
                   }, // método para reducir número de pausas
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -89,9 +90,9 @@ int n=0;
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p7Value}', // valor del número de pausas
-                  style: const TextStyle(fontSize: 40),
-                )),
+                      '${controller.p7Value}', // valor del número de pausas
+                      style: const TextStyle(fontSize: 40),
+                    )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
@@ -99,7 +100,8 @@ int n=0;
                     controller.increment(7);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -113,18 +115,21 @@ int n=0;
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-                 if(controller.p7choosenValue){
-                controller.editpractice(name,'${controller.p7Value} pausas');
-              }else{
-                controller.choosen(7);
-              task=Task(name:name,goal:'${controller.p7Value} pausas',pts:2);
-              controller.addpractices(task);
-              }
-              Get.off(()=>Practices());
+                if (controller.p7choosenValue) {
+                  controller.editpractice(name, '${controller.p7Value} pausas');
+                } else {
+                  controller.choosen(7);
+                  task = Task(
+                      name: name, goal: '${controller.p7Value} pausas', pts: 2);
+                  controller.addpractices(task);
+                }
+                Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
