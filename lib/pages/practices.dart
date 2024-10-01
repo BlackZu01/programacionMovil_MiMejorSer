@@ -10,7 +10,7 @@ import 'package:my_app/pages/PracticesPages/W6.dart';
 import 'package:my_app/pages/PracticesPages/W7.dart';
 import 'package:my_app/pages/PracticesPages/W8.dart';
 import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/edit.dart';
+import 'package:my_app/pages/Widgets/edit.dart';
 import 'package:my_app/pages/initial.dart';
 import 'package:my_app/pages/task_manager.dart';
 
@@ -120,9 +120,9 @@ class Practices extends StatelessWidget {
                         ),
                       ),
                       const Divider(),
-                      const Text(
-                        'Puntos: 100', // Actualiza con la cantidad real de puntos
-                        style: TextStyle(
+                     Text(
+                        'Puntos: ${controller.getPts}',
+                        style:const TextStyle(
                           fontSize: 14,
                           color: Colors.green,
                         ),

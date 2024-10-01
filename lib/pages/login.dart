@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/pages/initial.dart';
 import 'package:my_app/pages/main.dart';
 import 'package:my_app/pages/welcome.dart';
 
@@ -116,15 +117,14 @@ class _LoginPageState extends State<LoginPage> {
                           height: 60,
                           onPressed: () {
                             // Verificar si los datos coinciden
-                            
+                            int index=controller.emailGetList.indexOf(emailController.text);
                             if (controller.emailGetList.contains(emailController.text) &&
-                               controller.confirmPassword(controller.emailGetList.indexOf(emailController.text))==
+                               controller.confirmPassword(index)==
                                passwordController.text
                                ) {
-                                
-                                controller.emailpassword('$emailController', '$passwordController');
+                                controller.setname(index);
                               controller.emailpassword(emailController.text, passwordController.text);
-                              Get.off(()=>const QuestionPage());
+                              Get.off(()=>const InitialPage());
                               
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(

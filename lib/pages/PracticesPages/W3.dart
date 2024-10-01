@@ -117,7 +117,7 @@ class _Practice3State extends State<Practice3> {
                 controller.editpractice(name,'${controller.p3Value} minutos');
               }else{
                 controller.choosen(3);
-              task=Task(name:name,goal:'${controller.p3Value} minutos',pts:2,state:false);
+              task=Task(name:name,goal:'${controller.p3Value} minutos',pts:2);
               controller.addpractices(task);
               }
               Get.off(()=>Practices());

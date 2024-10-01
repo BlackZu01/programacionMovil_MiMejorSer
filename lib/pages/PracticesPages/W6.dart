@@ -118,7 +118,7 @@ int n=0;
                 controller.editpractice(name,'${controller.p6Value} minutos');
               }else{
                 controller.choosen(6);
-              task=Task(name:name,goal:'${controller.p6Value} minutos',pts:2,state:false);
+              task=Task(name:name,goal:'${controller.p6Value} minutos',pts:2);
               controller.addpractices(task);
               }
               Get.off(()=>Practices());

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
 import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/PracticeWidgets/WP1.dart';
+import 'package:my_app/pages/Widgets/Reset.dart';
+import 'package:my_app/pages/Widgets/WP1.dart';
+import 'package:my_app/pages/login.dart';
 import 'package:my_app/pages/practices.dart';
 import 'package:my_app/Controller/PracticeClass.dart';
 import 'package:my_app/pages/task_manager.dart';
@@ -18,11 +20,10 @@ class _InitialPage extends State<InitialPage> {
   final Accountcontroller controlleraccount = Get.find();
   final Practicecontroller controllerp = Get.find();
   int completedGoals = 0;
+  int points=0;
 
   @override
   Widget build(BuildContext context) {
-    
-   
      // Obtener el número total de tareas
     return Scaffold(
       backgroundColor: const Color(0xFFF5F4FB),
@@ -111,13 +112,20 @@ class _InitialPage extends State<InitialPage> {
                         ),
                       ),
                       const Divider(),
-                      const Text(
-                        'Puntos: 100',
+                       Text(
+                        'Puntos: ${controlleraccount.getPts}',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.green,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
+                      const Divider(),
+                      Center(child:
+                      TextButton(onPressed: (){
+                      controllerp.resetall();
+                      Get.off(()=>LoginPage());
+                      }, child: Text("Cerrar sesion",
+                      style: TextStyle(color:Theme.of(context).colorScheme.tertiary, fontSize: 14,)))),
                     ],
                   ),
                 ),
@@ -152,7 +160,7 @@ class _InitialPage extends State<InitialPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                    Text(((completedGoals/totalTasks)!=1)?
-                    "Vamos, animo y completa tus tareas diarias":
+                    "Vamos, ponle animo y completa tus tareas diarias":
                     "Felicidades,has completado tus tareas",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -172,20 +180,35 @@ class _InitialPage extends State<InitialPage> {
               }),
             ),
             const SizedBox(height: 20),
-            const Text(
+            Row(children: [
+              const Text(
               "TAREAS DE HOY",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
-            ),
+            ),const SizedBox(width: 190,),
+            IconButton(onPressed: (){
+              points=controllerp.resetDay();
+                controlleraccount.addpts(points);
+                setState(() {
+                  completedGoals=0;
+                });
+                
+              showDialog(context: context, builder: (BuildContext context){
+                return Reset(points: points);
+              });
+              debugPrint('${controllerp.getpracticeslist[0].getstate}');
+            }, icon: Icon(Icons.refresh,
+            color:Theme.of(context).colorScheme.primary))
+            ],),
             const SizedBox(height: 20),
 
             // Mostrar tareas o mensaje de que no hay tareas seleccionadas
             Expanded(
               child: Obx((){
-                var tasks = controllerp.getpracticeslist;
-                return tasks.isEmpty
+                 
+                return controllerp.getpracticeslist.isEmpty
                   ? const Center(
                       child: Text(
                         'No has seleccionado tareas.',
@@ -196,17 +219,17 @@ class _InitialPage extends State<InitialPage> {
                       ),
                     )
                   : Obx(()=>ListView.builder(
-                      itemCount: tasks.length,
+                      itemCount: controllerp.getpracticeslist.length,
                       itemBuilder: (context, index) {
                         return TaskCard(
-                          task: tasks[index],
+                          task: controllerp.getpracticeslist[index],
                           onStatusChange: () {
                             setState(() {
-                              if (tasks[index].state == false) {
-                                tasks[index].state = true;
+                              if (controllerp.getpracticeslist[index].getstate == false) {
+                                controllerp.getpracticeslist[index].trueTask();
                                 completedGoals++;
                               } else {
-                                tasks[index].state = false;
+                                controllerp.getpracticeslist[index].falseTask();
                                 completedGoals--;
                               }
                             });
@@ -291,12 +314,14 @@ class TaskCard extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(onPressed: (){
+            final Practicecontroller controllerp = Get.find();
            showDialog(context: context, builder: (BuildContext context){
                 switch(task.getname){
                 case 'Tomar agua':
-                return(WP1(name: task.getname));
+                return(WP1(name: task.getname,limit:controllerp.p1Value));
+                case 'Pausa activa':return(WP1(name:task.getname,limit:controllerp.p7Value));
                 default:
-                return(WP1(name: ""));
+                return(WP1(name: "",limit:30));
                 // break;
               }
              

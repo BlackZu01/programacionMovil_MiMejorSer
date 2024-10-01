@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Controller/accountController.dart';
 import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/edit.dart';
+import 'package:my_app/pages/Widgets/edit.dart';
 import 'package:my_app/pages/initial.dart';
 import 'package:my_app/pages/practices.dart';
 
@@ -105,9 +105,9 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                         ),
                       ),
                       const Divider(),
-                      const Text(
-                        'Puntos: 100',
-                        style: TextStyle(
+                      Text(
+                        'Puntos: ${controllerAccount.getPts}',
+                        style:const TextStyle(
                           fontSize: 14,
                           color: Colors.green,
                         ),
