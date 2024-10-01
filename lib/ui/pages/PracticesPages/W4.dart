@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
@@ -17,8 +17,8 @@ class _Practice4State extends State<Practice4> {
   final TextEditingController exerciseController = TextEditingController();
   String error = "";
   bool error2 = false;
-  final String name="Gimnasio"; 
-  List<String> list=[];
+  final String name = "Gimnasio";
+  List<String> list = [];
   void repeat() {
     error2 = true;
     setState(() {
@@ -37,20 +37,20 @@ class _Practice4State extends State<Practice4> {
   @override
   Widget build(BuildContext context) {
     Task task;
-    list=controller.p4List;
+    list = controller.p4List;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-             if(controller.editingValue){
-               controller.setterList(4, list);
-            Get.off(()=>Practices());
-            controller.changeEditing(false);
-           }else{
-           controller.reset(4);        
-            Get.off(() => Practices());
-           }
+            if (controller.editingValue) {
+              controller.setterList(4, list);
+              Get.off(() => Practices());
+              controller.changeEditing(false);
+            } else {
+              controller.reset(4);
+              Get.off(() => Practices());
+            }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -75,9 +75,7 @@ class _Practice4State extends State<Practice4> {
             Text(
               '(1 pt por cada ejercicio)',
               style: TextStyle(
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.primary
-              ),
+                  fontSize: 18, color: Theme.of(context).colorScheme.primary),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -87,12 +85,14 @@ class _Practice4State extends State<Practice4> {
             ),
             const SizedBox(height: 20),
             // Texto "Tipo de ejercicio" sobre el campo de entrada
-             Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Tipo de ejercicio', // Texto encima del campo de entrada
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
-                color:Theme.of(context).colorScheme.primary),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary),
               ),
             ),
             const SizedBox(height: 5),
@@ -102,7 +102,9 @@ class _Practice4State extends State<Practice4> {
                   child: TextField(
                     controller: exerciseController,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer, // Mejora la visibilidad del texto
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onPrimaryContainer, // Mejora la visibilidad del texto
                     ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -110,7 +112,10 @@ class _Practice4State extends State<Practice4> {
                       ),
                       hintText: 'Ej: Barras, Levantamiento de pesas...',
                       hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimaryContainer
+                            .withOpacity(0.6),
                       ),
                       fillColor: Theme.of(context).colorScheme.primaryContainer,
                       filled: true,
@@ -131,7 +136,8 @@ class _Practice4State extends State<Practice4> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
                     padding: const EdgeInsets.all(12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -145,7 +151,9 @@ class _Practice4State extends State<Practice4> {
             error2
                 ? Text(
                     error,
-                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 16),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontSize: 16),
                   )
                 : const SizedBox.shrink(),
             const SizedBox(height: 20),
@@ -166,7 +174,8 @@ class _Practice4State extends State<Practice4> {
                         child: ListTile(
                           title: Text(controller.p4[index]),
                           trailing: IconButton(
-                            icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
+                            icon: Icon(Icons.delete,
+                                color: Theme.of(context).colorScheme.primary),
                             onPressed: () {
                               controller.remove(4, index);
                             },
@@ -179,24 +188,30 @@ class _Practice4State extends State<Practice4> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                String plural="";
-                 if(controller.p4List.length>1){
-                  plural="s";
+                String plural = "";
+                if (controller.p4List.length > 1) {
+                  plural = "s";
                 }
-                 if(controller.p4ChoosenValue){
-                controller.editpractice(name,'${controller.p4List.length} ejercicio$plural');
-                controller.editPracticeList(name, controller.p4List);
-              }else{
-                controller.choosen(4);
-              task=Task(name:name,goal:'${controller.p4List.length} ejercicio$plural',pts:2);
-              task.addList(controller.p4List);
-              controller.addpractices(task);
-              }
-              Get.off(()=>Practices());
+                if (controller.p4ChoosenValue) {
+                  controller.editpractice(
+                      name, '${controller.p4List.length} ejercicio$plural');
+                  controller.editPracticeList(name, controller.p4List);
+                } else {
+                  controller.choosen(4);
+                  task = Task(
+                      name: name,
+                      goal: '${controller.p4List.length} ejercicio$plural',
+                      pts: 2);
+                  task.addList(controller.p4List);
+                  controller.addpractices(task);
+                }
+                Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -209,4 +224,3 @@ class _Practice4State extends State<Practice4> {
     );
   }
 }
-

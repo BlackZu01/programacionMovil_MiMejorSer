@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
-class Practice8 extends StatefulWidget {
-  const Practice8({super.key});
+class Practice6 extends StatefulWidget {
+  const Practice6({super.key});
 
   @override
-  _Practice8State createState() => _Practice8State();
+  _Practice6State createState() => _Practice6State();
 }
 
-class _Practice8State extends State<Practice8> {
+class _Practice6State extends State<Practice6> {
   Practicecontroller controller = Get.find();
 
-final String name="Tomar una siesta";
-int n=0;
+  final String name = "Leer";
+  int n = 0;
+
   @override
   Widget build(BuildContext context) {
-    n=controller.p8Value;
     Task task;
+    n = controller.p6Value;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            if(controller.editingValue){
-            Get.off(()=>Practices());
-            controller.changeEditing(false);
-            controller.setterCounter(8, n);
-           }else{
-            Get.off(()=>Practices());
-           controller.reset(8);
-           }
+            if (controller.editingValue) {
+              Get.off(() => Practices());
+              controller.setterCounter(6, n);
+              controller.changeEditing(false);
+            } else {
+              Get.off(() => Practices());
+              controller.reset(6);
+            }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -48,7 +49,7 @@ int n=0;
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Tomar una Siesta',
+              'Tiempo de Lectura',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -59,12 +60,12 @@ int n=0;
               '(2 pts)',
               style: TextStyle(
                 fontSize: 18,
-                color: Theme.of(context).colorScheme.primary
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Establezca como meta la cantidad de tiempo que desea dormir hoy para una siesta reparadora.',
+              'Establezca el tiempo (en minutos) que desea dedicar a la lectura hoy para mejorar su conocimiento.',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -74,9 +75,12 @@ int n=0;
               children: [
                 // Botón de decremento
                 ElevatedButton(
-                  onPressed:() {controller.decrement(8);}, // método para reducir tiempo
+                  onPressed: () {
+                    controller.decrement(6);
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -87,15 +91,18 @@ int n=0;
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p8Value} min', // valor del tiempo en minutos
-                  style: const TextStyle(fontSize: 40),
-                )),
+                      '${controller.p6Value}',
+                      style: const TextStyle(fontSize: 40),
+                    )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
-                  onPressed: (){controller.increment(8);}, 
+                  onPressed: () {
+                    controller.increment(6);
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -109,18 +116,24 @@ int n=0;
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-                 if(controller.p8choosenValue){
-                controller.editpractice(name,'${controller.p8Value} minutos');
-              }else{
-                controller.choosen(8);
-              task=Task(name:name,goal:'${controller.p8Value} minutos',pts:2);
-              controller.addpractices(task);
-              }
-              Get.off(()=>Practices());
+                if (controller.p6choosenValue) {
+                  controller.editpractice(
+                      name, '${controller.p6Value} minutos');
+                } else {
+                  controller.choosen(6);
+                  task = Task(
+                      name: name,
+                      goal: '${controller.p6Value} minutos',
+                      pts: 2);
+                  controller.addpractices(task);
+                }
+                Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

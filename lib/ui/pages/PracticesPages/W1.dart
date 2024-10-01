@@ -1,71 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
-import '../../Controller/PracticeClass.dart';
-
-class Practice6 extends StatefulWidget {
-  const Practice6({super.key});
+class Practice1 extends StatefulWidget {
+  const Practice1({super.key});
 
   @override
-  _Practice6State createState() => _Practice6State();
+  _Practice1State createState() => _Practice1State();
 }
 
-class _Practice6State extends State<Practice6> {
+class _Practice1State extends State<Practice1> {
   Practicecontroller controller = Get.find();
-
-final String name="Leer";
-int n=0;
+  final String name = "Tomar agua";
+  int n = 0;
 
   @override
   Widget build(BuildContext context) {
     Task task;
-    n=controller.p6Value;
+    n = controller.p1Value;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        leading: IconButton(
-          onPressed: () {    
-           if(controller.editingValue){
-            Get.off(()=>Practices());
-            controller.setterCounter(6, n);
-            controller.changeEditing(false);
-           }else{
-            Get.off(()=>Practices());
-           controller.reset(6);
-           }
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: Colors.black,
-          ),
-        ),
-      ),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          leading: IconButton(
+            onPressed: () {
+              if (controller.editingValue) {
+                Get.off(() => Practices());
+                controller.setterCounter(1, n);
+                controller.changeEditing(false);
+              } else {
+                Get.off(() => Practices());
+                controller.reset(1);
+              }
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Tiempo de Lectura',
+              'Consumo de Agua',
               style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary),
             ),
             Text(
               '(2 pts)',
               style: TextStyle(
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+                  fontSize: 18, color: Theme.of(context).colorScheme.primary),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Establezca el tiempo (en minutos) que desea dedicar a la lectura hoy para mejorar su conocimiento.',
+              'Establezca el numero de vasos de agua que desea tomar hoy para mantenerse hidratado.',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -76,10 +70,11 @@ int n=0;
                 // Botón de decremento
                 ElevatedButton(
                   onPressed: () {
-                    controller.decrement(6);
+                    controller.decrement(1);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -90,17 +85,18 @@ int n=0;
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p6Value}',
-                  style: const TextStyle(fontSize: 40),
-                )),
+                      '${controller.p1Value}',
+                      style: const TextStyle(fontSize: 40),
+                    )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
                   onPressed: () {
-                    controller.increment(6);
+                    controller.increment(1);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -114,18 +110,21 @@ int n=0;
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-               if(controller.p6choosenValue){
-                controller.editpractice(name,'${controller.p6Value} minutos');
-              }else{
-                controller.choosen(6);
-              task=Task(name:name,goal:'${controller.p6Value} minutos',pts:2);
-              controller.addpractices(task);
-              }
-              Get.off(()=>Practices());
+                if (controller.p1choosenValue) {
+                  controller.editpractice(name, '${controller.p1Value} vasos');
+                } else {
+                  controller.choosen(1);
+                  task = Task(
+                      name: name, goal: '${controller.p1Value} vasos', pts: 2);
+                  controller.addpractices(task);
+                }
+                Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

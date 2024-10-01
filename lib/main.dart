@@ -2,23 +2,23 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/PracticesPages/W1.dart';
-import 'package:my_app/pages/PracticesPages/W2.dart';
-import 'package:my_app/pages/PracticesPages/W3.dart';
-import 'package:my_app/pages/PracticesPages/W4.dart';
-import 'package:my_app/pages/PracticesPages/W5.dart';
-import 'package:my_app/pages/PracticesPages/W6.dart';
-import 'package:my_app/pages/PracticesPages/W7.dart';
-import 'package:my_app/pages/PracticesPages/W8.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/practices.dart';
-import 'package:my_app/pages/welcome.dart';
-import 'package:my_app/pages/task_manager.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/PracticesPages/W1.dart';
+import 'package:my_app/ui/pages/PracticesPages/W2.dart';
+import 'package:my_app/ui/pages/PracticesPages/W3.dart';
+import 'package:my_app/ui/pages/PracticesPages/W4.dart';
+import 'package:my_app/ui/pages/PracticesPages/W5.dart';
+import 'package:my_app/ui/pages/PracticesPages/W6.dart';
+import 'package:my_app/ui/pages/PracticesPages/W7.dart';
+import 'package:my_app/ui/pages/PracticesPages/W8.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/practices.dart';
+import 'package:my_app/ui/pages/welcome.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
 import 'package:lottie/lottie.dart';
-import 'login.dart';
-import 'signup.dart';
+import 'ui/pages/login.dart';
+import 'ui/pages/signup.dart';
 
 void main() {
   Get.put(Accountcontroller(), permanent: true);
@@ -55,14 +55,14 @@ void main() {
       GetPage(name: '/Initial', page: () => const InitialPage()),
       GetPage(name: '/task_manager', page: () => const TaskAdminPage()),
       GetPage(name: '/Practices', page: () => Practices()),
-      GetPage(name:'/Practice1',page:()=> const Practice1()),
-      GetPage(name:'/Practice2',page:()=> const Practice2()),
-      GetPage(name:'/Practice3',page:()=> const Practice3()),
-      GetPage(name:'/Practice4',page:()=> const Practice4()),
-      GetPage(name:'/Practice5',page:()=> const Practice5()),
-      GetPage(name:'/Practice6',page:()=> const Practice6()),
-      GetPage(name:'/Practice7',page:()=> const Practice7()),
-      GetPage(name:'/Practice8',page:()=> const Practice8())
+      GetPage(name: '/Practice1', page: () => const Practice1()),
+      GetPage(name: '/Practice2', page: () => const Practice2()),
+      GetPage(name: '/Practice3', page: () => const Practice3()),
+      GetPage(name: '/Practice4', page: () => const Practice4()),
+      GetPage(name: '/Practice5', page: () => const Practice5()),
+      GetPage(name: '/Practice6', page: () => const Practice6()),
+      GetPage(name: '/Practice7', page: () => const Practice7()),
+      GetPage(name: '/Practice8', page: () => const Practice8())
     ],
   ));
 }
@@ -115,7 +115,6 @@ class HomePage extends StatelessWidget {
                       duration: const Duration(milliseconds: 1500),
                       child: MaterialButton(
                         minWidth: double.infinity,
-                        height: 60,
                         onPressed: () {
                           Get.off(() => LoginPage());
                         },
@@ -145,7 +144,6 @@ class HomePage extends StatelessWidget {
                             )),
                         child: MaterialButton(
                           minWidth: double.infinity,
-                          height: 60,
                           onPressed: () {
                             Get.to(() => const SignupPage());
                           },

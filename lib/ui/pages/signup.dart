@@ -1,9 +1,8 @@
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/main.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/main.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -30,7 +29,7 @@ class _SignupPageState extends State<SignupPage> {
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         leading: IconButton(
           onPressed: () {
-           Get.off(()=>HomePage());
+            Get.off(() => HomePage());
           },
           icon: const Icon(Icons.arrow_back_ios, size: 20, color: Colors.black),
         ),
@@ -52,7 +51,8 @@ class _SignupPageState extends State<SignupPage> {
                       child: Text(
                         "Registrarse",
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
@@ -61,7 +61,9 @@ class _SignupPageState extends State<SignupPage> {
                       duration: const Duration(milliseconds: 1200),
                       child: Text(
                         "Crea una cuenta nueva",
-                        style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.primary),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
                   ],
@@ -156,9 +158,9 @@ class _SignupPageState extends State<SignupPage> {
                           controller.addEmailList(emailController.text);
                           controller.addPasswordList(passwordController.text);
                           controller.addnameList(nameController.text);
-                          debugPrint('${controller.emailGetList.contains('$emailController')}');
-                           Get.off(()=>const HomePage());
-                         
+                          debugPrint(
+                              '${controller.emailGetList.contains('$emailController')}');
+                          Get.off(() => const HomePage());
                         }
                       },
                       color: Theme.of(context).colorScheme.primaryContainer,
@@ -169,7 +171,8 @@ class _SignupPageState extends State<SignupPage> {
                       child: Text(
                         "Registrarse",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
                             color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
@@ -209,7 +212,9 @@ class _SignupPageState extends State<SignupPage> {
         Text(
           label,
           style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.primary),
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.primary),
         ),
         const SizedBox(height: 5),
         TextFormField(
@@ -219,10 +224,12 @@ class _SignupPageState extends State<SignupPage> {
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
             ),
           ),
           validator: validator, // Añadir validación

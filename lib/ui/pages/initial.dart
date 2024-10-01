@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/Widgets/Reset.dart';
-import 'package:my_app/pages/Widgets/WP1.dart';
-import 'package:my_app/pages/login.dart';
-import 'package:my_app/pages/practices.dart';
-import 'package:my_app/Controller/PracticeClass.dart';
-import 'package:my_app/pages/task_manager.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/Widgets/Reset.dart';
+import 'package:my_app/ui/pages/Widgets/WP1.dart';
+import 'package:my_app/ui/pages/login.dart';
+import 'package:my_app/ui/pages/practices.dart';
+import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({Key? key}) : super(key: key);
@@ -20,11 +20,11 @@ class _InitialPage extends State<InitialPage> {
   final Accountcontroller controlleraccount = Get.find();
   final Practicecontroller controllerp = Get.find();
   int completedGoals = 0;
-  int points=0;
+  int points = 0;
 
   @override
   Widget build(BuildContext context) {
-     // Obtener el número total de tareas
+    // Obtener el número total de tareas
     return Scaffold(
       backgroundColor: const Color(0xFFF5F4FB),
       appBar: AppBar(
@@ -32,10 +32,11 @@ class _InitialPage extends State<InitialPage> {
         toolbarHeight: 100,
         elevation: 0,
         flexibleSpace: Container(
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-               Colors.greenAccent.shade200, Colors.tealAccent.shade400,
+                Colors.greenAccent.shade200,
+                Colors.tealAccent.shade400,
               ], // Degradado de colores
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -64,7 +65,7 @@ class _InitialPage extends State<InitialPage> {
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
               onPressed: () {
-                Get.off(()=> Practices());
+                Get.off(() => Practices());
               },
               icon: const Icon(Icons.add_circle_outline,
                   color: Colors.white, size: 28),
@@ -75,7 +76,7 @@ class _InitialPage extends State<InitialPage> {
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
               onPressed: () {
-                Get.off(()=>const TaskAdminPage());
+                Get.off(() => const TaskAdminPage());
               },
               icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
               splashRadius: 24,
@@ -112,7 +113,7 @@ class _InitialPage extends State<InitialPage> {
                         ),
                       ),
                       const Divider(),
-                       Text(
+                      Text(
                         'Puntos: ${controlleraccount.getPts}',
                         style: TextStyle(
                           fontSize: 14,
@@ -120,12 +121,18 @@ class _InitialPage extends State<InitialPage> {
                         ),
                       ),
                       const Divider(),
-                      Center(child:
-                      TextButton(onPressed: (){
-                      controllerp.resetall();
-                      Get.off(()=>LoginPage());
-                      }, child: Text("Cerrar sesion",
-                      style: TextStyle(color:Theme.of(context).colorScheme.tertiary, fontSize: 14,)))),
+                      Center(
+                          child: TextButton(
+                              onPressed: () {
+                                controllerp.resetall();
+                                Get.off(() => LoginPage());
+                              },
+                              child: Text("Cerrar sesion",
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    fontSize: 14,
+                                  )))),
                     ],
                   ),
                 ),
@@ -154,61 +161,73 @@ class _InitialPage extends State<InitialPage> {
                 ],
               ),
               child:
-              //  int totalTasks = controllerp.getnpractices;
-              Obx(() { int totalTasks = controllerp.getnpractices;
-               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                   Text(((completedGoals/totalTasks)!=1)?
-                    "Vamos, ponle animo y completa tus tareas diarias":
-                    "Felicidades,has completado tus tareas",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                  //  int totalTasks = controllerp.getnpractices;
+                  Obx(() {
+                int totalTasks = controllerp.getnpractices;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ((completedGoals / totalTasks) != 1)
+                          ? "Vamos, ponle animo y completa tus tareas diarias"
+                          : "Felicidades,has completado tus tareas",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text('$completedGoals/$totalTasks objetivos completados'),
-                  const SizedBox(height: 10),
-                  LinearProgressIndicator(
-                    value: totalTasks > 0 ? completedGoals / totalTasks : 0, // Asegurarse de que no se divida entre 0
-                    backgroundColor: Colors.grey[300],
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.secondary),
-                  ),
-                ],
-              );
+                    const SizedBox(height: 8),
+                    Text('$completedGoals/$totalTasks objetivos completados'),
+                    const SizedBox(height: 10),
+                    LinearProgressIndicator(
+                      value: totalTasks > 0
+                          ? completedGoals / totalTasks
+                          : 0, // Asegurarse de que no se divida entre 0
+                      backgroundColor: Colors.grey[300],
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).colorScheme.secondary),
+                    ),
+                  ],
+                );
               }),
             ),
             const SizedBox(height: 20),
-            Row(children: [
-              const Text(
-              "TAREAS DE HOY",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),const SizedBox(width: 190,),
-            IconButton(onPressed: (){
-              points=controllerp.resetDay();
-                controlleraccount.addpts(points);
-                setState(() {
-                  completedGoals=0;
-                });
-                
-              showDialog(context: context, builder: (BuildContext context){
-                return Reset(points: points);
-              });
-              debugPrint('${controllerp.getpracticeslist[0].getstate}');
-            }, icon: Icon(Icons.refresh,
-            color:Theme.of(context).colorScheme.primary))
-            ],),
+            Row(
+              children: [
+                const Text(
+                  "TAREAS DE HOY",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  width: 190,
+                ),
+                IconButton(
+                    onPressed: () {
+                      points = controllerp.resetDay();
+                      controlleraccount.addpts(points);
+                      setState(() {
+                        completedGoals = 0;
+                      });
+
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Reset(points: points);
+                          });
+                      debugPrint('${controllerp.getpracticeslist[0].getstate}');
+                    },
+                    icon: Icon(Icons.refresh,
+                        color: Theme.of(context).colorScheme.primary))
+              ],
+            ),
             const SizedBox(height: 20),
 
             // Mostrar tareas o mensaje de que no hay tareas seleccionadas
-            Expanded(
-              child: Obx((){
-                 
-                return controllerp.getpracticeslist.isEmpty
+            Expanded(child: Obx(() {
+              return controllerp.getpracticeslist.isEmpty
                   ? const Center(
                       child: Text(
                         'No has seleccionado tareas.',
@@ -218,27 +237,30 @@ class _InitialPage extends State<InitialPage> {
                         ),
                       ),
                     )
-                  : Obx(()=>ListView.builder(
-                      itemCount: controllerp.getpracticeslist.length,
-                      itemBuilder: (context, index) {
-                        return TaskCard(
-                          task: controllerp.getpracticeslist[index],
-                          onStatusChange: () {
-                            setState(() {
-                              if (controllerp.getpracticeslist[index].getstate == false) {
-                                controllerp.getpracticeslist[index].trueTask();
-                                completedGoals++;
-                              } else {
-                                controllerp.getpracticeslist[index].falseTask();
-                                completedGoals--;
-                              }
-                            });
-                          },
-                        );
-                      },
-                    ));
-              })
-            ),
+                  : Obx(() => ListView.builder(
+                        itemCount: controllerp.getpracticeslist.length,
+                        itemBuilder: (context, index) {
+                          return TaskCard(
+                            task: controllerp.getpracticeslist[index],
+                            onStatusChange: () {
+                              setState(() {
+                                if (controllerp
+                                        .getpracticeslist[index].getstate ==
+                                    false) {
+                                  controllerp.getpracticeslist[index]
+                                      .trueTask();
+                                  completedGoals++;
+                                } else {
+                                  controllerp.getpracticeslist[index]
+                                      .falseTask();
+                                  completedGoals--;
+                                }
+                              });
+                            },
+                          );
+                        },
+                      ));
+            })),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -249,7 +271,8 @@ class _InitialPage extends State<InitialPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 ),
                 child: const Text(
                   'Añadir Practicas',
@@ -290,13 +313,16 @@ class TaskCard extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
-            : Theme.of(context).colorScheme.secondaryContainer,
+            backgroundColor: task.getstate == false
+                ? Theme.of(context).colorScheme.tertiaryContainer
+                : Theme.of(context).colorScheme.secondaryContainer,
             child: Icon(
-              task.getstate == false ? Icons.check_box_outline_blank : Icons.check,
-              color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
-              : Theme.of(context).colorScheme.secondary
-            ),
+                task.getstate == false
+                    ? Icons.check_box_outline_blank
+                    : Icons.check,
+                color: task.getstate == false
+                    ? Theme.of(context).colorScheme.tertiary
+                    : Theme.of(context).colorScheme.secondary),
           ),
           const SizedBox(width: 16),
           Column(
@@ -313,35 +339,45 @@ class TaskCard extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          IconButton(onPressed: (){
-            final Practicecontroller controllerp = Get.find();
-           showDialog(context: context, builder: (BuildContext context){
-                switch(task.getname){
-                case 'Tomar agua':
-                return(WP1(name: task.getname,limit:controllerp.p1Value));
-                case 'Pausa activa':return(WP1(name:task.getname,limit:controllerp.p7Value));
-                default:
-                return(WP1(name: "",limit:30));
-                // break;
-              }
-             
-           });
-          }, icon: Icon(Icons.info,color: Theme.of(context).colorScheme.primary,)),
-          
+          IconButton(
+              onPressed: () {
+                final Practicecontroller controllerp = Get.find();
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      switch (task.getname) {
+                        case 'Tomar agua':
+                          return (WP1(
+                              name: task.getname, limit: controllerp.p1Value));
+                        case 'Pausa activa':
+                          return (WP1(
+                              name: task.getname, limit: controllerp.p7Value));
+                        default:
+                          return (WP1(name: "", limit: 30));
+                        // break;
+                      }
+                    });
+              },
+              icon: Icon(
+                Icons.info,
+                color: Theme.of(context).colorScheme.primary,
+              )),
           GestureDetector(
             onTap: onStatusChange,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
-                color: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
-                : Theme.of(context).colorScheme.secondaryContainer,
+                color: task.getstate == false
+                    ? Theme.of(context).colorScheme.tertiaryContainer
+                    : Theme.of(context).colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 task.getstate ? "Completa" : "Pendiente",
                 style: TextStyle(
-                  color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
-                  : Theme.of(context).colorScheme.secondary,
+                  color: task.getstate == false
+                      ? Theme.of(context).colorScheme.tertiary
+                      : Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),

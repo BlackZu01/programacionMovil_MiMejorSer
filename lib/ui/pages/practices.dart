@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/PracticesPages/W1.dart';
-import 'package:my_app/pages/PracticesPages/W2.dart';
-import 'package:my_app/pages/PracticesPages/W3.dart';
-import 'package:my_app/pages/PracticesPages/W4.dart';
-import 'package:my_app/pages/PracticesPages/W5.dart';
-import 'package:my_app/pages/PracticesPages/W6.dart';
-import 'package:my_app/pages/PracticesPages/W7.dart';
-import 'package:my_app/pages/PracticesPages/W8.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/Widgets/edit.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/task_manager.dart';
-
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/PracticesPages/W1.dart';
+import 'package:my_app/ui/pages/PracticesPages/W2.dart';
+import 'package:my_app/ui/pages/PracticesPages/W3.dart';
+import 'package:my_app/ui/pages/PracticesPages/W4.dart';
+import 'package:my_app/ui/pages/PracticesPages/W5.dart';
+import 'package:my_app/ui/pages/PracticesPages/W6.dart';
+import 'package:my_app/ui/pages/PracticesPages/W7.dart';
+import 'package:my_app/ui/pages/PracticesPages/W8.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/pages/Widgets/edit.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
 
 // ignore: use_key_in_widget_constructors
 class Practices extends StatelessWidget {
@@ -45,7 +44,8 @@ class Practices extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.greenAccent.shade200, Colors.tealAccent.shade400,
+                Colors.greenAccent.shade200,
+                Colors.tealAccent.shade400,
                 Theme.of(context).colorScheme.inversePrimary,
               ],
               begin: Alignment.topLeft,
@@ -58,7 +58,7 @@ class Practices extends StatelessWidget {
               const EdgeInsets.only(left: 16), // Padding en el lado izquierdo
           child: IconButton(
             onPressed: () {
-              Get.off(()=>const InitialPage());
+              Get.off(() => const InitialPage());
             },
             icon: const Icon(
               Icons.home_outlined,
@@ -83,7 +83,7 @@ class Practices extends StatelessWidget {
                 right: 8), // Padding para la parte derecha
             child: IconButton(
               onPressed: () {
-                Get.off(()=>const TaskAdminPage());
+                Get.off(() => const TaskAdminPage());
               },
               icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
             ),
@@ -120,9 +120,9 @@ class Practices extends StatelessWidget {
                         ),
                       ),
                       const Divider(),
-                     Text(
+                      Text(
                         'Puntos: ${controller.getPts}',
-                        style:const TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.green,
                         ),
@@ -163,79 +163,96 @@ class Practices extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return ElevatedButton(
                     onPressed: () {
-                      switch(index){
+                      switch (index) {
                         case 0:
-                       if(controllerp.p1choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice1());
-                       }
-                        
-                        break;
+                          if (controllerp.p1choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice1());
+                          }
+
+                          break;
                         case 1:
-                        if(controllerp.p2ChoosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice2());
-                       }
-                        break;
-                         case 2:
-                          if(controllerp.p3choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice3());
-                       }
-                        break;
+                          if (controllerp.p2ChoosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice2());
+                          }
+                          break;
+                        case 2:
+                          if (controllerp.p3choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice3());
+                          }
+                          break;
                         case 3:
-                         if(controllerp.p4ChoosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice4());
-                       }
-                        break;
-                         case 4:
-                          if(controllerp.p5ChoosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice5());
-                       }
-                        break;
-                        case 5: if(controllerp.p6choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice6());
-                       }
-                        break;
-                        case 6: 
-                        if(controllerp.p7choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice7());
-                       }
-                        break;
-                        case 7:  
-                        if(controllerp.p8choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice8());
-                       }
-                        break;
+                          if (controllerp.p4ChoosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice4());
+                          }
+                          break;
+                        case 4:
+                          if (controllerp.p5ChoosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice5());
+                          }
+                          break;
+                        case 5:
+                          if (controllerp.p6choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice6());
+                          }
+                          break;
+                        case 6:
+                          if (controllerp.p7choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice7());
+                          }
+                          break;
+                        case 7:
+                          if (controllerp.p8choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice8());
+                          }
+                          break;
                       }
                     },
                     style: ElevatedButton.styleFrom(
