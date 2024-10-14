@@ -15,25 +15,25 @@ class Practice8 extends StatefulWidget {
 class _Practice8State extends State<Practice8> {
   Practicecontroller controller = Get.find();
 
-  final String name = "Tomar una siesta";
-  int n = 0;
+final String name="Tomar una siesta";
+int n=0;
   @override
   Widget build(BuildContext context) {
-    n = controller.p8Value;
+    n=controller.p8Value;
     Task task;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-            if (controller.editingValue) {
-              Get.off(() => Practices());
-              controller.changeEditing(false);
-              controller.setterCounter(8, n);
-            } else {
-              Get.off(() => Practices());
-              controller.reset(8);
-            }
+            if(controller.editingValue){
+            Get.off(()=>Practices());
+            controller.changeEditing(false);
+            controller.setterCounter(8, n);
+           }else{
+            Get.off(()=>Practices());
+           controller.reset(8);
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -58,7 +58,9 @@ class _Practice8State extends State<Practice8> {
             Text(
               '(2 pts)',
               style: TextStyle(
-                  fontSize: 18, color: Theme.of(context).colorScheme.primary),
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary
+              ),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -72,12 +74,9 @@ class _Practice8State extends State<Practice8> {
               children: [
                 // Botón de decremento
                 ElevatedButton(
-                  onPressed: () {
-                    controller.decrement(8);
-                  }, // método para reducir tiempo
+                  onPressed:() {controller.decrement(8);}, // método para reducir tiempo
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -88,18 +87,15 @@ class _Practice8State extends State<Practice8> {
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                      '${controller.p8Value} min', // valor del tiempo en minutos
-                      style: const TextStyle(fontSize: 40),
-                    )),
+                  '${controller.p8Value} min', // valor del tiempo en minutos
+                  style: const TextStyle(fontSize: 40),
+                )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
-                  onPressed: () {
-                    controller.increment(8);
-                  },
+                  onPressed: (){controller.increment(8);}, 
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -113,24 +109,19 @@ class _Practice8State extends State<Practice8> {
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-                if (controller.p8choosenValue) {
-                  controller.editpractice(
-                      name, '${controller.p8Value} minutos');
-                } else {
-                  controller.choosen(8);
-                  task = Task(
-                      name: name,
-                      goal: '${controller.p8Value} minutos',
-                      pts: 2);
-                  controller.addpractices(task);
-                }
-                Get.off(() => Practices());
+                 if(controller.p8choosenValue){
+                controller.editpractice(name,'${controller.p8Value} minutos');
+              }else{
+                controller.choosen(8);
+              task=Task(id:8,name:name,goal:'${controller.p8Value} minutos',pts:2);
+              task.goalCounterValue(controller.p8Value);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Theme.of(context).colorScheme.secondaryContainer,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

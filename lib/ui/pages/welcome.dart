@@ -54,7 +54,7 @@ class _QuestionPageState extends State<QuestionPage> {
             ),
             const SizedBox(height: 20),
             FadeInUp(
-                duration: Duration(milliseconds: 1000),
+                duration: const Duration(milliseconds: 1000),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

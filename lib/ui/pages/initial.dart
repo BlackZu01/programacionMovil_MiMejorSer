@@ -130,10 +130,14 @@ class _InitialPage extends State<InitialPage> {
                                 ),
                               ),
                               const Divider(),
-                              Center(
+                             Row(children: [  Icon(Icons.logout,
+                              color:Theme.of(context).colorScheme.tertiary ),
+                                Center(
                                 child: TextButton(
                                   onPressed: () {
-                                    // Creo q no hemos implementado algo para salir de la sesion
+                                    controllerp.logout();
+                                   controllerp.resetall();
+                                    Get.off(() => const LoginPage());
                                   },
                                   child: Text(
                                     "Cerrar sesión",
@@ -145,7 +149,8 @@ class _InitialPage extends State<InitialPage> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              )
+                              ],),
                             ],
                           ),
                         ),
@@ -211,16 +216,13 @@ class _InitialPage extends State<InitialPage> {
             const SizedBox(height: 20),
             Row(
               children: [
-                const Text(
+              const Expanded(child:  Text(
                   "TAREAS DE HOY",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
-                ),
-                const SizedBox(
-                  width: 190,
-                ),
+                )),
                 IconButton(
                     onPressed: () {
                       points = controllerp.resetDay();
@@ -254,52 +256,37 @@ class _InitialPage extends State<InitialPage> {
                         ),
                       ),
                     )
-                  : Obx(() => ListView.builder(
-                        itemCount: controllerp.getpracticeslist.length,
-                        itemBuilder: (context, index) {
-                          return TaskCard(
-                            task: controllerp.getpracticeslist[index],
-                            onStatusChange: () {
-                              setState(() {
-                                if (controllerp
-                                        .getpracticeslist[index].getstate ==
-                                    false) {
-                                  controllerp.getpracticeslist[index]
-                                      .trueTask();
-                                  completedGoals++;
-                                } else {
-                                  controllerp.getpracticeslist[index]
-                                      .falseTask();
-                                  completedGoals--;
-                                }
-                              });
-                            },
-                          );
-                        },
-                      ));
-            })),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => Practices());
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                ),
-                child: const Text(
-                  'Añadir Practicas',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
+                  : ListView.builder(
+                      itemCount: controllerp.getpracticeslist.length,
+                      itemBuilder: (context, index) {
+                        return TaskCard(
+                          task: controllerp.getpracticeslist[index],
+                          onStatusChange: () {
+                            setState(() {
+                              if (controllerp.getpracticeslist[index].getstate == false) {
+                                controllerp.getpracticeslist[index].trueTask();
+                                completedGoals++;
+                              } else {
+                                controllerp.getpracticeslist[index].falseTask();
+                                completedGoals--;
+                              }
+                            });
+                          },
+                        );
+                      },
+                    );
+              })
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => Practices()); // Ir a la página de añadir prácticas
+        },
+        backgroundColor: Colors.teal,
+        child: const Icon(Icons.add, color: Colors.white),
+      )
     );
   }
 }
@@ -330,16 +317,13 @@ class TaskCard extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: task.getstate == false
-                ? Theme.of(context).colorScheme.tertiaryContainer
-                : Theme.of(context).colorScheme.secondaryContainer,
+            backgroundColor: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
+            : Theme.of(context).colorScheme.secondaryContainer,
             child: Icon(
-                task.getstate == false
-                    ? Icons.check_box_outline_blank
-                    : Icons.check,
-                color: task.getstate == false
-                    ? Theme.of(context).colorScheme.tertiary
-                    : Theme.of(context).colorScheme.secondary),
+              task.getstate == false ? Icons.check_box_outline_blank : Icons.check,
+              color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
+              : Theme.of(context).colorScheme.secondary
+            ),
           ),
           const SizedBox(width: 16),
           Column(
@@ -356,45 +340,35 @@ class TaskCard extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          IconButton(
-              onPressed: () {
-                final Practicecontroller controllerp = Get.find();
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      switch (task.getname) {
-                        case 'Tomar agua':
-                          return (WP1(
-                              name: task.getname, limit: controllerp.p1Value));
-                        case 'Pausa activa':
-                          return (WP1(
-                              name: task.getname, limit: controllerp.p7Value));
-                        default:
-                          return (WP1(name: "", limit: 30));
-                        // break;
-                      }
-                    });
-              },
-              icon: Icon(
-                Icons.info,
-                color: Theme.of(context).colorScheme.primary,
-              )),
+          IconButton(onPressed: (){
+            final Practicecontroller controllerp = Get.find();
+           showDialog(context: context, builder: (BuildContext context){
+                switch(task.getname){
+                case 'Tomar agua':
+                return(WP1(name: task.getname,limit:controllerp.p1Value));
+                case 'Pausa activa':return(WP1(name:task.getname,limit:controllerp.p7Value));
+                default:
+                return(WP1(name: "",limit:30));
+                // break;
+              }
+             
+           });
+          }, icon: Icon(Icons.info,color: Theme.of(context).colorScheme.primary,)),
+          
           GestureDetector(
             onTap: onStatusChange,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
-                color: task.getstate == false
-                    ? Theme.of(context).colorScheme.tertiaryContainer
-                    : Theme.of(context).colorScheme.secondaryContainer,
+                color: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
+                : Theme.of(context).colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 task.getstate ? "Completa" : "Pendiente",
                 style: TextStyle(
-                  color: task.getstate == false
-                      ? Theme.of(context).colorScheme.tertiary
-                      : Theme.of(context).colorScheme.secondary,
+                  color: task.getstate == false ? Theme.of(context).colorScheme.tertiary 
+                  : Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),

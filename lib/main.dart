@@ -46,10 +46,10 @@ void main() {
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,,
-    initialRoute: '/Home',
+    initialRoute: '/Initial',
     getPages: [
       GetPage(name: '/Home', page: () => const HomePage()),
-      GetPage(name: '/Login', page: () => LoginPage()),
+      GetPage(name: '/Login', page: () => const LoginPage()),
       GetPage(name: '/SignUp', page: () => const SignupPage()),
       GetPage(name: '/Welcome', page: () => const QuestionPage()),
       GetPage(name: '/Initial', page: () => const InitialPage()),
@@ -110,54 +110,45 @@ class HomePage extends StatelessWidget {
                     child: Lottie.asset('assets/sunflower.json'),
                   )),
               Column(
-                children: <Widget>[
-                  FadeInUp(
-                      duration: const Duration(milliseconds: 1500),
-                      child: MaterialButton(
-                        minWidth: double.infinity,
-                        onPressed: () {
-                          Get.off(() => LoginPage());
+                children: <Widget>[ 
+                   FadeInUp(
+                      duration: const Duration(milliseconds: 1500),     
+                    child: ElevatedButton(style: ElevatedButton.styleFrom(
+                  backgroundColor:Colors.yellow,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 85, vertical: 15)),
+                            onPressed: () {
+                          Get.off(() => const LoginPage());
                         },
-                        shape: RoundedRectangleBorder(
-                            side: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(50)),
-                        child: const Text(
+                        child: const  Text(
                           "Iniciar sesión",
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
+                              fontWeight: FontWeight.w600, fontSize: 26,color: Colors.black54),
                         ),
-                      )),
+                      )
+              ),
                   const SizedBox(
                     height: 20,
+                  ), FadeInUp(
+                      duration: const Duration(milliseconds: 1600),child:
+                   ElevatedButton(style: ElevatedButton.styleFrom(
+                  backgroundColor:Colors.yellow,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                  FadeInUp(
-                      duration: const Duration(milliseconds: 1600),
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 3, left: 3),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: const Border(
-                              bottom: BorderSide(color: Colors.black),
-                              top: BorderSide(color: Colors.black),
-                              left: BorderSide(color: Colors.black),
-                              right: BorderSide(color: Colors.black),
-                            )),
-                        child: MaterialButton(
-                          minWidth: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15)),
                           onPressed: () {
                             Get.to(() => const SignupPage());
                           },
-                          color: Colors.yellow,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
                           child: const Text(
                             "Registrarse",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
+                                fontWeight: FontWeight.w600, fontSize: 26,color:Colors.black54),
                           ),
                         ),
-                      ))
+              ),
                 ],
               )
             ],

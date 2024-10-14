@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/main.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/login.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -19,6 +21,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final Accountcontroller controller = Get.find();
+  final Practicecontroller controllerp = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +32,7 @@ class _SignupPageState extends State<SignupPage> {
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         leading: IconButton(
           onPressed: () {
-            Get.off(() => HomePage());
+            Get.off(() => const HomePage());
           },
           icon: const Icon(Icons.arrow_back_ios, size: 20, color: Colors.black),
         ),
@@ -95,6 +98,9 @@ class _SignupPageState extends State<SignupPage> {
                           if (!value.contains('@')) {
                             return 'Ingrese un correo electronico valido';
                           }
+                          if(controllerp.verifyUser(value)){
+                             return 'Ya ese correo fue registrado';
+                          }
                           return null;
                         },
                       ),
@@ -137,20 +143,12 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 FadeInUp(
                   duration: const Duration(milliseconds: 1500),
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 3, left: 3),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: const Border(
-                        bottom: BorderSide(color: Colors.black),
-                        top: BorderSide(color: Colors.black),
-                        left: BorderSide(color: Colors.black),
-                        right: BorderSide(color: Colors.black),
-                      ),
-                    ),
-                    child: MaterialButton(
-                      minWidth: double.infinity,
-                      height: 60,
+                  child:  ElevatedButton(style: ElevatedButton.styleFrom(
+                  backgroundColor:Theme.of(context).colorScheme.primaryContainer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15)),
                       onPressed: () {
                         // Verificar si el formulario es válido
                         if (_formKey.currentState!.validate()) {
@@ -163,11 +161,6 @@ class _SignupPageState extends State<SignupPage> {
                           Get.off(() => const HomePage());
                         }
                       },
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
                       child: Text(
                         "Registrarse",
                         style: TextStyle(
@@ -176,19 +169,23 @@ class _SignupPageState extends State<SignupPage> {
                             color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
-                  ),
+                  
                 ),
                 FadeInUp(
                   duration: const Duration(milliseconds: 1600),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Already have an account?"),
-                      Text(
-                        " Login",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
-                      ),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text("¿No tienes una Cuenta? "),
+                      InkWell(
+                          onTap: () {
+                            Get.off(() => const LoginPage());
+                          },
+                          child: const Text(
+                            "Iniciar Sesion",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))
                     ],
                   ),
                 ),

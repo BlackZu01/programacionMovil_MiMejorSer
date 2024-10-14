@@ -15,26 +15,26 @@ class Practice6 extends StatefulWidget {
 class _Practice6State extends State<Practice6> {
   Practicecontroller controller = Get.find();
 
-  final String name = "Leer";
-  int n = 0;
+final String name="Leer";
+int n=0;
 
   @override
   Widget build(BuildContext context) {
     Task task;
-    n = controller.p6Value;
+    n=controller.p6Value;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
-          onPressed: () {
-            if (controller.editingValue) {
-              Get.off(() => Practices());
-              controller.setterCounter(6, n);
-              controller.changeEditing(false);
-            } else {
-              Get.off(() => Practices());
-              controller.reset(6);
-            }
+          onPressed: () {    
+           if(controller.editingValue){
+            Get.off(()=>Practices());
+            controller.setterCounter(6, n);
+            controller.changeEditing(false);
+           }else{
+            Get.off(()=>Practices());
+           controller.reset(6);
+           }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -79,8 +79,7 @@ class _Practice6State extends State<Practice6> {
                     controller.decrement(6);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -91,9 +90,9 @@ class _Practice6State extends State<Practice6> {
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                      '${controller.p6Value}',
-                      style: const TextStyle(fontSize: 40),
-                    )),
+                  '${controller.p6Value}',
+                  style: const TextStyle(fontSize: 40),
+                )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
@@ -101,8 +100,7 @@ class _Practice6State extends State<Practice6> {
                     controller.increment(6);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -116,24 +114,19 @@ class _Practice6State extends State<Practice6> {
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-                if (controller.p6choosenValue) {
-                  controller.editpractice(
-                      name, '${controller.p6Value} minutos');
-                } else {
-                  controller.choosen(6);
-                  task = Task(
-                      name: name,
-                      goal: '${controller.p6Value} minutos',
-                      pts: 2);
-                  controller.addpractices(task);
-                }
-                Get.off(() => Practices());
+               if(controller.p6choosenValue){
+                controller.editpractice(name,'${controller.p6Value} minutos');
+              }else{
+                controller.choosen(6);
+              task=Task(id:6,name:name,goal:'${controller.p6Value} minutos',pts:2);
+              task.goalCounterValue(controller.p6Value);
+              controller.addpractices(task);
+              }
+              Get.off(()=>Practices());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Theme.of(context).colorScheme.secondaryContainer,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
