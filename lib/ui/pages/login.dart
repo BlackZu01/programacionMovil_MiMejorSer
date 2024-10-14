@@ -102,24 +102,15 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  FadeInUp(
+                   FadeInUp(
                     duration: const Duration(milliseconds: 1400),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 3, left: 3),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border: const Border(
-                            bottom: BorderSide(color: Colors.black),
-                            top: BorderSide(color: Colors.black),
-                            left: BorderSide(color: Colors.black),
-                            right: BorderSide(color: Colors.black),
-                          ),
-                        ),
-                        child: MaterialButton(
-                          minWidth: double.infinity,
-                          height: 60,
+                    child: Padding(padding: const EdgeInsets.symmetric(horizontal: 40),
+                         child: ElevatedButton(style: ElevatedButton.styleFrom(
+                  backgroundColor:Theme.of(context).colorScheme.primaryContainer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15)),
                           onPressed: () {
                             // Verificar si los datos coinciden
                             int index=controller.emailGetList.indexOf(emailController.text);
@@ -144,11 +135,6 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             }
                           },
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
                           child: Text(
                             "Iniciar sesión",
                             style: TextStyle(
@@ -157,21 +143,22 @@ class _LoginPageState extends State<LoginPage> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
+                          ),
+              )),
                   FadeInUp(
                     duration: const Duration(milliseconds: 1500),
-                    child: const Row(
+                    child:  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("¿No tienes una cuenta? "),
-                        Text(
-                          "Registrarse",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
-                        ),
+                        const Text("¿No tienes una cuenta? "),
+                         InkWell(
+                          onTap: () {
+                            Get.off(() => const LoginPage());
+                          },
+                          child: const Text(
+                            "Registrarse",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
                       ],
                     ),
                   ),

@@ -4,6 +4,7 @@ import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/Widgets/Reset.dart';
 import 'package:my_app/ui/pages/Widgets/WP1.dart';
+import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
 import 'package:my_app/ui/Controller/PracticeClass.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
@@ -129,10 +130,14 @@ class _InitialPage extends State<InitialPage> {
                                 ),
                               ),
                               const Divider(),
-                              Center(
+                             Row(children: [  Icon(Icons.logout,
+                              color:Theme.of(context).colorScheme.tertiary ),
+                                Center(
                                 child: TextButton(
                                   onPressed: () {
-                                    // Creo q no hemos implementado algo para salir de la sesion
+                                    controllerp.logout();
+                                   controllerp.resetall();
+                                    Get.off(() => const LoginPage());
                                   },
                                   child: Text(
                                     "Cerrar sesión",
@@ -144,7 +149,8 @@ class _InitialPage extends State<InitialPage> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              )
+                              ],),
                             ],
                           ),
                         ),
@@ -210,16 +216,13 @@ class _InitialPage extends State<InitialPage> {
             const SizedBox(height: 20),
             Row(
               children: [
-                const Text(
+              const Expanded(child:  Text(
                   "TAREAS DE HOY",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
-                ),
-                const SizedBox(
-                  width: 190,
-                ),
+                )),
                 IconButton(
                     onPressed: () {
                       points = controllerp.resetDay();
@@ -274,27 +277,16 @@ class _InitialPage extends State<InitialPage> {
                     );
               })
             ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => Practices());
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                ),
-                child: const Text(
-                  'Añadir Practicas',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => Practices()); // Ir a la página de añadir prácticas
+        },
+        backgroundColor: Colors.teal,
+        child: const Icon(Icons.add, color: Colors.white),
+      )
     );
   }
 }

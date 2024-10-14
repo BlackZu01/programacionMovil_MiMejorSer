@@ -4,6 +4,7 @@ import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/Widgets/edit.dart';
 import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
 
 class TaskAdminPage extends StatefulWidget {
@@ -132,10 +133,14 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                 ),
                               ),
                               const Divider(),
-                              Center(
+                              Row(children: [  Icon(Icons.logout,
+                              color:Theme.of(context).colorScheme.tertiary ),
+                                Center(
                                 child: TextButton(
                                   onPressed: () {
-                                    // Creo q no hemos implementado algo para salir de la sesion
+                                    controllerPractice.logout();
+                                   controllerPractice.resetall();
+                                    Get.off(() => const LoginPage());
                                   },
                                   child: Text(
                                     "Cerrar sesión",
@@ -147,7 +152,8 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              )
+                              ],),
                             ],
                           ),
                         ),

@@ -14,6 +14,7 @@ import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/pages/PracticesPages/W9.dart';
 import 'package:my_app/ui/pages/Widgets/edit.dart';
 import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 
 
@@ -144,11 +145,14 @@ class Practices extends StatelessWidget {
                                 ),
                               ),
                               const Divider(),
-                              Center(
+                              Row(children: [  Icon(Icons.logout,
+                              color:Theme.of(context).colorScheme.tertiary ),
+                                Center(
                                 child: TextButton(
                                   onPressed: () {
                                     controllerp.logout();
                                    controllerp.resetall();
+                                    Get.off(() => const LoginPage());
                                   },
                                   child: Text(
                                     "Cerrar sesión",
@@ -160,7 +164,8 @@ class Practices extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              ),
+                              )
+                              ],),
                             ],
                           ),
                         ),
