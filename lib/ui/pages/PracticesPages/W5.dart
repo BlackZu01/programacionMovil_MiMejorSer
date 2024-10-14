@@ -239,7 +239,8 @@ class _Practice5State extends State<Practice5> {
                 controller.editPracticeList(name, controller.listp5);
               }else{
                 controller.choosen(5);
-              task=Task(id:5,name:name,goal:'${controller.listp5.length} tema$plural',pts:2);
+              task=Task(id:5,name:name,goal:'${controller.listp5.length} tema$plural',pts:2,
+              goalCounter: controller.p5List.length);
               task.addList(controller.listp5);
               controller.addpractices(task);
               }

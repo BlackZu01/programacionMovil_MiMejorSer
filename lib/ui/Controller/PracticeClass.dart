@@ -11,11 +11,11 @@ class Task {
   var counter=0.obs;
   var state=false.obs;
   var list = <String>[].obs;
-  late int goalCounter;
+   int goalCounter;
   late List<String> goalList;
   
 
-  Task({required this.id,required this.name, required this.goal,required this.pts});
+  Task({required this.id,required this.name, required this.goal,required this.pts, required this.goalCounter});
   
   int get getId=>id;
   String get getname=>name;
@@ -24,14 +24,14 @@ class Task {
   bool get getstate=>state.value;
   List<String> get getList =>list;
   int get getPoints=>pts;
-  int get getGoalCounter=>counter.value;
+  int get getGoalCounter=>goalCounter;
 
   void addList(List<String> l){
    list.value=l;
   }
 
-  void goalCounterValue(int number){
-   counter.value=number;
+  void goalCounterValue(){
+   counter.value++;
   }
   resetCounter()=>counter.value=0;
   falseTask()=>state.value=false;

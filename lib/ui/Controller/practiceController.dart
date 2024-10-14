@@ -41,7 +41,7 @@ Task getpractice(String value){
       return practice;
     }
   }
-  return Task(id:0,name:"",goal:"",pts:0);
+  return Task(id:0,name:"",goal:"",pts:0,goalCounter: 0);
 }
 
 addcounter(String name){
@@ -136,7 +136,7 @@ User searchUser(String email){
 
   // practices 2
  var p2 = <String>[].obs;
- var p2inpractice=<bool>[].obs;
+ var p2inpractice=0.obs;
  var p2choosen=false.obs;
 
  List<String> get p2List =>p2;
@@ -154,7 +154,7 @@ User searchUser(String email){
 
    // practices 4
  var p4 = <String>[].obs;
- var p4inpractice=<bool>[].obs;
+ var p4inpractice=0.obs;
  var p4choosen=false.obs;
 
  List<String> get p4List =>p4;
@@ -162,7 +162,7 @@ User searchUser(String email){
 
   // practices 5
  var p5 = <String,int>{}.obs;
- var p5inpractice=<bool>[].obs;
+ var p5inpractice=0.obs;
  var p5choosen=false.obs;
  var listp5=<String>[].obs;
 
@@ -211,7 +211,7 @@ User searchUser(String email){
 
 //practice 10
 var p10 = <String>[].obs;
- var p10inpractice=<bool>[].obs;
+ var p10inpractice=0.obs;
  var p10choosen=false.obs;
 
  List<String> get p10List =>p10;
@@ -429,6 +429,22 @@ var p10 = <String>[].obs;
    
     reset(index);
     npractices--;
+  }
+
+ int getinPractices(String name){
+  switch(name){
+    case 'Tomar agua':return p1inpractice.value;
+    case 'Alimentacion sana':return p2inpractice.value;
+    case 'Caminar/Trotar':return p3inpractice.value;
+    case 'Gimnasio':return p4inpractice.value;
+    case 'Estudiar':return p5inpractice.value;
+    case 'Leer':return p6inpractice.value;
+    case 'Pausa activa':return p7inpractice.value;
+    case 'Tomar una siesta':return p8inpractice.value;
+    case 'Sin ver pantallas':return p9inpractice.value;
+    case 'Actividad/Hobby':return p10inpractice.value;
+    default:return 0;
+  }
   }
 
  setterCounter(int index,int counter){

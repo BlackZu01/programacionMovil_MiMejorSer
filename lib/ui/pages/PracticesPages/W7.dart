@@ -117,8 +117,8 @@ int n=0;
                 controller.editpractice(name,'${controller.p7Value} pausas');
               }else{
                 controller.choosen(7);
-              task=Task(id:7,name:name,goal:'${controller.p7Value} pausas',pts:2);
-              task.goalCounterValue(controller.p7Value);
+              task=Task(id:7,name:name,goal:'${controller.p7Value} pausas',pts:2,
+               goalCounter:controller.p7Value);
               controller.addpractices(task);
               }
               Get.off(()=>Practices());

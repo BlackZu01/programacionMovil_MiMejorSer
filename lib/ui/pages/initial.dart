@@ -297,9 +297,11 @@ class TaskCard extends StatelessWidget {
   final VoidCallback onStatusChange;
 
   const TaskCard({super.key, required this.task, required this.onStatusChange});
-
+  
+  
   @override
   Widget build(BuildContext context) {
+    Practicecontroller controller=Get.find();
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -314,7 +316,9 @@ class TaskCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      
+      child: Column(children: [
+        Row(
         children: [
           CircleAvatar(
             backgroundColor: task.getstate == false ? Theme.of(context).colorScheme.tertiaryContainer 
@@ -376,6 +380,17 @@ class TaskCard extends StatelessWidget {
           ),
         ],
       ),
+      // Row(children: [
+      //   LinearProgressIndicator(
+      //                 value: task.getGoalCounter > 0
+      //                     ? controller.getinPractices(task.name) / task.getGoalCounter
+      //                     : 0.0, // Asegurarse de que no se divida entre 0
+      //                 backgroundColor: Colors.grey[300],
+      //                 valueColor: AlwaysStoppedAnimation<Color>(
+      //                     Theme.of(context).colorScheme.secondary),
+      //               )
+      // ],)
+      ],),
     );
   }
 }

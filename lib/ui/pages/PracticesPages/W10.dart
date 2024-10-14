@@ -199,7 +199,7 @@ class _Practice10State extends State<Practice10> {
                   task = Task(id:10,
                       name: name,
                       goal: '${controller.p10List.length} actividad$plural',
-                      pts: 2);
+                      pts: 2,goalCounter:controller.p10List.length);
                   task.addList(controller.p10List);
                   controller.addpractices(task);
                 }
