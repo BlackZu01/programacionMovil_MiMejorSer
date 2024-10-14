@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/PracticeClass.dart';
-import 'package:my_app/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/ui/Controller/UserClass.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
 
 
 
@@ -40,7 +41,7 @@ Task getpractice(String value){
       return practice;
     }
   }
-  return Task(name:"",goal:"",pts:0);
+  return Task(id:0,name:"",goal:"",pts:0);
 }
 
 addcounter(String name){
@@ -71,8 +72,16 @@ int resetDay(){
   int points=0;
 for(int i=0;i<practiceslist.length;i++){
   if(practiceslist[i].getstate){
-   points+=practiceslist[i].getPoints;
+    switch(practiceslist[i].getId){
+      case 1||3||6||7||8||9:
+    points+=practiceslist[i].getPoints;
    practiceslist[i].falseTask();
+   break;
+      case 2||4||5||10:
+      points+=practiceslist[i].getPoints*practiceslist[i].getList.length;
+   practiceslist[i].falseTask();
+      break;
+    }
   }
   practiceslist[i].resetCounter();
 }
@@ -90,12 +99,31 @@ int indexTask(String name){
     case 'Leer':return 6;
     case 'Pausa activa':return 7;
     case 'Tomar una siesta':return 8;
-    case 'Tiempo fuera de las pantallas':return 9;
+    case 'Sin ver pantallas':return 9;
     case 'Actividad/Hobby':return 10;
     default:0;
   }
   return 0;
 }
+
+var userList=<User>[].obs;
+
+List<User> get getUserList=>userList;
+
+void addUser(User user){
+   userList.add(user);
+}
+
+User searchUser(String email){
+   for(int i=0;i<userList.length;i++){
+      if(userList[i].email==email){
+        // debugPrint(userList[i].getTask[0].name);
+     return userList[i];
+      }
+   } 
+   return User(name:" ",email:" ",password:"",pts:0);
+}
+
 
   // practices1  
   var p1=7.obs; //Valor meta
@@ -171,6 +199,24 @@ int indexTask(String name){
   int get p8inpracticeValue=>p8inpractice.value;
   bool get p8choosenValue=>p8choosen.value;
 
+   //  practice9
+  var p9=30.obs;
+  var p9inpractice=0.obs;
+  var p9choosen=false.obs;
+  var p9finish=false.obs;
+
+  int get  p9Value=>p9.value;
+  int get p9inpracticeValue=>p9inpractice.value;
+  bool get p9choosenValue=>p9choosen.value;
+
+//practice 10
+var p10 = <String>[].obs;
+ var p10inpractice=<bool>[].obs;
+ var p10choosen=false.obs;
+
+ List<String> get p10List =>p10;
+ bool get p10ChoosenValue=>p10choosen.value;
+
   increment(int index){
     switch(index){
       case 1:
@@ -199,6 +245,11 @@ int indexTask(String name){
      }
      break;
      
+     case 9:
+     if(p9.value!=300){
+      p9.value+=30;
+     }
+     break;
     }
   }
 
@@ -227,6 +278,11 @@ int indexTask(String name){
         p8.value-=5;
     }    
     break;  
+    case 9:
+    if(p9.value!=30){
+        p9.value-=30;
+    }
+    break;
     }
     
   }
@@ -254,6 +310,12 @@ int indexTask(String name){
       case 8:
       p8.value=20;
       break;
+      case 9:
+      p9.value=30;
+      break;
+      case 10:
+      p10List.clear();
+      break;
     }
   }
 
@@ -268,6 +330,10 @@ int indexTask(String name){
       break;
       case 5:
       listp5.add(value);
+      break;
+      case 10:
+      p10.add(value);
+      break;
     }
    }
 
@@ -279,6 +345,8 @@ int indexTask(String name){
       case 4:
       p4.removeAt(index);
       break;
+      case 10:
+      p10.removeAt(index);
     }
    }
 
@@ -322,11 +390,19 @@ int indexTask(String name){
       break;
       case 8:p8choosen.value=true;
       break;
+      case 9:p9choosen.value=true;
+      break;
+      case 10:p10choosen.value=true;
+      break;
     }
     npractices++;
   }
 
+   var goals=<Goal>[];
+   List<Goal> get getGoals=>goals;
+
   void nochoosen(int index){
+     goals.add(Goal(id: index));
     switch(index){
       case 1: p1choosen.value=false;
       break;
@@ -344,8 +420,13 @@ int indexTask(String name){
       break;
       case 8:p8choosen.value=false;
       break;
+      case 9:p9choosen.value=false;
+      break;
+       case 10:p10choosen.value=false;
+      break;
 
     }
+   
     reset(index);
     npractices--;
   }
@@ -362,6 +443,7 @@ int indexTask(String name){
       break;
       case 8:p8.value=counter; 
       break;
+      case 9:p9.value=counter;
     }
  }
 
@@ -373,6 +455,9 @@ int indexTask(String name){
       case 4:
      p4.value=list;
      break;
+     case 10:
+     p10.value=list;
+     break;
     }
   }
 
@@ -380,11 +465,68 @@ int indexTask(String name){
  void resetall(){
     controller.reset();
     practiceslist.value=[];
-    for(int i=1;i<=8;i++){
+    for(int i=1;i<=10;i++){
       nochoosen(i);
     }
     npractices.value=0;
 
+  }
+
+
+  void logout(){
+    debugPrint(practiceslist[0].name);
+    User user=User(name:controller.nameValue, 
+    email:controller.emailValue, 
+    password:controller.passwordValue,
+    pts:controller.getPts);
+    user.addList(getpracticeslist);
+    if(verifyUser(controller.emailValue)){
+       for(int i=0;i<userList.length;i++){
+        if(userList[i].email==controller.emailValue){
+          userList[i]=user;
+          break;
+        }
+       }
+    }else{
+     userList.add(user);
+    }
+    
+  }
+   
+  bool verifyUser(String email){
+    for(int i=0;i<userList.length;i++){
+      debugPrint(userList[i].email);
+      if(userList[i].email==email){
+        return true;
+      }
+    }
+    return false;
+  }
+  void login(String email){
+   User user=searchUser(email);
+   
+   controller.emailpassword(user.email, user.password);
+   controller.changename(user.name);
+   controller.setpts(user.pts);
+   debugPrint(user.getTask[0].name);
+   practiceslist.value=List.from(user.getTask);
+   for(int i=0; i<practiceslist.length;i++){
+    choosen(practiceslist[i].id);
+    switch(practiceslist[i].id){
+      case 1||3||6||7||8:
+      setterCounter(practiceslist[i].id, practiceslist[i].getGoalCounter);
+      break;
+      case 2||4||5||10:
+      setterList(practiceslist[i].id, practiceslist[i].getList);
+      break;
+    }
+   }
+  }
+
+  void readpractices(){
+    for(int i=0;i<practiceslist.length;i++){
+      debugPrint(practiceslist[i].name);
+    }
   }
 
 

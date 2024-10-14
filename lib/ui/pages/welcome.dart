@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/initial.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/pages/initial.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({super.key});
@@ -54,7 +54,7 @@ class _QuestionPageState extends State<QuestionPage> {
             ),
             const SizedBox(height: 20),
             FadeInUp(
-                duration: Duration(milliseconds: 1000),
+                duration: const Duration(milliseconds: 1000),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

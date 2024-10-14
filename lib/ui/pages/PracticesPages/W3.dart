@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/PracticeClass.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
-class Practice1 extends StatefulWidget {
-  const Practice1({super.key});
+import '../../Controller/PracticeClass.dart';
+
+class Practice3 extends StatefulWidget {
+  const Practice3({super.key});
 
   @override
-  _Practice1State createState() => _Practice1State();
+  _Practice3State createState() => _Practice3State();
 }
 
-class _Practice1State extends State<Practice1> {
+class _Practice3State extends State<Practice3> {
   Practicecontroller controller = Get.find();
-  final String name="Tomar agua";
-  int n=0;
- 
+ final String name="Caminar/Trotar";
+ int n=0;
+
   @override
   Widget build(BuildContext context) {
     Task task;
-    n=controller.p1Value;
+    n=controller.p3Value;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
-          onPressed: () {    
-           if(controller.editingValue){
+          onPressed: () {
+            if(controller.editingValue){
             Get.off(()=>Practices());
-            controller.setterCounter(1, n);
+            controller.setterCounter(3, n);
             controller.changeEditing(false);
            }else{
             Get.off(()=>Practices());
-           controller.reset(1);
+           controller.reset(3);
            }
           },
           icon: const Icon(
@@ -39,31 +40,31 @@ class _Practice1State extends State<Practice1> {
             size: 20,
             color: Colors.black,
           ),
-        )
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-             Text(
-              'Consumo de Agua',
+            Text(
+              'Tiempo de Caminar o Trote',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             Text(
-              '(2 pts)',
+              '(3 pts)',
               style: TextStyle(
                 fontSize: 18,
-                color: Theme.of(context).colorScheme.primary
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Establezca el numero de vasos de agua que desea tomar hoy para mantenerse hidratado.',
+              'Establezca el tiempo (en minutos) que desea dedicar a trotar o caminar hoy para mejorar su resistencia',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -73,7 +74,9 @@ class _Practice1State extends State<Practice1> {
               children: [
                 // Botón de decremento
                 ElevatedButton(
-                  onPressed:() {controller.decrement(1);},
+                  onPressed: () {
+                    controller.decrement(3);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -86,13 +89,15 @@ class _Practice1State extends State<Practice1> {
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p1Value}',
+                  '${controller.p3Value}',
                   style: const TextStyle(fontSize: 40),
                 )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
-                  onPressed:() {controller.increment(1);},
+                  onPressed: () {
+                    controller.increment(3);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -107,12 +112,13 @@ class _Practice1State extends State<Practice1> {
             const SizedBox(height: 40),
             // Botón de aceptar
             ElevatedButton(
-              onPressed: (){
-              if(controller.p1choosenValue){
-                controller.editpractice(name,'${controller.p1Value} vasos');
+              onPressed: () {
+               if(controller.p3choosenValue){
+                controller.editpractice(name,'${controller.p3Value} minutos');
               }else{
-                controller.choosen(1);
-              task=Task(name:name,goal:'${controller.p1Value} vasos',pts:2);
+                controller.choosen(3);
+              task=Task(id:3,name:name,goal:'${controller.p3Value} minutos',pts:2);
+              task.goalCounterValue(controller.p3Value);
               controller.addpractices(task);
               }
               Get.off(()=>Practices());

@@ -2,23 +2,23 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/PracticesPages/W1.dart';
-import 'package:my_app/pages/PracticesPages/W2.dart';
-import 'package:my_app/pages/PracticesPages/W3.dart';
-import 'package:my_app/pages/PracticesPages/W4.dart';
-import 'package:my_app/pages/PracticesPages/W5.dart';
-import 'package:my_app/pages/PracticesPages/W6.dart';
-import 'package:my_app/pages/PracticesPages/W7.dart';
-import 'package:my_app/pages/PracticesPages/W8.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/practices.dart';
-import 'package:my_app/pages/welcome.dart';
-import 'package:my_app/pages/task_manager.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/PracticesPages/W1.dart';
+import 'package:my_app/ui/pages/PracticesPages/W2.dart';
+import 'package:my_app/ui/pages/PracticesPages/W3.dart';
+import 'package:my_app/ui/pages/PracticesPages/W4.dart';
+import 'package:my_app/ui/pages/PracticesPages/W5.dart';
+import 'package:my_app/ui/pages/PracticesPages/W6.dart';
+import 'package:my_app/ui/pages/PracticesPages/W7.dart';
+import 'package:my_app/ui/pages/PracticesPages/W8.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/practices.dart';
+import 'package:my_app/ui/pages/welcome.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
 import 'package:lottie/lottie.dart';
-import 'login.dart';
-import 'signup.dart';
+import 'ui/pages/login.dart';
+import 'ui/pages/signup.dart';
 
 void main() {
   Get.put(Accountcontroller(), permanent: true);
@@ -46,10 +46,10 @@ void main() {
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,,
-    initialRoute: '/Home',
+    initialRoute: '/Initial',
     getPages: [
       GetPage(name: '/Home', page: () => const HomePage()),
-      GetPage(name: '/Login', page: () => LoginPage()),
+      GetPage(name: '/Login', page: () => const LoginPage()),
       GetPage(name: '/SignUp', page: () => const SignupPage()),
       GetPage(name: '/Welcome', page: () => const QuestionPage()),
       GetPage(name: '/Initial', page: () => const InitialPage()),

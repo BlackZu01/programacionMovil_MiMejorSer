@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/Widgets/Reset.dart';
-import 'package:my_app/pages/Widgets/WP1.dart';
-import 'package:my_app/pages/login.dart';
-import 'package:my_app/pages/practices.dart';
-import 'package:my_app/Controller/PracticeClass.dart';
-import 'package:my_app/pages/task_manager.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/Widgets/Reset.dart';
+import 'package:my_app/ui/pages/Widgets/WP1.dart';
+import 'package:my_app/ui/pages/login.dart';
+import 'package:my_app/ui/pages/practices.dart';
+import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
 
 class InitialPage extends StatefulWidget {
-  const InitialPage({Key? key}) : super(key: key);
+  const InitialPage({super.key});
 
   @override
   _InitialPage createState() => _InitialPage();
@@ -122,8 +122,9 @@ class _InitialPage extends State<InitialPage> {
                       const Divider(),
                       Center(child:
                       TextButton(onPressed: (){
+                      controllerp.logout();
                       controllerp.resetall();
-                      Get.off(()=>LoginPage());
+                      Get.off(()=> const LoginPage());
                       }, child: Text("Cerrar sesion",
                       style: TextStyle(color:Theme.of(context).colorScheme.tertiary, fontSize: 14,)))),
                     ],
@@ -181,13 +182,13 @@ class _InitialPage extends State<InitialPage> {
             ),
             const SizedBox(height: 20),
             Row(children: [
-              const Text(
+              const Expanded(flex:2,child:  Text(
               "TAREAS DE HOY",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
-            ),const SizedBox(width: 190,),
+            )),
             IconButton(onPressed: (){
               points=controllerp.resetDay();
                 controlleraccount.addpts(points);
@@ -218,7 +219,7 @@ class _InitialPage extends State<InitialPage> {
                         ),
                       ),
                     )
-                  : Obx(()=>ListView.builder(
+                  : ListView.builder(
                       itemCount: controllerp.getpracticeslist.length,
                       itemBuilder: (context, index) {
                         return TaskCard(
@@ -236,7 +237,7 @@ class _InitialPage extends State<InitialPage> {
                           },
                         );
                       },
-                    ));
+                    );
               })
             ),
             Center(

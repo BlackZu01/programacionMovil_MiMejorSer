@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/PracticesPages/W1.dart';
-import 'package:my_app/pages/PracticesPages/W2.dart';
-import 'package:my_app/pages/PracticesPages/W3.dart';
-import 'package:my_app/pages/PracticesPages/W4.dart';
-import 'package:my_app/pages/PracticesPages/W5.dart';
-import 'package:my_app/pages/PracticesPages/W6.dart';
-import 'package:my_app/pages/PracticesPages/W7.dart';
-import 'package:my_app/pages/PracticesPages/W8.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/Widgets/edit.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/task_manager.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/PracticesPages/W1.dart';
+import 'package:my_app/ui/pages/PracticesPages/W10.dart';
+import 'package:my_app/ui/pages/PracticesPages/W2.dart';
+import 'package:my_app/ui/pages/PracticesPages/W3.dart';
+import 'package:my_app/ui/pages/PracticesPages/W4.dart';
+import 'package:my_app/ui/pages/PracticesPages/W5.dart';
+import 'package:my_app/ui/pages/PracticesPages/W6.dart';
+import 'package:my_app/ui/pages/PracticesPages/W7.dart';
+import 'package:my_app/ui/pages/PracticesPages/W8.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/pages/PracticesPages/W9.dart';
+import 'package:my_app/ui/pages/Widgets/edit.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/login.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
 
 
 // ignore: use_key_in_widget_constructors
@@ -26,8 +29,8 @@ class Practices extends StatelessWidget {
     {"icon": Icons.auto_stories, "text": "Leer"},
     {"icon": Icons.pause_circle, "text": "Pausa activa"},
     {"icon": Icons.hotel, "text": "Tomar una siesta"},
-    {"icon": Icons.tv_off, "text": "Tiempo fuera de las pantallas"},
-    {"icon": Icons.schedule, "text": "Tiempo libre"},
+    {"icon": Icons.tv_off, "text":"Sin ver pantallas"},
+    {"icon": Icons.schedule, "text": "Actividad/Hobby"},
   ];
 
   get name => null;
@@ -127,6 +130,17 @@ class Practices extends StatelessWidget {
                           color: Colors.green,
                         ),
                       ),
+                      const Divider(),
+                      Center(child:
+                      TextButton(onPressed: (){
+                      
+                      controllerp.logout();
+                      debugPrint("---Listo---");
+                      debugPrint("${controllerp.getUserList}");
+                      controllerp.resetall();
+                      Get.off(()=>const LoginPage());
+                      }, child: Text("Cerrar sesion",
+                      style: TextStyle(color:Theme.of(context).colorScheme.tertiary, fontSize: 14,))))
                     ],
                   ),
                 ),
@@ -236,7 +250,26 @@ class Practices extends StatelessWidget {
                         Get.off(()=>const Practice8());
                        }
                         break;
+                        case 8:  
+                        if(controllerp.p9choosenValue){
+                       showDialog(context: context, builder: (BuildContext context){
+                          return Edit(name: items[index]["text"]);
+                          });
+                       }else{
+                        Get.off(()=>const Practice9());
+                       }
+                        break;
+                         case 9:  
+                        if(controllerp.p10ChoosenValue){
+                       showDialog(context: context, builder: (BuildContext context){
+                          return Edit(name: items[index]["text"]);
+                          });
+                       }else{
+                        Get.off(()=>const Practice10());
+                       }
+                        break;
                       }
+
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.secondary,

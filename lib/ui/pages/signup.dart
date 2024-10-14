@@ -2,8 +2,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/main.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/main.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -30,7 +30,7 @@ class _SignupPageState extends State<SignupPage> {
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         leading: IconButton(
           onPressed: () {
-           Get.off(()=>HomePage());
+           Get.off(()=>const HomePage());
           },
           icon: const Icon(Icons.arrow_back_ios, size: 20, color: Colors.black),
         ),

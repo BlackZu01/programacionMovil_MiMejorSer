@@ -64,7 +64,10 @@ class Accountcontroller extends GetxController{
  addpts(int points){
   pts.value+=points;
  }
-
+ 
+ setpts(int points){
+    pts.value=points;
+ }
  
 
 }

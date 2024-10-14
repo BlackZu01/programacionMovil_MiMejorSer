@@ -1,38 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
-class Practice5 extends StatefulWidget {
-  const Practice5({super.key});
+class Practice10 extends StatefulWidget {
+  const Practice10({super.key});
 
   @override
-  _Practice5State createState() => _Practice5State();
+  _Practice10State createState() => _Practice10State();
 }
 
-class _Practice5State extends State<Practice5> {
+class _Practice10State extends State<Practice10> {
   Practicecontroller controller = Get.find();
-  final TextEditingController exerciseController = TextEditingController();
+  final TextEditingController hobbyController = TextEditingController();
   String error = "";
   bool error2 = false;
-  int hours = 1;
-  int totalhours=0;
-  final String name="Estudiar";
+  final String name = "Actividad/hobby";
+  List<String> list = [];
 
   void repeat() {
+    error2 = true;
     setState(() {
       error2 = true;
-      error = "¡Ya has agregado este tema o asignatura para estudiar!";
-    });
-  }
-
-  void passhours(){
-    error2=true;
-    setState(() {
-      error2=true;
-      error = "¡Estudiar mas de 12 horas es excesivo. Replantea tu horario!";
+      error = "¡Esta actividad ya ha sido agregada!";
     });
   }
 
@@ -43,37 +35,24 @@ class _Practice5State extends State<Practice5> {
     });
   }
 
-  void increaseHours() {
-    setState(() {
-      if(hours<12){
-       hours++;
-      }
-    });
-  }
-
-  void decreaseHours() {
-    if (hours > 1) {
-      setState(() {
-        hours--;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Task task;
+    list = controller.p10List;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-           if(controller.editingValue){
-            Get.off(()=>Practices());
-            controller.changeEditing(false);
-           }else{
-            Get.off(()=>Practices());
-           controller.reset(5);
-           } 
+            if (controller.editingValue) {
+              Get.off(() => Practices());
+              controller.setterList(10, list);
+              controller.changeEditing(false);
+            } else {
+              controller.reset(10);
+              Get.off(() => Practices());
+            }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -88,23 +67,24 @@ class _Practice5State extends State<Practice5> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Registro de Estudios',
+              'Registro de Actividades/Hobbies',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.primary,
               ),
+              textAlign: TextAlign.center,
             ),
             Text(
-              '(2 pts por cada tema o asignatura)',
+              '(1 pt por cada actividad realizada)',
               style: TextStyle(
                 fontSize: 18,
-                color: Theme.of(context).colorScheme.primary
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Escribe que asignatura o tema deseas estudiar y cuantas horas deseas estudiar eso',
+              'Escribe las actividades o hobbies que deseas realizar',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -112,16 +92,21 @@ class _Practice5State extends State<Practice5> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Asignatura o tema que desea estudiar',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary),
+                'Tipo de actividad',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
             const SizedBox(height: 5),
             Row(
               children: [
                 Expanded(
+                  flex: 1,
                   child: TextField(
-                    controller: exerciseController,
+                    controller: hobbyController,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
@@ -129,7 +114,7 @@ class _Practice5State extends State<Practice5> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'Ej: Calculo, Ciencia, Ingles',
+                      hintText: 'Ej: Cantar, Pintar...',
                       hintStyle: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
                       ),
@@ -141,21 +126,13 @@ class _Practice5State extends State<Practice5> {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    if (exerciseController.text.isNotEmpty) {
-                      if (controller.p5.containsKey(exerciseController.text)) {
+                    if (hobbyController.text.isNotEmpty) {
+                      if (controller.p10.contains(hobbyController.text)) {
                         repeat();
                       } else {
-                        if(totalhours+hours>=13){
-                          passhours();
-                        }else{
-                          controller.p5modify(exerciseController.text, hours, 1); 
-                          totalhours+=hours;
-                        exerciseController.clear();
+                        controller.add(10, hobbyController.text);
+                        hobbyController.clear();
                         solve();
-                        setState(() {
-                          hours = 1; 
-                        });
-                        }
                       }
                     }
                   },
@@ -171,39 +148,20 @@ class _Practice5State extends State<Practice5> {
               ],
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: decreaseHours,
-                  icon: Icon(Icons.remove, color: Theme.of(context).colorScheme.primary),
-                ),
-                Text(
-                  '$hours horas',
-                  style: TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.primary),
-                ),
-                IconButton(
-                  onPressed: increaseHours,
-                  icon: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
             error2
                 ? Text(
                     error,
-                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 16),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 16,
+                    ),
                   )
                 : const SizedBox.shrink(),
             const SizedBox(height: 20),
             Expanded(
               child: Obx(() => ListView.builder(
-                    itemCount: controller.p5.length,
+                    itemCount: controller.p10.length,
                     itemBuilder: (context, index) {
-                      String subject = controller.p5.keys.toList()[index];
-                      int hours = controller.p5[subject]!;
-                      String text="$subject - $hours horas";
-                      controller.add(5,text);
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         padding: const EdgeInsets.all(10),
@@ -215,11 +173,11 @@ class _Practice5State extends State<Practice5> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          title: Text(text),
+                          title: Text(controller.p10[index]),
                           trailing: IconButton(
                             icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
                             onPressed: () {
-                             controller.p5modify(subject, 0, 0); // Elimina el elemento
+                              controller.remove(10, index);
                             },
                           ),
                         ),
@@ -227,23 +185,25 @@ class _Practice5State extends State<Practice5> {
                     },
                   )),
             ),
-            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                String plural="";
-                if(controller.p5List.length>1){
-                  plural="s";
+                String plural = "";
+                if (controller.p10List.length > 1) {
+                  plural = "es";
                 }
-                if(controller.p5ChoosenValue){
-                controller.editpractice(name,'${controller.p5List.length} tema$plural');
-                controller.editPracticeList(name, controller.listp5);
-              }else{
-                controller.choosen(5);
-              task=Task(name:name,goal:'${controller.listp5.length} temas$plural',pts:2);
-              task.addList(controller.listp5);
-              controller.addpractices(task);
-              }
-              Get.off(()=>Practices());
+                if (controller.p10ChoosenValue) {
+                  controller.editpractice(name, '${controller.p10List.length} actividad$plural');
+                  controller.editPracticeList(name, controller.p10List);
+                } else {
+                  controller.choosen(10);
+                  task = Task(id:10,
+                      name: name,
+                      goal: '${controller.p10List.length} actividad$plural',
+                      pts: 2);
+                  task.addList(controller.p10List);
+                  controller.addpractices(task);
+                }
+                Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

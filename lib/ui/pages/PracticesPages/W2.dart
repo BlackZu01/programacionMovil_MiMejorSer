@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
@@ -101,7 +101,7 @@ class _Practice2State extends State<Practice2> {
             const SizedBox(height: 5),
             Row(
               children: [
-                Expanded(
+                Expanded(flex:1,
                   child: TextField(
                     controller: foodController,
                     style: TextStyle(
@@ -119,8 +119,7 @@ class _Practice2State extends State<Practice2> {
                       filled: true,
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
+                ),const SizedBox(width: 10,),
                 ElevatedButton(
                   onPressed: () {
                     if (foodController.text.isNotEmpty) {
@@ -141,7 +140,8 @@ class _Practice2State extends State<Practice2> {
                     ),
                   ),
                   child: const Icon(Icons.add, size: 30),
-                ),
+                )
+               ,
               ],
             ),
             const SizedBox(height: 10),
@@ -179,7 +179,7 @@ class _Practice2State extends State<Practice2> {
                     },
                   )),
             ),
-            const SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: () {
                 String plural="";
@@ -191,7 +191,7 @@ class _Practice2State extends State<Practice2> {
                 controller.editPracticeList(name, controller.p2List);
               }else{
                 controller.choosen(2);
-              task=Task(name:name,goal:'${controller.p2List.length} alimentos$plural',pts:2);
+              task=Task(id:2,name:name,goal:'${controller.p2List.length} alimento$plural',pts:2);
               task.addList(controller.p2List);
               controller.addpractices(task);
               }

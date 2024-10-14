@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
@@ -113,7 +113,8 @@ int n=0;
                 controller.editpractice(name,'${controller.p8Value} minutos');
               }else{
                 controller.choosen(8);
-              task=Task(name:name,goal:'${controller.p8Value} minutos',pts:2);
+              task=Task(id:8,name:name,goal:'${controller.p8Value} minutos',pts:2);
+              task.goalCounterValue(controller.p8Value);
               controller.addpractices(task);
               }
               Get.off(()=>Practices());

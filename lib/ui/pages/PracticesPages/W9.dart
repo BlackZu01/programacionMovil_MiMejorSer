@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 import '../../Controller/PracticeClass.dart';
 
-class Practice7 extends StatefulWidget {
-  const Practice7({super.key});
+class Practice9 extends StatefulWidget {
+  const Practice9({super.key});
 
   @override
-  _Practice7State createState() => _Practice7State();
+  _Practice9State createState() => _Practice9State();
 }
 
-class _Practice7State extends State<Practice7> {
+class _Practice9State extends State<Practice9> {
   Practicecontroller controller = Get.find();
+  final String name = "Sin ver pantallas";
+  int n = 0;
 
-final String name="Pausa activa";
-int n=0;
   @override
   Widget build(BuildContext context) {
-    n=controller.p7Value;
     Task task;
+    n = controller.p9Value;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: IconButton(
           onPressed: () {
-           if(controller.editingValue){
-            Get.off(()=>Practices());
-            controller.setterCounter(7, n);
-            controller.changeEditing(false);
-           }else{
-            Get.off(()=>Practices());
-           controller.reset(7);
-           }
+            if (controller.editingValue) {
+              Get.off(() => Practices());
+              controller.setterCounter(9, n);
+              controller.changeEditing(false);
+            } else {
+              Get.off(() => Practices());
+              controller.reset(9);
+            }
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -48,7 +48,7 @@ int n=0;
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Tomar Pausas Saludables',
+              'Sin ver pantallas',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ int n=0;
               ),
             ),
             Text(
-              '(2 pts)',
+              '(3 pts)',
               style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
@@ -64,7 +64,7 @@ int n=0;
             ),
             const SizedBox(height: 20),
             const Text(
-              'Establezca cuántas pausas saludables desea realizar hoy para mejorar su bienestar. Se recomienda pausas entre 10 y 15 minutos',
+              'Establezca el tiempo (en minutos) que desea dedicar sin estar frente a una pantalla para cuidar su salud visual',
               style: TextStyle(fontSize: 22),
               textAlign: TextAlign.center,
             ),
@@ -75,8 +75,8 @@ int n=0;
                 // Botón de decremento
                 ElevatedButton(
                   onPressed: () {
-                    controller.decrement(7);
-                  }, // método para reducir número de pausas
+                    controller.decrement(9);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(
@@ -89,14 +89,14 @@ int n=0;
                 const SizedBox(width: 20),
                 // Contador
                 Obx(() => Text(
-                  '${controller.p7Value}', // valor del número de pausas
+                  '${controller.p9Value}',
                   style: const TextStyle(fontSize: 40),
                 )),
                 const SizedBox(width: 20),
                 // Botón de incremento
                 ElevatedButton(
                   onPressed: () {
-                    controller.increment(7);
+                    controller.increment(9);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -113,14 +113,15 @@ int n=0;
             // Botón de aceptar
             ElevatedButton(
               onPressed: () {
-                 if(controller.p7choosenValue){
-                controller.editpractice(name,'${controller.p7Value} pausas');
-              }else{
-                controller.choosen(7);
-              task=Task(name:name,goal:'${controller.p7Value} pausas',pts:2);
-              controller.addpractices(task);
-              }
-              Get.off(()=>Practices());
+                if (controller.p9choosenValue) {
+                  controller.editpractice(name, '${controller.p9Value} minutos');
+                } else {
+                  controller.choosen(9);
+                  task = Task(id: 9, name: name, goal: '${controller.p9Value} minutos', pts: 2);
+                  task.goalCounterValue(controller.p9Value);
+                  controller.addpractices(task);
+                }
+                Get.off(() => Practices());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,

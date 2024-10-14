@@ -2,15 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
 
 class Reset extends StatelessWidget {
   final Practicecontroller controller = Get.find();
   final int points;
 
+
+
   Reset({super.key, required this.points});
   
- 
+ void puntos(){
+   
+ }
 
   @override
   Widget build(BuildContext context) {

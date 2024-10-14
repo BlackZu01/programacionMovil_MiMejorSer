@@ -2,13 +2,15 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/main.dart';
-import 'package:my_app/pages/welcome.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/main.dart';
 
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
 
 
 
@@ -21,7 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
  final Accountcontroller controller = Get.find();
-
+ final Practicecontroller controllerp = Get.find();
+ 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -34,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         leading: IconButton(
           onPressed: () {
-           Get.off(()=>HomePage());
+           Get.off(()=>const HomePage());
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -124,6 +127,10 @@ class _LoginPageState extends State<LoginPage> {
                                ) {
                                 controller.setname(index);
                               controller.emailpassword(emailController.text, passwordController.text);
+                              bool op=controllerp.verifyUser(emailController.text);
+                              if(op){
+                                controllerp.login(emailController.text);
+                              }
                               Get.off(()=>const InitialPage());
                               
                             } else {

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/accountController.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/Widgets/edit.dart';
-import 'package:my_app/pages/initial.dart';
-import 'package:my_app/pages/practices.dart';
+import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/Widgets/edit.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/login.dart';
+import 'package:my_app/ui/pages/practices.dart';
 
 class TaskAdminPage extends StatefulWidget {
-  const TaskAdminPage({Key? key}) : super(key: key);
+  const TaskAdminPage({super.key});
 
   @override
   _TaskAdminPageState createState() => _TaskAdminPageState();
@@ -112,6 +113,14 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                           color: Colors.green,
                         ),
                       ),
+                      const Divider(),
+                      Center(child:
+                      TextButton(onPressed: (){
+                      controllerPractice.logout();
+                      controllerPractice.resetall();
+                      Get.off(()=>LoginPage());
+                      }, child: Text("Cerrar sesion",
+                      style: TextStyle(color:Theme.of(context).colorScheme.tertiary, fontSize: 14,))))
                     ],
                   ),
                 ),

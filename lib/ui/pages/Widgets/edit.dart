@@ -1,14 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Controller/practiceController.dart';
-import 'package:my_app/pages/PracticesPages/W2.dart';
-import 'package:my_app/pages/PracticesPages/W3.dart';
-import 'package:my_app/pages/PracticesPages/W4.dart';
-import 'package:my_app/pages/PracticesPages/W5.dart';
-import 'package:my_app/pages/PracticesPages/W6.dart';
-import 'package:my_app/pages/PracticesPages/W7.dart';
-import 'package:my_app/pages/PracticesPages/W8.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
+import 'package:my_app/ui/pages/PracticesPages/W10.dart';
+import 'package:my_app/ui/pages/PracticesPages/W2.dart';
+import 'package:my_app/ui/pages/PracticesPages/W3.dart';
+import 'package:my_app/ui/pages/PracticesPages/W4.dart';
+import 'package:my_app/ui/pages/PracticesPages/W5.dart';
+import 'package:my_app/ui/pages/PracticesPages/W6.dart';
+import 'package:my_app/ui/pages/PracticesPages/W7.dart';
+import 'package:my_app/ui/pages/PracticesPages/W8.dart';
+import 'package:my_app/ui/pages/PracticesPages/W9.dart';
 import '../PracticesPages/W1.dart';
 
 void route(String name){
@@ -29,8 +31,8 @@ void route(String name){
     break;
     case 'Tomar una siesta':Get.off(()=>const Practice8());
     break;
-    case 'Tiempo fuera de las pantallas':
-    case 'Actividad/Hobby':
+    case 'Tiempo fuera de las pantallas':Get.off(()=> const Practice9());
+    case 'Actividad/Hobby':Get.off(()=>const Practice10());
     default:0;
   }
 
