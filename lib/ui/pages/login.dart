@@ -63,7 +63,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "Iniciar sesión",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary),
                           )),
                       const SizedBox(
@@ -74,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "Inicia sesión con tu cuenta",
                             style: TextStyle(
-                                fontSize: 15, color: Theme.of(context).colorScheme.primary),
+                                fontSize: 15,
+                                color: Theme.of(context).colorScheme.primary),
                           )),
                     ],
                   ),
@@ -115,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                             right: BorderSide(color: Colors.black),
                           ),
                         ),
-                        child:MaterialButton(
+                        child: MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
@@ -150,9 +152,10 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "Iniciar sesión",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18,
-                                color:Theme.of(context).colorScheme.primary ,
-                                ),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ),
                       ),
@@ -198,8 +201,10 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           label,
-          style:  TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.primary),
+          style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.primary),
         ),
         const SizedBox(
           height: 5,

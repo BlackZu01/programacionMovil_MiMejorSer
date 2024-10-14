@@ -90,7 +90,9 @@ class _QuestionPageState extends State<QuestionPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         onPressed: () {
-                          controller.changename(controller.obtainName(controller.emailGetList.indexOf(controller.emailValue)));
+                          controller.changename(controller.obtainName(controller
+                              .emailGetList
+                              .indexOf(controller.emailValue)));
                           goToInit(context, controller.nameValue);
                         },
                         child: const Text('Crear nueva lista')),
@@ -103,6 +105,6 @@ class _QuestionPageState extends State<QuestionPage> {
   }
 
   void goToInit(BuildContext context, String text) {
-      Get.off(()=>const InitialPage());
+    Get.off(() => const InitialPage());
   }
 }

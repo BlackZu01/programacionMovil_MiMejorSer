@@ -14,7 +14,6 @@ import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/pages/PracticesPages/W9.dart';
 import 'package:my_app/ui/pages/Widgets/edit.dart';
 import 'package:my_app/ui/pages/initial.dart';
-import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 
 
@@ -41,113 +40,138 @@ class Practices extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 6, // Mayor elevación para dar profundidad
-        backgroundColor: Colors.transparent, // Fondo transparente
-        flexibleSpace: Container(
+        title: const Text('Mi Mejor Ser'),
+        backgroundColor: Colors.greenAccent.shade200,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        child: Container(
+          height: 100,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.greenAccent.shade200, Colors.tealAccent.shade400,
-                Theme.of(context).colorScheme.inversePrimary,
+                Colors.greenAccent.shade200,
+                Colors.tealAccent.shade400,
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-          ),
-        ),
-        leading: Padding(
-          padding:
-              const EdgeInsets.only(left: 16), // Padding en el lado izquierdo
-          child: IconButton(
-            onPressed: () {
-              Get.off(()=>const InitialPage());
-            },
-            icon: const Icon(
-              Icons.home_outlined,
-              size: 30,
-              color: Colors.white, // Cambia el color para que contraste mejor
-            ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(
-                right: 8), // Padding para la parte derecha
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.add_circle_outline,
-                  color: Color.fromARGB(255, 206, 204, 204),
-                  size: 28), // Ícono con color blanco
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                right: 8), // Padding para la parte derecha
-            child: IconButton(
-              onPressed: () {
-                Get.off(()=>const TaskAdminPage());
-              },
-              icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                right: 16), // Padding extra en el PopupMenu
-            child: PopupMenuButton(
-              icon: const Icon(Icons.person_outline,
-                  size: 30, color: Colors.white),
-              offset: const Offset(0, 50),
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15), // Redondea el popup
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 4),
+                blurRadius: 8,
               ),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nombre: ${controller.nameValue}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      Text(
-                        'Correo: ${controller.emailValue}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      const Divider(),
-                     Text(
-                        'Puntos: ${controller.getPts}',
-                        style:const TextStyle(
-                          fontSize: 14,
-                          color: Colors.green,
-                        ),
-                      ),
-                      const Divider(),
-                      Center(child:
-                      TextButton(onPressed: (){
-                      
-                      controllerp.logout();
-                      debugPrint("---Listo---");
-                      debugPrint("${controllerp.getUserList}");
-                      controllerp.resetall();
-                      Get.off(()=>const LoginPage());
-                      }, child: Text("Cerrar sesion",
-                      style: TextStyle(color:Theme.of(context).colorScheme.tertiary, fontSize: 14,))))
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            ],
           ),
-        ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Boton home
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: IconButton(
+                  onPressed: () {
+                    Get.off(() => const InitialPage());
+                  },
+                  icon: const Icon(
+                    Icons.home_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                  splashRadius: 24,
+                ),
+              ),
+              Row(
+                children: [
+                  // Boton de administrar tareas
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.off(() => const TaskAdminPage());
+                      },
+                      icon: const Icon(
+                        Icons.list_alt,
+                        size: 28,
+                        color: Colors.white,
+                      ),
+                      splashRadius: 24,
+                    ),
+                  ),
+                  // Boton del perfil
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: PopupMenuButton(
+                      icon: const Icon(
+                        Icons.person_outline,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                      offset: const Offset(0, 50),
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nombre: ${controller.nameValue}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              Text(
+                                'Correo: ${controller.emailValue}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                              const Divider(),
+                              Text(
+                                'Puntos: ${controller.getPts}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              const Divider(),
+                              Center(
+                                child: TextButton(
+                                  onPressed: () {
+                                    controllerp.logout();
+                                   controllerp.resetall();
+                                  },
+                                  child: Text(
+                                    "Cerrar sesión",
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

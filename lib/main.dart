@@ -55,14 +55,14 @@ void main() {
       GetPage(name: '/Initial', page: () => const InitialPage()),
       GetPage(name: '/task_manager', page: () => const TaskAdminPage()),
       GetPage(name: '/Practices', page: () => Practices()),
-      GetPage(name:'/Practice1',page:()=> const Practice1()),
-      GetPage(name:'/Practice2',page:()=> const Practice2()),
-      GetPage(name:'/Practice3',page:()=> const Practice3()),
-      GetPage(name:'/Practice4',page:()=> const Practice4()),
-      GetPage(name:'/Practice5',page:()=> const Practice5()),
-      GetPage(name:'/Practice6',page:()=> const Practice6()),
-      GetPage(name:'/Practice7',page:()=> const Practice7()),
-      GetPage(name:'/Practice8',page:()=> const Practice8())
+      GetPage(name: '/Practice1', page: () => const Practice1()),
+      GetPage(name: '/Practice2', page: () => const Practice2()),
+      GetPage(name: '/Practice3', page: () => const Practice3()),
+      GetPage(name: '/Practice4', page: () => const Practice4()),
+      GetPage(name: '/Practice5', page: () => const Practice5()),
+      GetPage(name: '/Practice6', page: () => const Practice6()),
+      GetPage(name: '/Practice7', page: () => const Practice7()),
+      GetPage(name: '/Practice8', page: () => const Practice8())
     ],
   ));
 }
@@ -115,7 +115,6 @@ class HomePage extends StatelessWidget {
                       duration: const Duration(milliseconds: 1500),
                       child: MaterialButton(
                         minWidth: double.infinity,
-                        height: 60,
                         onPressed: () {
                           Get.off(() => LoginPage());
                         },
@@ -145,7 +144,6 @@ class HomePage extends StatelessWidget {
                             )),
                         child: MaterialButton(
                           minWidth: double.infinity,
-                          height: 60,
                           onPressed: () {
                             Get.to(() => const SignupPage());
                           },

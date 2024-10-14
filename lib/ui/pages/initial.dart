@@ -4,13 +4,12 @@ import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/Widgets/Reset.dart';
 import 'package:my_app/ui/pages/Widgets/WP1.dart';
-import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
 import 'package:my_app/ui/Controller/PracticeClass.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 
 class InitialPage extends StatefulWidget {
-  const InitialPage({super.key});
+  const InitialPage({Key? key}) : super(key: key);
 
   @override
   _InitialPage createState() => _InitialPage();
@@ -20,120 +19,143 @@ class _InitialPage extends State<InitialPage> {
   final Accountcontroller controlleraccount = Get.find();
   final Practicecontroller controllerp = Get.find();
   int completedGoals = 0;
-  int points=0;
+  int points = 0;
 
   @override
   Widget build(BuildContext context) {
-     // Obtener el número total de tareas
+    // Obtener el número total de tareas
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F4FB),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 100,
+        title: const Text('Mi Mejor Ser'),
+        backgroundColor: Colors.greenAccent.shade200,
         elevation: 0,
-        flexibleSpace: Container(
-          decoration:  BoxDecoration(
+        centerTitle: true,
+      ),
+      backgroundColor: const Color(0xFFF5F4FB),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        child: Container(
+          height: 100,
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-               Colors.greenAccent.shade200, Colors.tealAccent.shade400,
-              ], // Degradado de colores
+                Colors.greenAccent.shade200,
+                Colors.tealAccent.shade400,
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: const [
               BoxShadow(
-                color: Colors.black26, // Sombra suave
+                color: Colors.black26,
                 offset: Offset(0, 4),
                 blurRadius: 8,
               ),
             ],
           ),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: IconButton(
-            onPressed: () {},
-            icon:
-                const Icon(Icons.home_outlined, size: 30, color: Colors.white),
-            splashRadius: 24, // Radio del efecto de splash
-          ),
-        ),
-        centerTitle: true, // Centrar el título
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: IconButton(
-              onPressed: () {
-                Get.off(()=> Practices());
-              },
-              icon: const Icon(Icons.add_circle_outline,
-                  color: Colors.white, size: 28),
-              splashRadius: 24,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: IconButton(
-              onPressed: () {
-                Get.off(()=>const TaskAdminPage());
-              },
-              icon: const Icon(Icons.list_alt, color: Colors.white, size: 28),
-              splashRadius: 24,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: PopupMenuButton(
-              icon: const Icon(Icons.person_outline,
-                  size: 30, color: Colors.white),
-              offset: const Offset(0, 50),
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nombre: ${controlleraccount.nameValue}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      Text(
-                        'Correo: ${controlleraccount.emailValue}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      const Divider(),
-                       Text(
-                        'Puntos: ${controlleraccount.getPts}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      const Divider(),
-                      Center(child:
-                      TextButton(onPressed: (){
-                      controllerp.logout();
-                      controllerp.resetall();
-                      Get.off(()=> const LoginPage());
-                      }, child: Text("Cerrar sesion",
-                      style: TextStyle(color:Theme.of(context).colorScheme.tertiary, fontSize: 14,)))),
-                    ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Boton home
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.home_outlined,
+                    size: 30,
+                    color: Colors.white,
                   ),
+                  splashRadius: 24,
                 ),
-              ],
-            ),
+              ),
+              Row(
+                children: [
+                  // Boton de administrar tareas
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.off(() => const TaskAdminPage());
+                      },
+                      icon: const Icon(
+                        Icons.list_alt,
+                        size: 28,
+                        color: Colors.white,
+                      ),
+                      splashRadius: 24,
+                    ),
+                  ),
+                  // Boton del perfil
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: PopupMenuButton(
+                      icon: const Icon(
+                        Icons.person_outline,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                      offset: const Offset(0, 50),
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nombre: ${controlleraccount.nameValue}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              Text(
+                                'Correo: ${controlleraccount.emailValue}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                              const Divider(),
+                              Text(
+                                'Puntos: ${controlleraccount.getPts}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              const Divider(),
+                              Center(
+                                child: TextButton(
+                                  onPressed: () {
+                                    // Creo q no hemos implementado algo para salir de la sesion
+                                  },
+                                  child: Text(
+                                    "Cerrar sesión",
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -155,61 +177,73 @@ class _InitialPage extends State<InitialPage> {
                 ],
               ),
               child:
-              //  int totalTasks = controllerp.getnpractices;
-              Obx(() { int totalTasks = controllerp.getnpractices;
-               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                   Text(((completedGoals/totalTasks)!=1)?
-                    "Vamos, ponle animo y completa tus tareas diarias":
-                    "Felicidades,has completado tus tareas",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                  //  int totalTasks = controllerp.getnpractices;
+                  Obx(() {
+                int totalTasks = controllerp.getnpractices;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ((completedGoals / totalTasks) != 1)
+                          ? "Vamos, ponle animo y completa tus tareas diarias"
+                          : "Felicidades,has completado tus tareas",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text('$completedGoals/$totalTasks objetivos completados'),
-                  const SizedBox(height: 10),
-                  LinearProgressIndicator(
-                    value: totalTasks > 0 ? completedGoals / totalTasks : 0, // Asegurarse de que no se divida entre 0
-                    backgroundColor: Colors.grey[300],
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.secondary),
-                  ),
-                ],
-              );
+                    const SizedBox(height: 8),
+                    Text('$completedGoals/$totalTasks objetivos completados'),
+                    const SizedBox(height: 10),
+                    LinearProgressIndicator(
+                      value: totalTasks > 0
+                          ? completedGoals / totalTasks
+                          : 0, // Asegurarse de que no se divida entre 0
+                      backgroundColor: Colors.grey[300],
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).colorScheme.secondary),
+                    ),
+                  ],
+                );
               }),
             ),
             const SizedBox(height: 20),
-            Row(children: [
-              const Expanded(flex:2,child:  Text(
-              "TAREAS DE HOY",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            )),
-            IconButton(onPressed: (){
-              points=controllerp.resetDay();
-                controlleraccount.addpts(points);
-                setState(() {
-                  completedGoals=0;
-                });
-                
-              showDialog(context: context, builder: (BuildContext context){
-                return Reset(points: points);
-              });
-              debugPrint('${controllerp.getpracticeslist[0].getstate}');
-            }, icon: Icon(Icons.refresh,
-            color:Theme.of(context).colorScheme.primary))
-            ],),
+            Row(
+              children: [
+                const Text(
+                  "TAREAS DE HOY",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  width: 190,
+                ),
+                IconButton(
+                    onPressed: () {
+                      points = controllerp.resetDay();
+                      controlleraccount.addpts(points);
+                      setState(() {
+                        completedGoals = 0;
+                      });
+
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Reset(points: points);
+                          });
+                      debugPrint('${controllerp.getpracticeslist[0].getstate}');
+                    },
+                    icon: Icon(Icons.refresh,
+                        color: Theme.of(context).colorScheme.primary))
+              ],
+            ),
             const SizedBox(height: 20),
 
             // Mostrar tareas o mensaje de que no hay tareas seleccionadas
-            Expanded(
-              child: Obx((){
-                 
-                return controllerp.getpracticeslist.isEmpty
+            Expanded(child: Obx(() {
+              return controllerp.getpracticeslist.isEmpty
                   ? const Center(
                       child: Text(
                         'No has seleccionado tareas.',
