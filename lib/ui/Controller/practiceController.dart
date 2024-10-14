@@ -19,6 +19,10 @@ Accountcontroller controller=Get.find();
 
  bool get editingValue=>editing.value;
 
+ var focusedDay = DateTime.now().obs;
+
+ var completedDays = <Map<String, dynamic>>[].obs;
+
  changeEditing(bool value){
   editing.value=value;
  }
@@ -68,26 +72,51 @@ editPracticeList(String name,List<String> l){
   }
 }
 
-int resetDay(){
-  int points=0;
-for(int i=0;i<practiceslist.length;i++){
-  if(practiceslist[i].getstate){
-    switch(practiceslist[i].getId){
-      case 1||3||6||7||8||9:
-    points+=practiceslist[i].getPoints;
-   practiceslist[i].falseTask();
-   break;
-      case 2||4||5||10:
-      points+=practiceslist[i].getPoints*practiceslist[i].getList.length;
-   practiceslist[i].falseTask();
-      break;
-    }
+  void advanceCalendarOneDay() {
+    focusedDay.value = focusedDay.value.add(const Duration(days: 1));
   }
-  practiceslist[i].resetCounter();
-}
-debugPrint('$points');
-return points;
-}
+
+  bool allTasksCompleted() {
+    for (var task in practiceslist) {
+      if (!task.getstate) {
+        return false; 
+      }
+    }
+    return true; 
+  }
+
+ 
+  int resetDay() {
+    int points = 0;
+    bool allCompleted = allTasksCompleted();
+
+    for (int i = 0; i < practiceslist.length; i++) {
+      if (practiceslist[i].getstate) {
+        switch (practiceslist[i].getId) {
+          case 1 || 3 || 6 || 7 || 8 || 9:
+            points += practiceslist[i].getPoints;
+            practiceslist[i].falseTask();
+            break;
+          case 2 || 4 || 5 || 10:
+            points += practiceslist[i].getPoints * practiceslist[i].getList.length;
+            practiceslist[i].falseTask();
+            break;
+        }
+      }
+      practiceslist[i].resetCounter();
+    }
+
+    completedDays.add({
+      "day": focusedDay.value,
+      "completed": allCompleted,
+    });
+
+    advanceCalendarOneDay();
+    debugPrint('$points');
+    return points;
+  }
+
+  List<Map<String, dynamic>> get getCompletedDays => completedDays;
 
 int indexTask(String name){
   switch(name){

@@ -7,6 +7,7 @@ import 'package:my_app/ui/pages/Widgets/WP1.dart';
 import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
 import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/ui/pages/calendar.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 
 class InitialPage extends StatefulWidget {
@@ -70,95 +71,111 @@ class _InitialPage extends State<InitialPage> {
                   splashRadius: 24,
                 ),
               ),
-              Row(
-                children: [
-                  // Boton de administrar tareas
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: IconButton(
-                      onPressed: () {
-                        Get.off(() => const TaskAdminPage());
-                      },
-                      icon: const Icon(
-                        Icons.list_alt,
-                        size: 28,
-                        color: Colors.white,
-                      ),
-                      splashRadius: 24,
-                    ),
-                  ),
-                  // Boton del perfil
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: PopupMenuButton(
-                      icon: const Icon(
-                        Icons.person_outline,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      offset: const Offset(0, 50),
+            Row(
+              children: [
+                // Botón de calendario
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.to(() => CalendarPage());
+                    },
+                    icon: const Icon(
+                      Icons.calendar_today, // Icono de calendario
+                      size: 28,
                       color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Nombre: ${controlleraccount.nameValue}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.black87,
-                                ),
+                    ),
+                    splashRadius: 24,
+                  ),
+                ),
+                // Botón de administrar tareas
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.off(() => const TaskAdminPage());
+                    },
+                    icon: const Icon(
+                      Icons.list_alt,
+                      size: 28,
+                      color: Colors.white,
+                    ),
+                    splashRadius: 24,
+                  ),
+                ),
+                // Botón del perfil
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: PopupMenuButton(
+                    icon: const Icon(
+                      Icons.person_outline,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                    offset: const Offset(0, 50),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Nombre: ${controlleraccount.nameValue}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black87,
                               ),
-                              Text(
-                                'Correo: ${controlleraccount.emailValue}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey.shade700,
-                                ),
+                            ),
+                            Text(
+                              'Correo: ${controlleraccount.emailValue}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey.shade700,
                               ),
-                              const Divider(),
-                              Text(
-                                'Puntos: ${controlleraccount.getPts}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                            ),
+                            const Divider(),
+                            Text(
+                              'Puntos: ${controlleraccount.getPts}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
-                              const Divider(),
-                             Row(children: [  Icon(Icons.logout,
-                              color:Theme.of(context).colorScheme.tertiary ),
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                Icon(Icons.logout,
+                                    color: Theme.of(context).colorScheme.tertiary),
                                 Center(
-                                child: TextButton(
-                                  onPressed: () {
-                                    controllerp.logout();
-                                   controllerp.resetall();
-                                    Get.off(() => const LoginPage());
-                                  },
-                                  child: Text(
-                                    "Cerrar sesión",
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                      fontSize: 14,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      controllerp.logout();
+                                      controllerp.resetall();
+                                      Get.off(() => const LoginPage());
+                                    },
+                                    child: Text(
+                                      "Cerrar sesión",
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.tertiary,
+                                        fontSize: 14,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                              ],),
-                            ],
-                          ),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
             ],
           ),
         ),
