@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/ui/pages/initial.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,29 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   final Practicecontroller controllerp = Get.find();
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    
+    switch (index) {
+      case 0:
+        Get.off(() => InitialPage()); // Asegúrate de reemplazar 'HomePage' por el nombre de tu página de inicio.
+        break;
+      case 1:
+        Get.off(() => TaskAdminPage());
+        break;
+      case 2:
+        break;
+      case 3:
+        // Si ya estás en la página del calendario, no necesitas hacer nada.
+        break;
+      default:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +51,20 @@ class _CalendarPageState extends State<CalendarPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Obx para la actualización reactiva de la tabla del calendario
             Obx(() => TableCalendar(
               firstDay: DateTime.utc(2020, 1, 1),
               lastDay: DateTime.utc(2030, 12, 31),
               focusedDay: controllerp.focusedDay.value,
-              // Cambiar a true si el día es igual a focusedDay
               selectedDayPredicate: (day) {
                 return isSameDay(controllerp.focusedDay.value, day);
               },
-              // Estilo de los días en el calendario
               calendarStyle: CalendarStyle(
                 todayDecoration: BoxDecoration(
                   color: Colors.teal[200],
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: BoxDecoration(
-                  color: Colors.blue, // Cambia el color a azul para el día seleccionado
+                  color: Colors.blue,
                   shape: BoxShape.circle,
                 ),
                 isTodayHighlighted: true,
@@ -59,16 +81,13 @@ class _CalendarPageState extends State<CalendarPage> {
                   ],
                 ),
               ),
-              // Customización de los días con condicionales
               calendarBuilders: CalendarBuilders(
                 defaultBuilder: (context, day, focusedDay) {
-                  // Encuentra si el día está completado o no
                   var completedDay = controllerp.completedDays.firstWhere(
                     (completed) => isSameDay(completed['day'], day),
-                    orElse: () => {},  // Retorna un mapa vacío si no hay información del día
+                    orElse: () => {},
                   );
 
-                  // Si el día tiene información de completado
                   if (completedDay.isNotEmpty && completedDay['completed'] != null) {
                     bool completed = completedDay['completed'];
                     return Container(
@@ -96,7 +115,6 @@ class _CalendarPageState extends State<CalendarPage> {
                     );
                   }
 
-                  // Estilo por defecto para otros días sin información
                   return Container(
                     margin: const EdgeInsets.all(4.0),
                     alignment: Alignment.center,
@@ -122,16 +140,31 @@ class _CalendarPageState extends State<CalendarPage> {
             )),
             const SizedBox(height: 16),
             // Mostrar el día seleccionado
-            Obx(() => Text(
-              'Día seleccionado: ${controllerp.focusedDay.value.day}/${controllerp.focusedDay.value.month}/${controllerp.focusedDay.value.year}',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.teal,
-              ),
-            )),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Inicio',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Tareas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Calendario',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.teal[700],
+        onTap: _onItemTapped,
       ),
     );
   }

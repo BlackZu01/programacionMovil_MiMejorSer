@@ -41,8 +41,7 @@ class _InitialPage extends State<InitialPage> {
           child: Container(
             height: 100,
             decoration: BoxDecoration(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
               gradient: LinearGradient(
                 colors: [
                   Colors.greenAccent.shade200,
@@ -94,7 +93,7 @@ class _InitialPage extends State<InitialPage> {
                     ),
                     // Boton del perfil
                     Padding(
-                      padding: const EdgeInsets.only(right: 16),
+                      padding: const EdgeInsets.only(right: 8),
                       child: PopupMenuButton(
                         icon: const Icon(
                           Icons.person_outline,
@@ -131,17 +130,14 @@ class _InitialPage extends State<InitialPage> {
                                   'Puntos: ${controlleraccount.getPts}',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 const Divider(),
                                 Row(
                                   children: [
                                     Icon(Icons.logout,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .tertiary),
+                                        color: Theme.of(context).colorScheme.tertiary),
                                     Center(
                                       child: TextButton(
                                         onPressed: () {
@@ -168,12 +164,29 @@ class _InitialPage extends State<InitialPage> {
                         ],
                       ),
                     ),
+                    // Botón del calendario
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: IconButton(
+                        onPressed: () {
+                          // Navega a la página de calendario
+                          Get.off(() => CalendarPage());
+                        },
+                        icon: const Icon(
+                          Icons.calendar_today,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        splashRadius: 24,
+                      ),
+                    ),
                   ],
                 ),
               ],
             ),
           ),
         ),
+
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
