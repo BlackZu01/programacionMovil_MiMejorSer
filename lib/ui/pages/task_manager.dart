@@ -26,99 +26,139 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F4F8),
       appBar: AppBar(
-        toolbarHeight: 90,
-        elevation: 5,
-        backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
+        title: const Text('Mi Mejor Ser'),
+        backgroundColor: Colors.greenAccent.shade200,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      backgroundColor: const Color(0xFFF0F4F8),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        child: Container(
+          height: 100,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.greenAccent.shade200, Colors.tealAccent.shade400],
+              colors: [
+                Colors.greenAccent.shade200,
+                Colors.tealAccent.shade400,
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-          ),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 12.0), // Padding a la izquierda
-          child: IconButton(
-            onPressed: () {
-              Get.off(
-                  () => const InitialPage()); // Regresar a la página inicial
-            },
-            icon: const Icon(
-              Icons.home_outlined,
-              size: 30,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0), // Padding a la derecha
-            child: IconButton(
-              onPressed: () {
-                Get.to(() => Practices()); // Ir a la página de prácticas
-              },
-              icon: const Icon(Icons.add_circle_outline,
-                  color: Colors.white, size: 30),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.list_alt,
-                  color: Color.fromARGB(255, 206, 204, 204), size: 28),
-              splashRadius: 24,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: PopupMenuButton(
-              icon: const Icon(Icons.person_outline,
-                  size: 30, color: Colors.white),
-              offset: const Offset(0, 50),
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 4),
+                blurRadius: 8,
               ),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nombre: ${controllerAccount.nameValue}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      Text(
-                        'Correo: ${controllerAccount.emailValue}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      const Divider(),
-                      Text(
-                        'Puntos: ${controllerAccount.getPts}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ],
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Boton home
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: IconButton(
+                  onPressed: () {
+                    Get.off(() => const InitialPage());
+                  },
+                  icon: const Icon(
+                    Icons.home_outlined,
+                    size: 30,
+                    color: Colors.white,
                   ),
+                  splashRadius: 24,
                 ),
-              ],
-            ),
-          )
-        ],
+              ),
+              Row(
+                children: [
+                  // Boton de administrar tareas
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.off(() => const TaskAdminPage());
+                      },
+                      icon: const Icon(
+                        Icons.list_alt,
+                        size: 28,
+                        color: Colors.white,
+                      ),
+                      splashRadius: 24,
+                    ),
+                  ),
+                  // Boton del perfil
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: PopupMenuButton(
+                      icon: const Icon(
+                        Icons.person_outline,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                      offset: const Offset(0, 50),
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nombre: ${controllerAccount.nameValue}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              Text(
+                                'Correo: ${controllerAccount.emailValue}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                              const Divider(),
+                              Text(
+                                'Puntos: ${controllerAccount.getPts}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              const Divider(),
+                              Center(
+                                child: TextButton(
+                                  onPressed: () {
+                                    // Creo q no hemos implementado algo para salir de la sesion
+                                  },
+                                  child: Text(
+                                    "Cerrar sesión",
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
