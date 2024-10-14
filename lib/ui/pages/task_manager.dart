@@ -8,7 +8,7 @@ import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
 
 class TaskAdminPage extends StatefulWidget {
-  const TaskAdminPage({Key? key}) : super(key: key);
+  const TaskAdminPage({super.key});
 
   @override
   _TaskAdminPageState createState() => _TaskAdminPageState();
@@ -36,9 +36,12 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
       backgroundColor: const Color(0xFFF0F4F8),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
+        padding: const EdgeInsets.symmetric(vertical: 0),
+        height: 75,
         child: Container(
           height: 100,
           decoration: BoxDecoration(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             gradient: LinearGradient(
               colors: [
                 Colors.greenAccent.shade200,
@@ -133,27 +136,32 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                 ),
                               ),
                               const Divider(),
-                              Row(children: [  Icon(Icons.logout,
-                              color:Theme.of(context).colorScheme.tertiary ),
-                                Center(
-                                child: TextButton(
-                                  onPressed: () {
-                                    controllerPractice.logout();
-                                   controllerPractice.resetall();
-                                    Get.off(() => const LoginPage());
-                                  },
-                                  child: Text(
-                                    "Cerrar sesión",
-                                    style: TextStyle(
+                              Row(
+                                children: [
+                                  Icon(Icons.logout,
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .tertiary,
-                                      fontSize: 14,
+                                          .tertiary),
+                                  Center(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        controllerPractice.logout();
+                                        controllerPractice.resetall();
+                                        Get.off(() => const LoginPage());
+                                      },
+                                      child: Text(
+                                        "Cerrar sesión",
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                          fontSize: 14,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
-                              ],),
+                                  )
+                                ],
+                              ),
                             ],
                           ),
                         ),
