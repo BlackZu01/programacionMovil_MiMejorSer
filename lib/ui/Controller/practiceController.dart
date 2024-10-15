@@ -165,7 +165,7 @@ User searchUser(String email){
 
   // practices 2
  var p2 = <String>[].obs;
- var p2inpractice=<bool>[].obs;
+ var p2inpractice=0.obs;
  var p2choosen=false.obs;
 
  List<String> get p2List =>p2;
@@ -183,7 +183,7 @@ User searchUser(String email){
 
    // practices 4
  var p4 = <String>[].obs;
- var p4inpractice=<bool>[].obs;
+ var p4inpractice=0.obs;
  var p4choosen=false.obs;
 
  List<String> get p4List =>p4;
@@ -191,7 +191,7 @@ User searchUser(String email){
 
   // practices 5
  var p5 = <String,int>{}.obs;
- var p5inpractice=<bool>[].obs;
+ var p5inpractice=0.obs;
  var p5choosen=false.obs;
  var listp5=<String>[].obs;
 
@@ -240,7 +240,7 @@ User searchUser(String email){
 
 //practice 10
 var p10 = <String>[].obs;
- var p10inpractice=<bool>[].obs;
+ var p10inpractice=0.obs;
  var p10choosen=false.obs;
 
  List<String> get p10List =>p10;
@@ -282,6 +282,53 @@ var p10 = <String>[].obs;
     }
   }
 
+  incrementInPractice(int index){
+    switch(index){
+      case 1:
+      if(p1inpractice.value!=15){
+        p1inpractice.value++;
+     }
+     break;
+     case 2:
+     p2inpractice.value++;
+     break;
+     case 3:
+     if(p3inpractice.value!=90){
+       p3inpractice.value+=5;  
+     }
+     case 4:
+     p4inpractice.value++;
+     break;
+     case 5:
+     p5inpractice.value++;
+     break;
+     case 6:
+     if(p6inpractice.value!=720){
+       p6inpractice.value+=10;
+     }
+     break;
+     case 7:
+     if(p7inpractice.value!=5){
+      p7inpractice.value++;
+     }
+     break;
+     case 8:
+        if(p8inpractice.value!=90){
+        p8inpractice.value+=5;
+     }
+     break;
+     
+     case 9:
+     if(p9inpractice.value!=300){
+      p9inpractice.value+=30;
+     }
+     break;
+     case 10:
+     p10inpractice.value++;
+     break;
+    }
+  }
+
   decrement(int index){
     switch(index){
       case 1:
@@ -313,7 +360,57 @@ var p10 = <String>[].obs;
     }
     break;
     }
+  }
+
+   decrementInPractice(int index){
+    switch(index){
+      case 1:
+        if(p1inpractice.value!=7){
+        p1inpractice.value--;
+    }
+    case 3:
+    if(p3inpractice.value!=10){
+      p3inpractice.value-=5;
+    }
+      break;
+      case 6:
+      if(p6inpractice.value!=10){
+       p6inpractice.value-=10;
+      }
+      break;
+    case 7:
+    if(p7inpractice.value!=1){
+      p7inpractice.value--;
+    }
+    case 8:
+     if(p8inpractice.value!=20){
+        p8inpractice.value-=5;
+    }    
+    break;  
+    case 9:
+    if(p9inpractice.value!=30){
+        p9inpractice.value-=30;
+    }
+    break;
+    }
     
+  }
+
+  int getInPractice(int index){
+    switch(index){
+      case 1:return p1inpractice.value; 
+      case 2:return p2inpractice.value; 
+      case 3:return p3inpractice.value; 
+      case 4:return p4inpractice.value; 
+      case 5:return p5inpractice.value; 
+      case 6:return p6inpractice.value; 
+      case 7:return p7inpractice.value; 
+      case 8:return p8inpractice.value; 
+      case 9:return p9inpractice.value;
+      case 10:return p10inpractice.value;
+      default:return 0;
+    }
+
   }
 
   reset(int index){

@@ -4,6 +4,7 @@ import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/Widgets/Reset.dart';
 import 'package:my_app/ui/pages/Widgets/WP1.dart';
+import 'package:my_app/ui/pages/Widgets/WP2.dart';
 import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
 import 'package:my_app/ui/Controller/PracticeClass.dart';
@@ -375,15 +376,11 @@ class TaskCard extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      switch (task.getname) {
-                        case 'Tomar agua':
-                          return (WP1(
-                              name: task.getname, limit: controllerp.p1Value));
-                        case 'Pausa activa':
-                          return (WP1(
-                              name: task.getname, limit: controllerp.p7Value));
+                      switch (task.id) {
+                       case 1||3||6||7||8||9: return (WP1(index:task.id));
+                       case 2||4||5||10:return (WP2(list:task.list,name:task.name));
                         default:
-                          return (WP1(name: "", limit: 30));
+                          return (WP1(index:0));
                         // break;
                       }
                     });
