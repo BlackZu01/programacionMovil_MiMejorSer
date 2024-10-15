@@ -63,9 +63,11 @@ class _InitialPage extends State<InitialPage> {
               children: [
                 // Boton home
                 Padding(
-                  padding: const EdgeInsets.only(left: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.off(()=>const InitialPage());
+                    },
                     icon: const Icon(
                       Icons.home_outlined,
                       size: 30,
@@ -73,12 +75,9 @@ class _InitialPage extends State<InitialPage> {
                     ),
                     splashRadius: 24,
                   ),
-                ),
-                Row(
-                  children: [
-                    // Boton de administrar tareas
+                ),      // Boton de administrar tareas
                     Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: IconButton(
                         onPressed: () {
                           Get.off(() => const TaskAdminPage());
@@ -91,9 +90,25 @@ class _InitialPage extends State<InitialPage> {
                         splashRadius: 24,
                       ),
                     ),
+                    // Botón del calendario
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: IconButton(
+                        onPressed: () {
+                          // Navega a la página de calendario
+                          Get.off(() => CalendarPage());
+                        },
+                        icon: const Icon(
+                          Icons.calendar_today,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        splashRadius: 24,
+                      ),
+                    ),
                     // Boton del perfil
                     Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: PopupMenuButton(
                         icon: const Icon(
                           Icons.person_outline,
@@ -164,24 +179,7 @@ class _InitialPage extends State<InitialPage> {
                         ],
                       ),
                     ),
-                    // Botón del calendario
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: IconButton(
-                        onPressed: () {
-                          // Navega a la página de calendario
-                          Get.off(() => CalendarPage());
-                        },
-                        icon: const Icon(
-                          Icons.calendar_today,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                        splashRadius: 24,
-                      ),
-                    ),
-                  ],
-                ),
+                    
               ],
             ),
           ),

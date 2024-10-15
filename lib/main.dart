@@ -47,7 +47,7 @@ void main() {
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,,
-    initialRoute: '/Initial',
+    initialRoute: '/Home',
     getPages: [
       GetPage(name: '/Home', page: () => const HomePage()),
       GetPage(name: '/Login', page: () => const LoginPage()),
