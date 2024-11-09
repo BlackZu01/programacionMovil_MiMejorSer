@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/ui/Controller/PracticeClass.dart';
-import 'package:my_app/ui/Controller/UserClass.dart';
+import 'package:my_app/domain/entities/CalendarDayClass.dart';
+import 'package:my_app/domain/entities/PracticeClass.dart';
+import 'package:my_app/domain/entities/UserClass.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 
 
@@ -20,6 +22,8 @@ Accountcontroller controller=Get.find();
  bool get editingValue=>editing.value;
 
  var focusedDay = DateTime.now().obs;
+ var startday=DateTime.now();
+  bool startdayoption=false;
 
  var completedDays = <Map<String, dynamic>>[].obs;
 
@@ -105,7 +109,11 @@ editPracticeList(String name,List<String> l){
       }
       practiceslist[i].resetCounter();
     }
-
+    
+    if(!startdayoption){
+      startday=focusedDay.value;
+      startdayoption=true;
+    }
     completedDays.add({
       "day": focusedDay.value,
       "completed": allCompleted,
@@ -150,7 +158,7 @@ User searchUser(String email){
      return userList[i];
       }
    } 
-   return User(name:" ",email:" ",password:"",pts:0);
+   return User(name:" ",email:" ",password:"",pts:0,startdate: DateTime.now());
 }
 
 
@@ -600,12 +608,16 @@ var p10 = <String>[].obs;
 
 
   void logout(){
-    debugPrint(practiceslist[0].name);
-    User user=User(name:controller.nameValue, 
+
+      startdayoption=false;
+      User user=User(name:controller.nameValue, 
     email:controller.emailValue, 
     password:controller.passwordValue,
-    pts:controller.getPts);
+    pts:controller.getPts,startdate: startday);
     user.addList(getpracticeslist);
+    user.addDays(getAllCompletedDays());
+    user.setFocusDay(focusedDay.value);
+    restartDate();
     if(verifyUser(controller.emailValue)){
        for(int i=0;i<userList.length;i++){
         if(userList[i].email==controller.emailValue){
@@ -616,6 +628,7 @@ var p10 = <String>[].obs;
     }else{
      userList.add(user);
     }
+
     
   }
    
@@ -629,12 +642,13 @@ var p10 = <String>[].obs;
     return false;
   }
   void login(String email){
+    startdayoption=true;
    User user=searchUser(email);
    
    controller.emailpassword(user.email, user.password);
    controller.changename(user.name);
    controller.setpts(user.pts);
-   debugPrint(user.getTask[0].name);
+   loadUserData(user.startdate,user.getLastDay,user.getDays);
    practiceslist.value=List.from(user.getTask);
    for(int i=0; i<practiceslist.length;i++){
     choosen(practiceslist[i].id);
@@ -655,8 +669,63 @@ var p10 = <String>[].obs;
     }
   }
 
+  var calendarDays = <CalendarDay>[].obs;
+  RxList<DateTime> completedDates = <DateTime>[].obs; 
 
 
+
+
+  void setFocusedDay(DateTime day ){
+    focusedDay.value=day;
+  }
+
+// Carga las fechas para el usuario actual
+  void loadUserData(DateTime startday,DateTime lastday, List<DateTime> userCompletedDates) {
+    
+    completedDates.value = userCompletedDates;
+    focusedDay.value=startday;
+    for (var day in userCompletedDates) {
+      debugPrint("${focusedDay.value}+$day");
+      while(!(isSameDay(focusedDay.value, day))){ 
+          
+
+        completedDays.add({"day":focusedDay.value,"completed":false});
+        advanceCalendarOneDay();
+      }
+        completedDays.add({"day":focusedDay.value,"completed":true});
+         advanceCalendarOneDay();
+    }
+
+    while(!isSameDay(focusedDay.value, lastday)){
+       completedDays.add({"day":focusedDay.value,"completed":false});
+        advanceCalendarOneDay();
+    }
+    
+  }
+
+
+// Restablece el calendario cerrar sesión
+  void restartDate() {
+    
+    completedDates.clear();
+    completedDays.clear();
+    for (var day in calendarDays) {
+      day.completed = false;
+    }
+    focusedDay.value = DateTime.now();
+    calendarDays.refresh(); 
+    completedDates.refresh();
+  }
+
+  List<DateTime> getAllCompletedDays() {
+    List<DateTime>days=[];
+    for(var day in completedDays){
+     if(day["completed"]){
+       days.add(day["day"]);
+     }
+    }
+    return days;
+  }
 
 }
 

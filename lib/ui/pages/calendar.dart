@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/initial.dart';
 import 'package:my_app/ui/pages/login.dart';
-import 'package:my_app/ui/pages/practices.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:get/get.dart';
 
-class CalendarPage extends StatefulWidget {
-  @override
-  _CalendarPageState createState() => _CalendarPageState();
-}
 
-class _CalendarPageState extends State<CalendarPage> {
+class CalendarPage extends StatelessWidget {
   final Practicecontroller controllerp = Get.find();
-  final Accountcontroller controlleraccount=Get.find();
+   final Accountcontroller controlleraccount = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Calendario',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.greenAccent.shade200,
+        title:const Center(child: Text('Calendario de Tareas')),
+        automaticallyImplyLeading: false
       ),
       bottomNavigationBar: BottomAppBar(
           elevation: 0,
@@ -189,6 +180,9 @@ class _CalendarPageState extends State<CalendarPage> {
               selectedDayPredicate: (day) {
                 return isSameDay(controllerp.focusedDay.value, day);
               },
+              onDaySelected: (selectedDay, focusedDay) {
+                controllerp.focusedDay.value = selectedDay;
+              },
               calendarStyle: CalendarStyle(
                 todayDecoration: BoxDecoration(
                   color: Colors.teal[200],
@@ -259,7 +253,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   );
                 },
               ),
-              headerStyle:const  HeaderStyle(
+              headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
                 titleTextStyle: const TextStyle(
@@ -269,18 +263,9 @@ class _CalendarPageState extends State<CalendarPage> {
                 ),
               ),
             )),
-            const SizedBox(height: 16),
-            // Mostrar el día seleccionado
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Get.to(() => Practices()); // Ir a la página de añadir prácticas
-          },
-          backgroundColor: Colors.teal,
-          child: const Icon(Icons.add, color: Colors.white),
-        )
     );
   }
 }

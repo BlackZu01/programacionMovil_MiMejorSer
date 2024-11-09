@@ -7,7 +7,7 @@ import 'package:my_app/ui/pages/Widgets/WP1.dart';
 import 'package:my_app/ui/pages/Widgets/WP2.dart';
 import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
-import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/domain/entities/PracticeClass.dart';
 import 'package:my_app/ui/pages/calendar.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 
@@ -30,6 +30,7 @@ class _InitialPage extends State<InitialPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Mi Mejor Ser'),
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.greenAccent.shade200,
           elevation: 0,
           centerTitle: true,
@@ -372,7 +373,6 @@ class TaskCard extends StatelessWidget {
           const Spacer(),
           IconButton(
               onPressed: () {
-                final Practicecontroller controllerp = Get.find();
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
