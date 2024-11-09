@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/practices.dart';
 
-import '../../Controller/PracticeClass.dart';
+import '../../../domain/entities/PracticeClass.dart';
 
 class Practice9 extends StatefulWidget {
   const Practice9({super.key});
@@ -117,8 +117,8 @@ class _Practice9State extends State<Practice9> {
                   controller.editpractice(name, '${controller.p9Value} minutos');
                 } else {
                   controller.choosen(9);
-                  task = Task(id: 9, name: name, goal: '${controller.p9Value} minutos', pts: 2);
-                  task.goalCounterValue(controller.p9Value);
+                  task = Task(id: 9, name: name, goal: '${controller.p9Value} minutos', pts: 2,
+                   goalCounter:controller.p9Value);
                   controller.addpractices(task);
                 }
                 Get.off(() => Practices());

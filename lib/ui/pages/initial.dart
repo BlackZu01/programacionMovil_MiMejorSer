@@ -7,7 +7,7 @@ import 'package:my_app/ui/pages/Widgets/WP1.dart';
 import 'package:my_app/ui/pages/Widgets/WP2.dart';
 import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/practices.dart';
-import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/domain/entities/PracticeClass.dart';
 import 'package:my_app/ui/pages/calendar.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 
@@ -30,6 +30,7 @@ class _InitialPage extends State<InitialPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Mi Mejor Ser'),
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.greenAccent.shade200,
           elevation: 0,
           centerTitle: true,
@@ -324,9 +325,11 @@ class TaskCard extends StatelessWidget {
   final VoidCallback onStatusChange;
 
   const TaskCard({super.key, required this.task, required this.onStatusChange});
-
+  
+  
   @override
   Widget build(BuildContext context) {
+    Practicecontroller controller=Get.find();
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -341,7 +344,9 @@ class TaskCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      
+      child: Column(children: [
+        Row(
         children: [
           CircleAvatar(
             backgroundColor: task.getstate == false
@@ -372,7 +377,6 @@ class TaskCard extends StatelessWidget {
           const Spacer(),
           IconButton(
               onPressed: () {
-                final Practicecontroller controllerp = Get.find();
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -412,6 +416,17 @@ class TaskCard extends StatelessWidget {
           ),
         ],
       ),
+      // Row(children: [
+      //   LinearProgressIndicator(
+      //                 value: task.getGoalCounter > 0
+      //                     ? controller.getinPractices(task.name) / task.getGoalCounter
+      //                     : 0.0, // Asegurarse de que no se divida entre 0
+      //                 backgroundColor: Colors.grey[300],
+      //                 valueColor: AlwaysStoppedAnimation<Color>(
+      //                     Theme.of(context).colorScheme.secondary),
+      //               )
+      // ],)
+      ],),
     );
   }
 }

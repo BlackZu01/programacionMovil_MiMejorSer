@@ -6,6 +6,7 @@ import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/initial.dart';
 import 'package:my_app/main.dart';
+import 'package:my_app/ui/pages/signup.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -123,6 +124,8 @@ class _LoginPageState extends State<LoginPage> {
                               bool op=controllerp.verifyUser(emailController.text);
                               if(op){
                                 controllerp.login(emailController.text);
+                              }else{
+                                controllerp.restartDate();
                               }
                               Get.off(()=>const InitialPage());
                               
@@ -153,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                         const Text("¿No tienes una cuenta? "),
                          InkWell(
                           onTap: () {
-                            Get.off(() => const LoginPage());
+                            Get.off(() => const SignupPage());
                           },
                           child: const Text(
                             "Registrarse",
