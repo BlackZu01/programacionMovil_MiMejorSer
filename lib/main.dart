@@ -15,6 +15,7 @@ import 'package:my_app/ui/pages/PracticesPages/W8.dart';
 import 'package:my_app/ui/pages/initial.dart';
 import 'package:my_app/ui/pages/practices.dart';
 import 'package:my_app/ui/pages/welcome.dart';
+import 'package:my_app/ui/pages/calendar.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
 import 'package:lottie/lottie.dart';
 import 'ui/pages/login.dart';
@@ -46,7 +47,7 @@ void main() {
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,,
-    initialRoute: '/Initial',
+    initialRoute: '/Home',
     getPages: [
       GetPage(name: '/Home', page: () => const HomePage()),
       GetPage(name: '/Login', page: () => const LoginPage()),
@@ -55,6 +56,7 @@ void main() {
       GetPage(name: '/Initial', page: () => const InitialPage()),
       GetPage(name: '/task_manager', page: () => const TaskAdminPage()),
       GetPage(name: '/Practices', page: () => Practices()),
+      GetPage(name: '/Calendar', page: () => CalendarPage()),
       GetPage(name: '/Practice1', page: () => const Practice1()),
       GetPage(name: '/Practice2', page: () => const Practice2()),
       GetPage(name: '/Practice3', page: () => const Practice3()),

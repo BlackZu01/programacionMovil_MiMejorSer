@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/practices.dart';
 
-import '../../Controller/PracticeClass.dart';
+import '../../../domain/entities/PracticeClass.dart';
 
 class Practice6 extends StatefulWidget {
   const Practice6({super.key});

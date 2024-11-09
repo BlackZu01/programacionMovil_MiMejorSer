@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:my_app/ui/Controller/PracticeClass.dart';
-import 'package:my_app/ui/Controller/practiceController.dart';
 
 class WP2 extends StatelessWidget {
-  final Practicecontroller controller = Get.find();
   final List<String> list;
   final String name;
 
@@ -12,62 +8,56 @@ class WP2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Task task = controller.getpractice(name);
-
     return AlertDialog(
       title: Center(
-          child: Text(
-        'Lista',
-        style: TextStyle(color: Theme.of(context).colorScheme.primary),
-      )), // Título dinámico
-      content: Container(
-        width: double.maxFinite,
-        constraints: const BoxConstraints(
-          maxWidth: 300,
-        ),
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Obx(
-                    () => Text(
-                      "Llevas ${task.getcount}",
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                  ), // Se actualiza automáticamente
-                  ElevatedButton(
-                    onPressed: () {
-                      if (controller.getpractice(name).getcount <
-                          controller.p1Value) {
-                        controller.addcounter(task.getname);
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.inversePrimary),
-                    child: const Icon(Icons.add),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20), // Espaciado entre elementos
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Cierra el diálogo
-              },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Theme.of(context).colorScheme.inversePrimary),
-              child: const Text("Aceptar"),
-            ),
-          ],
+        child: Text(
+          'Lista',
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
+      content: Container(
+        width: double.maxFinite,
+        padding: const EdgeInsets.all(20),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.5, // Máximo 50% de la altura de la pantalla
+          ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.inversePrimary, // Color de fondo
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.primary, // Color del borde
+                  ),
+                  borderRadius: BorderRadius.circular(8), // Bordes redondeados
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  list[index],
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Cierra el diálogo
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          ),
+          child: const Text("Aceptar"),
+        ),
+      ],
     );
   }
 }

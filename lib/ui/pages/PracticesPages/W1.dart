@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/ui/Controller/PracticeClass.dart';
+import 'package:my_app/domain/entities/PracticeClass.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 import 'package:my_app/ui/pages/practices.dart';
 

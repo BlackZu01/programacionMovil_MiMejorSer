@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/ui/Controller/PracticeClass.dart';
-import 'package:my_app/ui/Controller/UserClass.dart';
+import 'package:my_app/domain/entities/CalendarDayClass.dart';
+import 'package:my_app/domain/entities/PracticeClass.dart';
+import 'package:my_app/domain/entities/UserClass.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 
 
@@ -18,6 +20,12 @@ Accountcontroller controller=Get.find();
  var editing=false.obs;
 
  bool get editingValue=>editing.value;
+
+ var focusedDay = DateTime.now().obs;
+ var startday=DateTime.now();
+  bool startdayoption=false;
+
+ var completedDays = <Map<String, dynamic>>[].obs;
 
  changeEditing(bool value){
   editing.value=value;
@@ -68,26 +76,55 @@ editPracticeList(String name,List<String> l){
   }
 }
 
-int resetDay(){
-  int points=0;
-for(int i=0;i<practiceslist.length;i++){
-  if(practiceslist[i].getstate){
-    switch(practiceslist[i].getId){
-      case 1||3||6||7||8||9:
-    points+=practiceslist[i].getPoints;
-   practiceslist[i].falseTask();
-   break;
-      case 2||4||5||10:
-      points+=practiceslist[i].getPoints*practiceslist[i].getList.length;
-   practiceslist[i].falseTask();
-      break;
-    }
+  void advanceCalendarOneDay() {
+    focusedDay.value = focusedDay.value.add(const Duration(days: 1));
   }
-  practiceslist[i].resetCounter();
-}
-debugPrint('$points');
-return points;
-}
+
+  bool allTasksCompleted() {
+    for (var task in practiceslist) {
+      if (!task.getstate) {
+        return false; 
+      }
+    }
+    return true; 
+  }
+
+ 
+  int resetDay() {
+    int points = 0;
+    bool allCompleted = allTasksCompleted();
+
+    for (int i = 0; i < practiceslist.length; i++) {
+      if (practiceslist[i].getstate) {
+        switch (practiceslist[i].getId) {
+          case 1 || 3 || 6 || 7 || 8 || 9:
+            points += practiceslist[i].getPoints;
+            practiceslist[i].falseTask();
+            break;
+          case 2 || 4 || 5 || 10:
+            points += practiceslist[i].getPoints * practiceslist[i].getList.length;
+            practiceslist[i].falseTask();
+            break;
+        }
+      }
+      practiceslist[i].resetCounter();
+    }
+    
+    if(!startdayoption){
+      startday=focusedDay.value;
+      startdayoption=true;
+    }
+    completedDays.add({
+      "day": focusedDay.value,
+      "completed": allCompleted,
+    });
+
+    advanceCalendarOneDay();
+    debugPrint('$points');
+    return points;
+  }
+
+  List<Map<String, dynamic>> get getCompletedDays => completedDays;
 
 int indexTask(String name){
   switch(name){
@@ -121,7 +158,7 @@ User searchUser(String email){
      return userList[i];
       }
    } 
-   return User(name:" ",email:" ",password:"",pts:0);
+   return User(name:" ",email:" ",password:"",pts:0,startdate: DateTime.now());
 }
 
 
@@ -253,6 +290,53 @@ var p10 = <String>[].obs;
     }
   }
 
+  incrementInPractice(int index){
+    switch(index){
+      case 1:
+      if(p1inpractice.value!=15){
+        p1inpractice.value++;
+     }
+     break;
+     case 2:
+     p2inpractice.value++;
+     break;
+     case 3:
+     if(p3inpractice.value!=90){
+       p3inpractice.value+=5;  
+     }
+     case 4:
+     p4inpractice.value++;
+     break;
+     case 5:
+     p5inpractice.value++;
+     break;
+     case 6:
+     if(p6inpractice.value!=720){
+       p6inpractice.value+=10;
+     }
+     break;
+     case 7:
+     if(p7inpractice.value!=5){
+      p7inpractice.value++;
+     }
+     break;
+     case 8:
+        if(p8inpractice.value!=90){
+        p8inpractice.value+=5;
+     }
+     break;
+     
+     case 9:
+     if(p9inpractice.value!=300){
+      p9inpractice.value+=30;
+     }
+     break;
+     case 10:
+     p10inpractice.value++;
+     break;
+    }
+  }
+
   decrement(int index){
     switch(index){
       case 1:
@@ -284,7 +368,57 @@ var p10 = <String>[].obs;
     }
     break;
     }
+  }
+
+   decrementInPractice(int index){
+    switch(index){
+      case 1:
+        if(p1inpractice.value!=7){
+        p1inpractice.value--;
+    }
+    case 3:
+    if(p3inpractice.value!=10){
+      p3inpractice.value-=5;
+    }
+      break;
+      case 6:
+      if(p6inpractice.value!=10){
+       p6inpractice.value-=10;
+      }
+      break;
+    case 7:
+    if(p7inpractice.value!=1){
+      p7inpractice.value--;
+    }
+    case 8:
+     if(p8inpractice.value!=20){
+        p8inpractice.value-=5;
+    }    
+    break;  
+    case 9:
+    if(p9inpractice.value!=30){
+        p9inpractice.value-=30;
+    }
+    break;
+    }
     
+  }
+
+  int getInPractice(int index){
+    switch(index){
+      case 1:return p1inpractice.value; 
+      case 2:return p2inpractice.value; 
+      case 3:return p3inpractice.value; 
+      case 4:return p4inpractice.value; 
+      case 5:return p5inpractice.value; 
+      case 6:return p6inpractice.value; 
+      case 7:return p7inpractice.value; 
+      case 8:return p8inpractice.value; 
+      case 9:return p9inpractice.value;
+      case 10:return p10inpractice.value;
+      default:return 0;
+    }
+
   }
 
   reset(int index){
@@ -490,12 +624,16 @@ var p10 = <String>[].obs;
 
 
   void logout(){
-    debugPrint(practiceslist[0].name);
-    User user=User(name:controller.nameValue, 
+
+      startdayoption=false;
+      User user=User(name:controller.nameValue, 
     email:controller.emailValue, 
     password:controller.passwordValue,
-    pts:controller.getPts);
+    pts:controller.getPts,startdate: startday);
     user.addList(getpracticeslist);
+    user.addDays(getAllCompletedDays());
+    user.setFocusDay(focusedDay.value);
+    restartDate();
     if(verifyUser(controller.emailValue)){
        for(int i=0;i<userList.length;i++){
         if(userList[i].email==controller.emailValue){
@@ -506,6 +644,7 @@ var p10 = <String>[].obs;
     }else{
      userList.add(user);
     }
+
     
   }
    
@@ -519,12 +658,13 @@ var p10 = <String>[].obs;
     return false;
   }
   void login(String email){
+    startdayoption=true;
    User user=searchUser(email);
    
    controller.emailpassword(user.email, user.password);
    controller.changename(user.name);
    controller.setpts(user.pts);
-   debugPrint(user.getTask[0].name);
+   loadUserData(user.startdate,user.getLastDay,user.getDays);
    practiceslist.value=List.from(user.getTask);
    for(int i=0; i<practiceslist.length;i++){
     choosen(practiceslist[i].id);
@@ -545,8 +685,63 @@ var p10 = <String>[].obs;
     }
   }
 
+  var calendarDays = <CalendarDay>[].obs;
+  RxList<DateTime> completedDates = <DateTime>[].obs; 
 
 
+
+
+  void setFocusedDay(DateTime day ){
+    focusedDay.value=day;
+  }
+
+// Carga las fechas para el usuario actual
+  void loadUserData(DateTime startday,DateTime lastday, List<DateTime> userCompletedDates) {
+    
+    completedDates.value = userCompletedDates;
+    focusedDay.value=startday;
+    for (var day in userCompletedDates) {
+      debugPrint("${focusedDay.value}+$day");
+      while(!(isSameDay(focusedDay.value, day))){ 
+          
+
+        completedDays.add({"day":focusedDay.value,"completed":false});
+        advanceCalendarOneDay();
+      }
+        completedDays.add({"day":focusedDay.value,"completed":true});
+         advanceCalendarOneDay();
+    }
+
+    while(!isSameDay(focusedDay.value, lastday)){
+       completedDays.add({"day":focusedDay.value,"completed":false});
+        advanceCalendarOneDay();
+    }
+    
+  }
+
+
+// Restablece el calendario cerrar sesión
+  void restartDate() {
+    
+    completedDates.clear();
+    completedDays.clear();
+    for (var day in calendarDays) {
+      day.completed = false;
+    }
+    focusedDay.value = DateTime.now();
+    calendarDays.refresh(); 
+    completedDates.refresh();
+  }
+
+  List<DateTime> getAllCompletedDays() {
+    List<DateTime>days=[];
+    for(var day in completedDays){
+     if(day["completed"]){
+       days.add(day["day"]);
+     }
+    }
+    return days;
+  }
 
 }
 

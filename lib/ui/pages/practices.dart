@@ -13,10 +13,10 @@ import 'package:my_app/ui/pages/PracticesPages/W8.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/pages/PracticesPages/W9.dart';
 import 'package:my_app/ui/pages/Widgets/edit.dart';
+import 'package:my_app/ui/pages/calendar.dart';
 import 'package:my_app/ui/pages/initial.dart';
 import 'package:my_app/ui/pages/login.dart';
 import 'package:my_app/ui/pages/task_manager.dart';
-
 
 // ignore: use_key_in_widget_constructors
 class Practices extends StatelessWidget {
@@ -29,7 +29,7 @@ class Practices extends StatelessWidget {
     {"icon": Icons.auto_stories, "text": "Leer"},
     {"icon": Icons.pause_circle, "text": "Pausa activa"},
     {"icon": Icons.hotel, "text": "Tomar una siesta"},
-    {"icon": Icons.tv_off, "text":"Sin ver pantallas"},
+    {"icon": Icons.tv_off, "text": "Sin ver pantallas"},
     {"icon": Icons.schedule, "text": "Actividad/Hobby"},
   ];
 
@@ -47,137 +47,155 @@ class Practices extends StatelessWidget {
         centerTitle: true,
       ),
       bottomNavigationBar: BottomAppBar(
-        elevation: 0,
-        child: Container(
-          height: 100,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.greenAccent.shade200,
-                Colors.tealAccent.shade400,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 4),
-                blurRadius: 8,
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(vertical: 0),
+          height: 75,
+          child: Container(
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.greenAccent.shade200,
+                  Colors.tealAccent.shade400,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Boton home
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: IconButton(
-                  onPressed: () {
-                    Get.off(() => const InitialPage());
-                  },
-                  icon: const Icon(
-                    Icons.home_outlined,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                  splashRadius: 24,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 4),
+                  blurRadius: 8,
                 ),
-              ),
-              Row(
-                children: [
-                  // Boton de administrar tareas
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: IconButton(
-                      onPressed: () {
-                        Get.off(() => const TaskAdminPage());
-                      },
-                      icon: const Icon(
-                        Icons.list_alt,
-                        size: 28,
-                        color: Colors.white,
-                      ),
-                      splashRadius: 24,
-                    ),
-                  ),
-                  // Boton del perfil
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: PopupMenuButton(
-                      icon: const Icon(
-                        Icons.person_outline,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      offset: const Offset(0, 50),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Boton home
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.off(()=>const InitialPage());
+                    },
+                    icon: const Icon(
+                      Icons.home_outlined,
+                      size: 30,
                       color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                    ),
+                    splashRadius: 24,
+                  ),
+                ),      // Boton de administrar tareas
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: IconButton(
+                        onPressed: () {
+                          Get.off(() => const TaskAdminPage());
+                        },
+                        icon: const Icon(
+                          Icons.list_alt,
+                          size: 28,
+                          color: Colors.white,
+                        ),
+                        splashRadius: 24,
                       ),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Nombre: ${controller.nameValue}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              Text(
-                                'Correo: ${controller.emailValue}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey.shade700,
-                                ),
-                              ),
-                              const Divider(),
-                              Text(
-                                'Puntos: ${controller.getPts}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              const Divider(),
-                              Row(children: [  Icon(Icons.logout,
-                              color:Theme.of(context).colorScheme.tertiary ),
-                                Center(
-                                child: TextButton(
-                                  onPressed: () {
-                                    controllerp.logout();
-                                   controllerp.resetall();
-                                    Get.off(() => const LoginPage());
-                                  },
-                                  child: Text(
-                                    "Cerrar sesión",
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                      fontSize: 14,
-                                    ),
+                    ),
+                    // Botón del calendario
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: IconButton(
+                        onPressed: () {
+                          // Navega a la página de calendario
+                          Get.off(() => CalendarPage());
+                        },
+                        icon: const Icon(
+                          Icons.calendar_today,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        splashRadius: 24,
+                      ),
+                    ),
+                    // Boton del perfil
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: PopupMenuButton(
+                        icon: const Icon(
+                          Icons.person_outline,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        offset: const Offset(0, 50),
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Nombre: ${controller.nameValue}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.black87,
                                   ),
                                 ),
-                              )
-                              ],),
-                            ],
+                                Text(
+                                  'Correo: ${controller.emailValue}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                ),
+                                const Divider(),
+                                Text(
+                                  'Puntos: ${controller.getPts}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                const Divider(),
+                                Row(
+                                  children: [
+                                    Icon(Icons.logout,
+                                        color: Theme.of(context).colorScheme.tertiary),
+                                    Center(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          controllerp.logout();
+                                          controllerp.resetall();
+                                          Get.off(() => const LoginPage());
+                                        },
+                                        child: Text(
+                                          "Cerrar sesión",
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    
+              ],
+            ),
           ),
         ),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -206,99 +224,119 @@ class Practices extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return ElevatedButton(
                     onPressed: () {
-                      switch(index){
+                      switch (index) {
                         case 0:
-                       if(controllerp.p1choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice1());
-                       }
-                        
-                        break;
-                        case 1:
-                        if(controllerp.p2ChoosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice2());
-                       }
-                        break;
-                         case 2:
-                          if(controllerp.p3choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice3());
-                       }
-                        break;
-                        case 3:
-                         if(controllerp.p4ChoosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice4());
-                       }
-                        break;
-                         case 4:
-                          if(controllerp.p5ChoosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice5());
-                       }
-                        break;
-                        case 5: if(controllerp.p6choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice6());
-                       }
-                        break;
-                        case 6: 
-                        if(controllerp.p7choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice7());
-                       }
-                        break;
-                        case 7:  
-                        if(controllerp.p8choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice8());
-                       }
-                        break;
-                        case 8:  
-                        if(controllerp.p9choosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice9());
-                       }
-                        break;
-                         case 9:  
-                        if(controllerp.p10ChoosenValue){
-                       showDialog(context: context, builder: (BuildContext context){
-                          return Edit(name: items[index]["text"]);
-                          });
-                       }else{
-                        Get.off(()=>const Practice10());
-                       }
-                        break;
-                      }
+                          if (controllerp.p1choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice1());
+                          }
 
+                          break;
+                        case 1:
+                          if (controllerp.p2ChoosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice2());
+                          }
+                          break;
+                        case 2:
+                          if (controllerp.p3choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice3());
+                          }
+                          break;
+                        case 3:
+                          if (controllerp.p4ChoosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice4());
+                          }
+                          break;
+                        case 4:
+                          if (controllerp.p5ChoosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice5());
+                          }
+                          break;
+                        case 5:
+                          if (controllerp.p6choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice6());
+                          }
+                          break;
+                        case 6:
+                          if (controllerp.p7choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice7());
+                          }
+                          break;
+                        case 7:
+                          if (controllerp.p8choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice8());
+                          }
+                          break;
+                        case 8:
+                          if (controllerp.p9choosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice9());
+                          }
+                          break;
+                        case 9:
+                          if (controllerp.p10ChoosenValue) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Edit(name: items[index]["text"]);
+                                });
+                          } else {
+                            Get.off(() => const Practice10());
+                          }
+                          break;
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.secondary,

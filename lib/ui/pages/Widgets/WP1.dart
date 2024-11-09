@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/ui/Controller/PracticeClass.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
 
 class WP1 extends StatelessWidget {
   final Practicecontroller controller = Get.find();
-  final String name;
-  final int limit;
+  final int  index;
 
-  WP1({super.key, required this.name, required this.limit});
+  WP1({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    Task task = controller.getpractice(name);
-
+    Practicecontroller controller = Get.find();
     return AlertDialog(
       title: Center(
           child: Text(
-        task.getname,
+        "Detalles",
         style: TextStyle(color: Theme.of(context).colorScheme.primary),
       )), // Título dinámico
       content: Container(
@@ -36,15 +33,13 @@ class WP1 extends StatelessWidget {
                 children: [
                   Obx(
                     () => Text(
-                      "Llevas ${task.getcount}",
+                      "Llevas ${controller.getInPractice(index)}",
                       style: const TextStyle(fontSize: 20),
                     ),
                   ), // Se actualiza automáticamente
                   ElevatedButton(
                     onPressed: () {
-                      if (controller.getpractice(name).getcount < limit) {
-                        controller.addcounter(task.getname);
-                      }
+                     controller.incrementInPractice(index);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor:

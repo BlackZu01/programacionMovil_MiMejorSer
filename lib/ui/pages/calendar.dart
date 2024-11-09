@@ -1,40 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
-import 'package:my_app/ui/pages/Widgets/edit.dart';
-import 'package:my_app/ui/pages/calendar.dart';
 import 'package:my_app/ui/pages/initial.dart';
 import 'package:my_app/ui/pages/login.dart';
-import 'package:my_app/ui/pages/practices.dart';
+import 'package:my_app/ui/pages/task_manager.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:get/get.dart';
 
-class TaskAdminPage extends StatefulWidget {
-  const TaskAdminPage({super.key});
 
-  @override
-  _TaskAdminPageState createState() => _TaskAdminPageState();
-}
-
-class _TaskAdminPageState extends State<TaskAdminPage> {
-  final Accountcontroller controllerAccount = Get.find();
-  final Practicecontroller controllerPractice = Get.find();
-  int completedGoals = 0;
-
-  void _editTask(String name) {
-    controllerPractice.changeEditing(true);
-    route(name);
-  }
+class CalendarPage extends StatelessWidget {
+  final Practicecontroller controllerp = Get.find();
+   final Accountcontroller controlleraccount = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mi Mejor Ser'),
-        backgroundColor: Colors.greenAccent.shade200,
-        elevation: 0,
-        centerTitle: true,
+        title:const Center(child: Text('Calendario de Tareas')),
+        automaticallyImplyLeading: false
       ),
-      backgroundColor: const Color(0xFFF0F4F8),
       bottomNavigationBar: BottomAppBar(
           elevation: 0,
           padding: const EdgeInsets.symmetric(vertical: 0),
@@ -127,7 +111,7 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Nombre: ${controllerAccount.nameValue}',
+                                  'Nombre: ${controlleraccount.nameValue}',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -135,7 +119,7 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                   ),
                                 ),
                                 Text(
-                                  'Correo: ${controllerAccount.emailValue}',
+                                  'Correo: ${controlleraccount.emailValue}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey.shade700,
@@ -143,7 +127,7 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                 ),
                                 const Divider(),
                                 Text(
-                                  'Puntos: ${controllerAccount.getPts}',
+                                  'Puntos: ${controlleraccount.getPts}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Theme.of(context).colorScheme.primary,
@@ -157,8 +141,8 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
                                     Center(
                                       child: TextButton(
                                         onPressed: () {
-                                          controllerPractice.logout();
-                                          controllerPractice.resetall();
+                                          controllerp.logout();
+                                          controllerp.resetall();
                                           Get.off(() => const LoginPage());
                                         },
                                         child: Text(
@@ -188,81 +172,99 @@ class _TaskAdminPageState extends State<TaskAdminPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Administrar Tareas Diarias',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal,
+            Obx(() => TableCalendar(
+              firstDay: DateTime.utc(2020, 1, 1),
+              lastDay: DateTime.utc(2030, 12, 31),
+              focusedDay: controllerp.focusedDay.value,
+              selectedDayPredicate: (day) {
+                return isSameDay(controllerp.focusedDay.value, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                controllerp.focusedDay.value = selectedDay;
+              },
+              calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(
+                  color: Colors.teal[200],
+                  shape: BoxShape.circle,
+                ),
+                selectedDecoration: const BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                isTodayHighlighted: true,
+                defaultDecoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      blurRadius: 6,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Obx(() {
-                var tasks = controllerPractice.getpracticeslist;
-                return tasks.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'No hay tareas. Añade una nueva tarea.',
-                          style: TextStyle(fontSize: 18, color: Colors.black54),
+              calendarBuilders: CalendarBuilders(
+                defaultBuilder: (context, day, focusedDay) {
+                  var completedDay = controllerp.completedDays.firstWhere(
+                    (completed) => isSameDay(completed['day'], day),
+                    orElse: () => {},
+                  );
+
+                  if (completedDay.isNotEmpty && completedDay['completed'] != null) {
+                    bool completed = completedDay['completed'];
+                    return Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: completed ? Colors.green[400] : Colors.red[400],
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            blurRadius: 6,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        '${day.day}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                      )
-                    : ListView.builder(
-                        itemCount: tasks.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 20),
-                              title: Text(
-                                tasks[index].getname,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
-                                ),
-                              ),
-                              subtitle: Text(tasks[index].getgoal),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit,
-                                        color: Colors.teal),
-                                    onPressed: () =>
-                                        _editTask(tasks[index].getname),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.delete,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .error),
-                                    onPressed: () => controllerPractice
-                                        .removepractice(tasks[index].getname),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-              }),
-            ),
+                      ),
+                    );
+                  }
+
+                  return Container(
+                    margin: const EdgeInsets.all(4.0),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${day.day}',
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              headerStyle: const HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+                titleTextStyle: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal,
+                ),
+              ),
+            )),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => Practices()); // Ir a la página de añadir prácticas
-        },
-        backgroundColor: Colors.teal,
-        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
