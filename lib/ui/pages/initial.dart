@@ -98,7 +98,7 @@ class _InitialPage extends State<InitialPage> {
                       child: IconButton(
                         onPressed: () {
                           // Navega a la página de calendario
-                          Get.off(() => CalendarPage());
+                          Get.off(() => const CalendarPage());
                         },
                         icon: const Icon(
                           Icons.calendar_today,

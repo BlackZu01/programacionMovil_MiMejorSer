@@ -12,6 +12,8 @@ class CalendarPage extends StatelessWidget {
   final Practicecontroller controllerp = Get.find();
    final Accountcontroller controlleraccount = Get.find();
 
+  const CalendarPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +83,7 @@ class CalendarPage extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           // Navega a la página de calendario
-                          Get.off(() => CalendarPage());
+                          Get.off(() => const CalendarPage());
                         },
                         icon: const Icon(
                           Icons.calendar_today,
@@ -256,7 +258,7 @@ class CalendarPage extends StatelessWidget {
               headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
-                titleTextStyle: const TextStyle(
+                titleTextStyle: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal,
