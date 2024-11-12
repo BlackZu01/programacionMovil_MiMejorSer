@@ -45,8 +45,7 @@ class Practicecontroller extends GetxController {
         return practice;
       }
     }
-    return Task(
-        id: 0, name: "", goal: "", pts: 0, goalCounter: 0, state: false);
+    return Task(id: 0, name: "", goal: "", pts: 0, goalCounter: 0);
   }
 
   addcounter(String name) {

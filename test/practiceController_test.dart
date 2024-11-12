@@ -16,8 +16,7 @@ void main() {
           name: "Tarea de prueba",
           goal: "Terminarla",
           pts: 10,
-          goalCounter: 0,
-          state: false);
+          goalCounter: 0);
       practiceController.addpractices(task);
       expect(practiceController.getpracticeslist.length, 1);
       expect(practiceController.getpracticeslist.first.name, "Tarea de prueba");
@@ -29,8 +28,7 @@ void main() {
           name: "Tarea de prueba",
           goal: "Completar tarea",
           pts: 10,
-          goalCounter: 0,
-          state: false);
+          goalCounter: 0);
       practiceController.addpractices(task);
       practiceController.removepractice("Tarea de prueba");
       expect(practiceController.getpracticeslist.length, 0);
@@ -42,8 +40,7 @@ void main() {
           name: "Tomar agua",
           goal: "Tomar 5 vasos de agua",
           pts: 5,
-          goalCounter: 0,
-          state: false);
+          goalCounter: 0);
       practiceController.addpractices(task);
       var retrievedTask = practiceController.getpractice("Tomar agua");
       expect(retrievedTask.name, "Tomar agua");
@@ -56,8 +53,7 @@ void main() {
           name: "Leer",
           goal: "Leer 10 paginas",
           pts: 15,
-          goalCounter: 0,
-          state: false);
+          goalCounter: 0);
       practiceController.addpractices(task);
       practiceController.editpractice("Leer", "Leer 20 paginas");
       expect(practiceController.getpractice("Leer").goal, "Leer 20 paginas");
@@ -67,7 +63,7 @@ void main() {
       DateTime initialDay = practiceController.focusedDay.value;
       practiceController.advanceCalendarOneDay();
       expect(practiceController.focusedDay.value,
-          initialDay.add(Duration(days: 1)));
+          initialDay.add(const Duration(days: 1)));
     });
 
     test('Revisa si todos las tareas se completaron', () {
@@ -76,15 +72,9 @@ void main() {
           name: "Yoga",
           goal: "Rutina de mañana",
           pts: 5,
-          goalCounter: 0,
-          state: false);
+          goalCounter: 0);
       Task task2 = Task(
-          id: 2,
-          name: "Ejercicio",
-          goal: "Cardio",
-          pts: 10,
-          goalCounter: 0,
-          state: true);
+          id: 2, name: "Ejercicio", goal: "Cardio", pts: 10, goalCounter: 0);
       practiceController.addpractices(task1);
       practiceController.addpractices(task2);
       expect(practiceController.allTasksCompleted(), false);

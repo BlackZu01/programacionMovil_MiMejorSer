@@ -15,7 +15,7 @@ class Task {
   late List<String> goalList;
   
 
-  Task({required this.id,required this.name, required this.goal,required this.pts, required this.goalCounter, required bool state});
+  Task({required this.id,required this.name, required this.goal,required this.pts, required this.goalCounter});
   
   int get getId=>id;
   String get getname=>name;
