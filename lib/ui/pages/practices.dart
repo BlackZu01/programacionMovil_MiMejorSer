@@ -108,7 +108,7 @@ class Practices extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           // Navega a la página de calendario
-                          Get.off(() => const CalendarPage());
+                          Get.off(() => CalendarPage());
                         },
                         icon: const Icon(
                           Icons.calendar_today,

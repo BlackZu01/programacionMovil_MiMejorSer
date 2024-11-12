@@ -56,7 +56,7 @@ void main() {
       GetPage(name: '/Initial', page: () => const InitialPage()),
       GetPage(name: '/task_manager', page: () => const TaskAdminPage()),
       GetPage(name: '/Practices', page: () => Practices()),
-      GetPage(name: '/Calendar', page: () => const CalendarPage()),
+      GetPage(name: '/Calendar', page: () => CalendarPage()),
       GetPage(name: '/Practice1', page: () => const Practice1()),
       GetPage(name: '/Practice2', page: () => const Practice2()),
       GetPage(name: '/Practice3', page: () => const Practice3()),
