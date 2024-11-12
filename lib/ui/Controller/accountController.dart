@@ -57,11 +57,15 @@ class Accountcontroller extends GetxController {
     name.value = obtainName(index);
   }
 
-  addpts(int points) {
-    pts.value += points;
-  }
+ addpts(int points){
+  pts.value+=points;
+ }
+ 
+ setpts(int points){
+    pts.value=points;
+ }
 
-  setpts(int points) {
-    pts.value = points;
-  }
+ 
+ 
+
 }
