@@ -4,7 +4,7 @@ class WP2 extends StatelessWidget {
   final List<String> list;
   final String name;
 
-  WP2({super.key, required this.list, required this.name});
+  const WP2({super.key, required this.list, required this.name});
 
   @override
   Widget build(BuildContext context) {

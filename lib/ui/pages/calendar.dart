@@ -12,6 +12,8 @@ class CalendarPage extends StatelessWidget {
   final Practicecontroller controllerp = Get.find();
    final Accountcontroller controlleraccount = Get.find();
 
+  CalendarPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -256,7 +258,7 @@ class CalendarPage extends StatelessWidget {
               headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
-                titleTextStyle: const TextStyle(
+                titleTextStyle: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal,

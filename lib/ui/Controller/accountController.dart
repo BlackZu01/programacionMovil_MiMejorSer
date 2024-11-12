@@ -1,66 +1,60 @@
-
-
 import 'package:get/get.dart';
-import 'package:my_app/domain/usecase/user_use_case.dart';
-import 'package:my_app/ui/Controller/practiceController.dart';
 
-class Accountcontroller extends GetxController{
-  var email ="".obs;
-  var password="".obs;
-  var name="".obs;
+class Accountcontroller extends GetxController {
+  var email = "".obs;
+  var password = "".obs;
+  var name = "".obs;
   var emailList = <String>[].obs;
   var passwordList = <String>[].obs;
   var nameList = <String>[].obs;
-  var pts=0.obs;
+  var pts = 0.obs;
 
-  String get emailValue =>email.value;
-  String get passwordValue =>password.value;
-  String get nameValue =>name.value;
-  List<String> get emailGetList =>emailList;
-  List<String> get passwordGetList =>passwordList;
-  List<String> get nameGetList =>nameList;
-  int get getPts =>pts.value;
+  String get emailValue => email.value;
+  String get passwordValue => password.value;
+  String get nameValue => name.value;
+  List<String> get emailGetList => emailList;
+  List<String> get passwordGetList => passwordList;
+  List<String> get nameGetList => nameList;
+  int get getPts => pts.value;
 
-
-  void emailpassword(String emailvalue, String passwordValue){
-    email.value=emailvalue;
-    password.value=passwordValue;
+  void emailpassword(String emailvalue, String passwordValue) {
+    email.value = emailvalue;
+    password.value = passwordValue;
   }
 
-  void changename(String namevalue){
-    name.value=namevalue;
+  void changename(String namevalue) {
+    name.value = namevalue;
   }
 
-
-  void reset(){
-    email.value="";
-    password.value="";
-    name.value="";
-    pts.value=0;
-  }
-  
-  void addEmailList(String value){
-     emailList.add(value);
+  void reset() {
+    email.value = "";
+    password.value = "";
+    name.value = "";
+    pts.value = 0;
   }
 
-   void addnameList(String value){
-     nameList.add(value);
+  void addEmailList(String value) {
+    emailList.add(value);
   }
 
-  void addPasswordList(String value){
-     passwordList.add(value);
+  void addnameList(String value) {
+    nameList.add(value);
   }
 
-   String confirmPassword(int index){
+  void addPasswordList(String value) {
+    passwordList.add(value);
+  }
+
+  String confirmPassword(int index) {
     return passwordList[index];
   }
 
-  String obtainName(int index){
+  String obtainName(int index) {
     return nameList[index];
   }
 
-  setname(index){
-    name.value=obtainName(index);
+  setname(index) {
+    name.value = obtainName(index);
   }
 
  addpts(int points){
