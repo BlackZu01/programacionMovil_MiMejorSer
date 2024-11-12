@@ -1,6 +1,4 @@
 
-
-
 import 'package:get/get.dart';
 
 class Task {
@@ -36,5 +34,10 @@ class Task {
   resetCounter()=>counter.value=0;
   falseTask()=>state.value=false;
   trueTask()=>state.value=true;
+
+void addCounterValue(int c){
+  counter.value=c;
+}
+  
 }
 

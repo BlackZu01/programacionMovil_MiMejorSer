@@ -8,20 +8,29 @@ class Goal{
 
   Goal({required this.id});
 
-  
+  addGoal(int goalvalue){
+    goal=goalvalue;
+  }
+
+  addList(List<String> listvalue){
+   list=listvalue;
+  }
 }
 
 class User{
+  int? id;
   String name;
   String email;
   String password;
   int pts;
   DateTime startdate;
  late List<Task> tasks=[]; 
-  late List <Goal>goals;
+  late List <Goal>goals=[];
   late List<DateTime>days=[];
   late DateTime lastday;
   User({required this.name, required this.email,required  this.password,required this.pts,required this.startdate});
+  
+  User.id({this.id,required this.name, required this.email,required  this.password,required this.pts,required this.startdate});
 
   String get getname=>name;
   String get getemail=>email;

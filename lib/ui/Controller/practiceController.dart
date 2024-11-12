@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_app/domain/entities/CalendarDayClass.dart';
 import 'package:my_app/domain/entities/PracticeClass.dart';
 import 'package:my_app/domain/entities/UserClass.dart';
+import 'package:my_app/domain/usecase/user_use_case.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -11,6 +12,9 @@ import 'package:table_calendar/table_calendar.dart';
 class Practicecontroller extends GetxController{
   
 Accountcontroller controller=Get.find();
+
+
+
   var npractices=0.obs;
   
   int get getnpractices=>npractices.value;
@@ -26,6 +30,10 @@ Accountcontroller controller=Get.find();
   bool startdayoption=false;
 
  var completedDays = <Map<String, dynamic>>[].obs;
+
+setUserList(List<User> user){
+  userList.value=user;
+}
 
  changeEditing(bool value){
   editing.value=value;
@@ -637,7 +645,7 @@ var p10 = <String>[].obs;
     if(verifyUser(controller.emailValue)){
        for(int i=0;i<userList.length;i++){
         if(userList[i].email==controller.emailValue){
-          userList[i]=user;
+          userList[i] = user;
           break;
         }
        }
@@ -743,5 +751,50 @@ var p10 = <String>[].obs;
     return days;
   }
 
+
+// Practicecontroller() {
+//     getAllUser();
+//   }
+
+  
+
+  UserUseCase userUseCase = Get.find();
+
+  Future<void> getAllUser() async {
+   try{
+    var list = await userUseCase.getAllUser();
+    setUserList(list);
+   }catch(e){
+     Future.error(e);
+   }
+  }
+
+  void addItem(item) async {
+    try{
+    await userUseCase.addUser(item);
+    }catch(e){
+     Future.error(e);
+   }
+    await getAllUser();
+  }
+
+  void removeItem(item) async {
+    try{
+    await userUseCase.deleteUser(item.id);
+    }catch(e){
+     Future.error(e);
+   }
+    await getAllUser();
+  }
+
+   void updateItem(item) async {
+    try{
+    await userUseCase.updateUser(item);
+    }catch(e){
+     Future.error(e);
+   }
+    await getAllUser();
+  }
+  
 }
 

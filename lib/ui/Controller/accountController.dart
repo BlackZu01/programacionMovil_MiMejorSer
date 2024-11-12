@@ -1,6 +1,8 @@
 
 
 import 'package:get/get.dart';
+import 'package:my_app/domain/usecase/user_use_case.dart';
+import 'package:my_app/ui/Controller/practiceController.dart';
 
 class Accountcontroller extends GetxController{
   var email ="".obs;
@@ -68,6 +70,8 @@ class Accountcontroller extends GetxController{
  setpts(int points){
     pts.value=points;
  }
+
+ 
  
 
 }

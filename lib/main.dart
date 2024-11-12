@@ -2,8 +2,14 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:my_app/data/models/usersdb.dart';
+import 'package:my_app/domain/repository/User_repository.dart';
+import 'package:my_app/domain/usecase/user_use_case.dart';
 import 'package:my_app/ui/Controller/accountController.dart';
 import 'package:my_app/ui/Controller/practiceController.dart';
+
 import 'package:my_app/ui/pages/PracticesPages/W1.dart';
 import 'package:my_app/ui/pages/PracticesPages/W2.dart';
 import 'package:my_app/ui/pages/PracticesPages/W3.dart';
@@ -21,9 +27,26 @@ import 'package:lottie/lottie.dart';
 import 'ui/pages/login.dart';
 import 'ui/pages/signup.dart';
 
-void main() {
-  Get.put(Accountcontroller(), permanent: true);
-  Get.put(Practicecontroller(), permanent: true);
+Future<List<Box>> _openBox() async {
+  List<Box> boxList = [];
+  await Hive.initFlutter();
+ Hive.registerAdapter(UserdbAdapter());
+  Hive.registerAdapter(TaskdbAdapter());
+  Hive.registerAdapter(GoaldbAdapter());
+  boxList.add(await Hive.openBox('user'));
+  return boxList;
+}
+void main () async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await _openBox();
+  Get.put(UserRepository());
+  Get.put(UserUseCase());
+   Get.put(Accountcontroller(), permanent: true);
+   Get.put(Practicecontroller(), permanent: true);
+ 
+  
+  
+ 
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     theme: FlexThemeData.light(
